@@ -1,0 +1,26 @@
+{
+  "slug": "prize-randomizer",
+  "device": "desktop",
+  "title": {
+    "ru": "Розыгрыш призов",
+    "en": "Prize draw"
+  },
+  "scenarios": [
+    {
+      "id": "all",
+      "path": "#/all",
+      "title": {
+        "ru": "Все",
+        "en": "All"
+      }
+    },
+    {
+      "id": "category",
+      "path": "#/soda",
+      "title": {
+        "ru": "Категория",
+        "en": "Category"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "ai-agents-marketplace",
+  "device": "desktop",
+  "title": {
+    "ru": "Агентная мастерская",
+    "en": "Agent Workshop"
+  },
+  "scenarios": [
+    {
+      "id": "catalog",
+      "path": "#/catalog",
+      "title": {
+        "ru": "Каталог",
+        "en": "Catalog"
+      }
+    },
+    {
+      "id": "request",
+      "path": "#/request/meeting",
+      "title": {
+        "ru": "Заявка",
+        "en": "Request"
+      }
+    },
+    {
+      "id": "editor",
+      "path": "#/editor",
+      "title": {
+        "ru": "Редактор",
+        "en": "Editor"
+      }
+    }
+  ]
+}

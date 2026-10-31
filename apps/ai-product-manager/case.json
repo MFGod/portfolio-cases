@@ -1,0 +1,42 @@
+{
+  "slug": "ai-product-manager",
+  "device": "desktop",
+  "title": {
+    "ru": "Контур задач",
+    "en": "Task Outline"
+  },
+  "scenarios": [
+    {
+      "id": "analyze",
+      "path": "#/analyze",
+      "title": {
+        "ru": "Загрузка",
+        "en": "Upload"
+      }
+    },
+    {
+      "id": "queue",
+      "path": "#/review/sample-cancelled",
+      "title": {
+        "ru": "Разбор",
+        "en": "Parsing"
+      }
+    },
+    {
+      "id": "review",
+      "path": "#/review",
+      "title": {
+        "ru": "Проверка",
+        "en": "Review"
+      }
+    },
+    {
+      "id": "export",
+      "path": "#/export",
+      "title": {
+        "ru": "Передача",
+        "en": "Handoff"
+      }
+    }
+  ]
+}

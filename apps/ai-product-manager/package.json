@@ -1,0 +1,17 @@
+{
+  "name": "@cases/ai-product-manager",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@cases/demo-kit": "*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "ats-platform",
+  "device": "desktop",
+  "title": {
+    "ru": "Лист Найма",
+    "en": "Hiring Leaf"
+  },
+  "scenarios": [
+    {
+      "id": "vacancies",
+      "path": "#/vacancies",
+      "title": {
+        "ru": "Вакансии",
+        "en": "Vacancies"
+      }
+    },
+    {
+      "id": "pipeline",
+      "path": "#/pipeline",
+      "title": {
+        "ru": "Воронка",
+        "en": "Pipeline"
+      }
+    },
+    {
+      "id": "report",
+      "path": "#/report",
+      "title": {
+        "ru": "Отчёт",
+        "en": "Report"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "vk-gifts",
+  "device": "phone",
+  "title": {
+    "ru": "Хочу: список желаний",
+    "en": "Wish: gift wishlist"
+  },
+  "scenarios": [
+    {
+      "id": "wishlist",
+      "path": "#/wishlist",
+      "title": {
+        "ru": "Желания",
+        "en": "Wishlist"
+      }
+    },
+    {
+      "id": "add-link",
+      "path": "#/add",
+      "title": {
+        "ru": "Ссылка",
+        "en": "Link"
+      }
+    },
+    {
+      "id": "friend-booking",
+      "path": "#/friends/lev",
+      "title": {
+        "ru": "Подарок",
+        "en": "Gift"
+      }
+    }
+  ]
+}

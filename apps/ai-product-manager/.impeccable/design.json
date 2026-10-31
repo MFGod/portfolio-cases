@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T13:16:31.504724+00:00",
+  "title": "Design System: Контур задач",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "bg"
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "surface"
+      },
+      "sidebar": {
+        "role": "neutral",
+        "displayName": "sidebar"
+      },
+      "code": {
+        "role": "neutral",
+        "displayName": "code"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "ink"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "muted"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "accent"
+      },
+      "accent-strong": {
+        "role": "primary",
+        "displayName": "accent-strong"
+      },
+      "on-accent": {
+        "role": "neutral",
+        "displayName": "on-accent"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "line"
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "line-strong"
+      },
+      "outline": {
+        "role": "neutral",
+        "displayName": "outline"
+      },
+      "tint": {
+        "role": "primary",
+        "displayName": "tint"
+      },
+      "tint-soft": {
+        "role": "primary",
+        "displayName": "tint-soft"
+      },
+      "selection": {
+        "role": "primary",
+        "displayName": "selection"
+      },
+      "ready": {
+        "role": "neutral",
+        "displayName": "ready"
+      },
+      "ready-surface": {
+        "role": "neutral",
+        "displayName": "ready-surface"
+      },
+      "running": {
+        "role": "neutral",
+        "displayName": "running"
+      },
+      "running-surface": {
+        "role": "neutral",
+        "displayName": "running-surface"
+      },
+      "danger": {
+        "role": "neutral",
+        "displayName": "danger"
+      },
+      "danger-surface": {
+        "role": "neutral",
+        "displayName": "danger-surface"
+      },
+      "warning": {
+        "role": "neutral",
+        "displayName": "warning"
+      },
+      "warning-surface": {
+        "role": "neutral",
+        "displayName": "warning-surface"
+      },
+      "toast": {
+        "role": "neutral",
+        "displayName": "toast"
+      },
+      "on-toast": {
+        "role": "neutral",
+        "displayName": "on-toast"
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "Заголовок документа",
+        "purpose": "Название текущего документа."
+      },
+      "body": {
+        "displayName": "Текст задачи",
+        "purpose": "Требования и основные подписи."
+      },
+      "code-label": {
+        "displayName": "Номер строки",
+        "purpose": "Номера строк исходника и задач трекера."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "duration",
+        "value": "180ms",
+        "purpose": "Смена цвета и появления уведомления."
+      },
+      {
+        "name": "duration-slow",
+        "value": "1.4s",
+        "purpose": "Пульсация текущей обработки и скелетона."
+      },
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Переходы состояний интерфейса."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "source-view",
+        "value": "1099px"
+      },
+      {
+        "name": "top-navigation",
+        "value": "899px"
+      },
+      {
+        "name": "phone",
+        "value": "599px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Основная кнопка",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Главное действие страницы или редактора.",
+      "html": "<button class=\"ds-button ds-primary\">Сохранить задачу</button>",
+      "css": ".ds-button {display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control);padding:var(--space-2) var(--space-4);border:1px solid transparent;border-radius:var(--radius-sm);font:var(--weight-medium) var(--text-md)/var(--leading-tight) var(--font-body);cursor:pointer;transition:background-color var(--duration) var(--ease-out),border-color var(--duration) var(--ease-out)} .ds-button:focus-visible {outline:var(--focus-ring);outline-offset:var(--focus-width)} .ds-button:disabled {opacity:var(--disabled-opacity);cursor:default} .ds-primary {background:var(--color-accent);color:var(--color-on-accent)} .ds-primary:hover:not(:disabled),.ds-primary:active:not(:disabled) {background:var(--color-accent-strong)}"
+    },
+    {
+      "name": "Вторичная кнопка",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Вспомогательное действие рядом с основным.",
+      "html": "<button class=\"ds-button ds-secondary\">Показать исходник</button>",
+      "css": ".ds-button {display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control);padding:var(--space-2) var(--space-4);border:1px solid transparent;border-radius:var(--radius-sm);font:var(--weight-medium) var(--text-md)/var(--leading-tight) var(--font-body);cursor:pointer;transition:background-color var(--duration) var(--ease-out),border-color var(--duration) var(--ease-out)} .ds-button:focus-visible {outline:var(--focus-ring);outline-offset:var(--focus-width)} .ds-button:disabled {opacity:var(--disabled-opacity);cursor:default} .ds-secondary {background:var(--color-surface);border-color:var(--color-line-strong);color:var(--color-ink)} .ds-secondary:hover:not(:disabled) {background:var(--color-tint-soft);border-color:var(--color-outline)} .ds-secondary:active:not(:disabled) {background:var(--color-tint)}"
+    },
+    {
+      "name": "Поле задачи",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Подписанное редактируемое поле внутри задачи.",
+      "html": "<label class=\"ds-label\">Название задачи<input class=\"ds-field\" value=\"Показывать свободные места\"></label>",
+      "css": ".ds-label {display:grid;gap:var(--space-2);font:var(--weight-medium) var(--text-md)/var(--leading-body) var(--font-body);color:var(--color-ink)} .ds-field {min-height:var(--control);padding:var(--space-2) var(--space-3);border:1px solid var(--color-outline);border-radius:var(--radius-sm);background:var(--color-surface);color:var(--color-ink);font:var(--weight-regular) var(--text-body)/var(--leading-body) var(--font-body)} .ds-field:focus-visible {outline:var(--focus-ring);outline-offset:var(--focus-width)} .ds-field:disabled {opacity:var(--disabled-opacity)}"
+    },
+    {
+      "name": "Навигация",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "Сценарии рабочей области с текущим разделом.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Разделы\"><a href=\"#review\" aria-current=\"page\">Документы</a><a href=\"#queue\">Очередь</a></nav>",
+      "css": ".ds-nav {display:grid;gap:var(--space-1);padding:var(--space-3);background:var(--color-sidebar);font:var(--text-md)/var(--leading-body) var(--font-body)} .ds-nav a {display:flex;align-items:center;min-height:var(--control);padding:0 var(--space-3);border-radius:var(--radius-sm);color:var(--color-muted);text-decoration:none} .ds-nav a[aria-current] {background:var(--color-tint);color:var(--color-accent);font-weight:var(--weight-medium)} .ds-nav a:not([aria-current]):hover {background:var(--color-tint-soft)} .ds-nav a:focus-visible {outline:var(--focus-ring);outline-offset:var(--focus-width)}"
+    },
+    {
+      "name": "Готовность документа",
+      "kind": "chip",
+      "refersTo": "badge-ready",
+      "description": "Текстовое состояние готового документа.",
+      "html": "<span class=\"ds-badge\">Готово к проверке</span>",
+      "css": ".ds-badge {display:inline-flex;width:fit-content;padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);background:var(--color-ready-surface);color:var(--color-ready);font:var(--text-xs)/var(--leading-tight) var(--font-body)}"
+    },
+    {
+      "name": "Строка задачи",
+      "kind": "custom",
+      "refersTo": "task-selected",
+      "description": "Раскрытая задача с состоянием критериев.",
+      "html": "<button class=\"ds-task\" aria-expanded=\"true\"><span>Позволять участнику забронировать место на два часа.</span><small>1 критерий</small></button>",
+      "css": ".ds-task {display:grid;gap:var(--space-2);width:100%;min-height:calc(var(--control) * 2);padding:var(--space-4);border:0;border-radius:0;background:var(--color-tint);color:var(--color-ink);font:var(--weight-medium) var(--text-body)/var(--leading-body) var(--font-body);text-align:left;cursor:pointer} .ds-task small {color:var(--color-ready);font-size:var(--text-xs);font-weight:var(--weight-regular)} .ds-task:hover {background:var(--color-tint-soft)} .ds-task:focus-visible {outline:var(--focus-ring);outline-offset:calc(var(--focus-width) * -1)}"
+    },
+    {
+      "name": "Связанный фрагмент",
+      "kind": "custom",
+      "refersTo": "source-fragment",
+      "description": "Строка исходного документа, связанная с выбранной задачей.",
+      "html": "<div class=\"ds-source\"><span>5</span><div>- <mark>Позволять участнику забронировать место на два часа.</mark></div></div>",
+      "css": ".ds-source {display:grid;grid-template-columns:var(--space-5) minmax(0,1fr);gap:var(--space-2);padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);background:var(--color-tint);color:var(--color-ink);font:var(--text-sm)/var(--leading-code) var(--font-body)} .ds-source > span {font-family:var(--font-code);font-size:var(--text-xs);color:var(--color-muted);text-align:right;opacity:.7} .ds-source mark {color:inherit;background:var(--color-selection)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Рабочая область проверки",
+    "overview": "«Рабочая область проверки» сохраняет задачи в центре внимания. Светлые поверхности, зелёные состояния выбора и плотная типографика поддерживают чтение требований. Развёрнутая задача связана с точной строкой исходного документа.",
+    "keyCharacteristics": [
+      "Задачи сгруппированы по эпику, одна задача раскрыта для проверки.",
+      "Выбор задачи и связанный фрагмент исходника отмечены согласованными зелёными тонами.",
+      "На телефоне исходник открывается отдельным представлением с возвратом к задачам."
+    ],
+    "rules": [
+      {
+        "name": "Связанный выбор",
+        "body": "Выделение строки исходника следует за выбранной задачей; зелёная заливка обозначает текущий контекст проверки.",
+        "section": "colors"
+      },
+      {
+        "name": "Плоские поверхности",
+        "body": "Границы и различие фоновых тонов отделяют области. Тени в текущей системе отсутствуют.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do: брать цвета, размеры и интервалы из custom properties приложения.",
+      "Do: сохранять название задачи, состояние критериев и приоритет при переносе строки на телефон.",
+      "Do: сопровождать цвет состояния текстом и видимым фокусом."
+    ],
+    "donts": [
+      "Don’t: добавлять маркетинговые слоганы и декоративные метрики на рабочие экраны.",
+      "Don’t: превращать разделы страницы в вложенные карточки.",
+      "Don’t: назначать отсутствующим критериям цвет успешной проверки."
+    ]
+  }
+}

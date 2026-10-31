@@ -1,0 +1,42 @@
+{
+  "slug": "ecommerce-mini-app",
+  "device": "phone",
+  "title": {
+    "ru": "Корзина Рядом",
+    "en": "Basket Nearby"
+  },
+  "scenarios": [
+    {
+      "id": "catalog",
+      "path": "#/catalog",
+      "title": {
+        "ru": "Каталог",
+        "en": "Catalog"
+      }
+    },
+    {
+      "id": "cart",
+      "path": "#/cart",
+      "title": {
+        "ru": "Корзина",
+        "en": "Cart"
+      }
+    },
+    {
+      "id": "checkout",
+      "path": "#/checkout",
+      "title": {
+        "ru": "Оформление",
+        "en": "Checkout"
+      }
+    },
+    {
+      "id": "orders",
+      "path": "#/orders",
+      "title": {
+        "ru": "Заказы",
+        "en": "Orders"
+      }
+    }
+  ]
+}

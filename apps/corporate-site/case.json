@@ -1,0 +1,42 @@
+{
+  "slug": "corporate-site",
+  "device": "desktop",
+  "title": {
+    "ru": "Корпоративный сайт",
+    "en": "Corporate website"
+  },
+  "scenarios": [
+    {
+      "id": "home",
+      "path": "#/ru",
+      "title": {
+        "ru": "Главная",
+        "en": "Home"
+      }
+    },
+    {
+      "id": "solution",
+      "path": "#/ru/solutions/support",
+      "title": {
+        "ru": "Решение",
+        "en": "Solution"
+      }
+    },
+    {
+      "id": "english",
+      "path": "#/en",
+      "title": {
+        "ru": "English",
+        "en": "English"
+      }
+    },
+    {
+      "id": "editor",
+      "path": "#/editor",
+      "title": {
+        "ru": "Админка",
+        "en": "Admin"
+      }
+    }
+  ]
+}

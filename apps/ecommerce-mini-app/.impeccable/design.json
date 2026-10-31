@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T18:45:35.947019Z",
+  "title": "Design System: Корзина Рядом",
+  "extensions": {
+    "colorMeta": {
+      "green": {
+        "role": "primary",
+        "displayName": "green",
+        "canonical": "#0b704d",
+        "tonalRamp": [
+          "oklch(15% 0.1020 162.48)",
+          "oklch(26% 0.1020 162.48)",
+          "oklch(38% 0.1020 162.48)",
+          "oklch(49% 0.1020 162.48)",
+          "oklch(61% 0.1020 162.48)",
+          "oklch(72% 0.1020 162.48)",
+          "oklch(84% 0.1020 162.48)",
+          "oklch(95% 0.1020 162.48)"
+        ]
+      },
+      "green-hover": {
+        "role": "primary",
+        "displayName": "green-hover",
+        "canonical": "#095e41",
+        "tonalRamp": [
+          "oklch(15% 0.0889 163.15)",
+          "oklch(26% 0.0889 163.15)",
+          "oklch(38% 0.0889 163.15)",
+          "oklch(49% 0.0889 163.15)",
+          "oklch(61% 0.0889 163.15)",
+          "oklch(72% 0.0889 163.15)",
+          "oklch(84% 0.0889 163.15)",
+          "oklch(95% 0.0889 163.15)"
+        ]
+      },
+      "green-dark": {
+        "role": "primary",
+        "displayName": "green-dark",
+        "canonical": "#114431",
+        "tonalRamp": [
+          "oklch(15% 0.0633 164.31)",
+          "oklch(26% 0.0633 164.31)",
+          "oklch(38% 0.0633 164.31)",
+          "oklch(49% 0.0633 164.31)",
+          "oklch(61% 0.0633 164.31)",
+          "oklch(72% 0.0633 164.31)",
+          "oklch(84% 0.0633 164.31)",
+          "oklch(95% 0.0633 164.31)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "ink",
+        "canonical": "#18251e",
+        "tonalRamp": [
+          "oklch(15% 0.0224 160.69)",
+          "oklch(26% 0.0224 160.69)",
+          "oklch(38% 0.0224 160.69)",
+          "oklch(49% 0.0224 160.69)",
+          "oklch(61% 0.0224 160.69)",
+          "oklch(72% 0.0224 160.69)",
+          "oklch(84% 0.0224 160.69)",
+          "oklch(95% 0.0224 160.69)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "muted",
+        "canonical": "#59675f",
+        "tonalRamp": [
+          "oklch(15% 0.0212 160.52)",
+          "oklch(26% 0.0212 160.52)",
+          "oklch(38% 0.0212 160.52)",
+          "oklch(49% 0.0212 160.52)",
+          "oklch(61% 0.0212 160.52)",
+          "oklch(72% 0.0212 160.52)",
+          "oklch(84% 0.0212 160.52)",
+          "oklch(95% 0.0212 160.52)"
+        ]
+      },
+      "mint": {
+        "role": "neutral",
+        "displayName": "mint",
+        "canonical": "#f2f4ee",
+        "tonalRamp": [
+          "oklch(15% 0.0082 121.63)",
+          "oklch(26% 0.0082 121.63)",
+          "oklch(38% 0.0082 121.63)",
+          "oklch(49% 0.0082 121.63)",
+          "oklch(61% 0.0082 121.63)",
+          "oklch(72% 0.0082 121.63)",
+          "oklch(84% 0.0082 121.63)",
+          "oklch(95% 0.0082 121.63)"
+        ]
+      },
+      "mint-strong": {
+        "role": "neutral",
+        "displayName": "mint-strong",
+        "canonical": "#e5ecdd",
+        "tonalRamp": [
+          "oklch(15% 0.0213 127.39)",
+          "oklch(26% 0.0213 127.39)",
+          "oklch(38% 0.0213 127.39)",
+          "oklch(49% 0.0213 127.39)",
+          "oklch(61% 0.0213 127.39)",
+          "oklch(72% 0.0213 127.39)",
+          "oklch(84% 0.0213 127.39)",
+          "oklch(95% 0.0213 127.39)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "paper",
+        "canonical": "#fff",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "page",
+        "canonical": "#eef0ea",
+        "tonalRamp": [
+          "oklch(15% 0.0082 121.63)",
+          "oklch(26% 0.0082 121.63)",
+          "oklch(38% 0.0082 121.63)",
+          "oklch(49% 0.0082 121.63)",
+          "oklch(61% 0.0082 121.63)",
+          "oklch(72% 0.0082 121.63)",
+          "oklch(84% 0.0082 121.63)",
+          "oklch(95% 0.0082 121.63)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "white",
+        "canonical": "#fff",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "border",
+        "canonical": "#dce2d9",
+        "tonalRamp": [
+          "oklch(15% 0.0137 134.90)",
+          "oklch(26% 0.0137 134.90)",
+          "oklch(38% 0.0137 134.90)",
+          "oklch(49% 0.0137 134.90)",
+          "oklch(61% 0.0137 134.90)",
+          "oklch(72% 0.0137 134.90)",
+          "oklch(84% 0.0137 134.90)",
+          "oklch(95% 0.0137 134.90)"
+        ]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "border-strong",
+        "canonical": "#81948a",
+        "tonalRamp": [
+          "oklch(15% 0.0263 162.72)",
+          "oklch(26% 0.0263 162.72)",
+          "oklch(38% 0.0263 162.72)",
+          "oklch(49% 0.0263 162.72)",
+          "oklch(61% 0.0263 162.72)",
+          "oklch(72% 0.0263 162.72)",
+          "oklch(84% 0.0263 162.72)",
+          "oklch(95% 0.0263 162.72)"
+        ]
+      },
+      "frame": {
+        "role": "neutral",
+        "displayName": "frame",
+        "canonical": "#d0d9cf",
+        "tonalRamp": [
+          "oklch(15% 0.0167 142.55)",
+          "oklch(26% 0.0167 142.55)",
+          "oklch(38% 0.0167 142.55)",
+          "oklch(49% 0.0167 142.55)",
+          "oklch(61% 0.0167 142.55)",
+          "oklch(72% 0.0167 142.55)",
+          "oklch(84% 0.0167 142.55)",
+          "oklch(95% 0.0167 142.55)"
+        ]
+      },
+      "orange": {
+        "role": "neutral",
+        "displayName": "orange",
+        "canonical": "#a5581f",
+        "tonalRamp": [
+          "oklch(15% 0.1217 52.68)",
+          "oklch(26% 0.1217 52.68)",
+          "oklch(38% 0.1217 52.68)",
+          "oklch(49% 0.1217 52.68)",
+          "oklch(61% 0.1217 52.68)",
+          "oklch(72% 0.1217 52.68)",
+          "oklch(84% 0.1217 52.68)",
+          "oklch(95% 0.1217 52.68)"
+        ]
+      },
+      "error-ink": {
+        "role": "neutral",
+        "displayName": "error-ink",
+        "canonical": "#8a432c",
+        "tonalRamp": [
+          "oklch(15% 0.1033 38.51)",
+          "oklch(26% 0.1033 38.51)",
+          "oklch(38% 0.1033 38.51)",
+          "oklch(49% 0.1033 38.51)",
+          "oklch(61% 0.1033 38.51)",
+          "oklch(72% 0.1033 38.51)",
+          "oklch(84% 0.1033 38.51)",
+          "oklch(95% 0.1033 38.51)"
+        ]
+      },
+      "error-soft": {
+        "role": "neutral",
+        "displayName": "error-soft",
+        "canonical": "#f8e8df",
+        "tonalRamp": [
+          "oklch(15% 0.0213 51.52)",
+          "oklch(26% 0.0213 51.52)",
+          "oklch(38% 0.0213 51.52)",
+          "oklch(49% 0.0213 51.52)",
+          "oklch(61% 0.0213 51.52)",
+          "oklch(72% 0.0213 51.52)",
+          "oklch(84% 0.0213 51.52)",
+          "oklch(95% 0.0213 51.52)"
+        ]
+      },
+      "danger": {
+        "role": "neutral",
+        "displayName": "danger",
+        "canonical": "#91472e",
+        "tonalRamp": [
+          "oklch(15% 0.1071 39.12)",
+          "oklch(26% 0.1071 39.12)",
+          "oklch(38% 0.1071 39.12)",
+          "oklch(49% 0.1071 39.12)",
+          "oklch(61% 0.1071 39.12)",
+          "oklch(72% 0.1071 39.12)",
+          "oklch(84% 0.1071 39.12)",
+          "oklch(95% 0.1071 39.12)"
+        ]
+      },
+      "cancel-soft": {
+        "role": "neutral",
+        "displayName": "cancel-soft",
+        "canonical": "#f4e9e0",
+        "tonalRamp": [
+          "oklch(15% 0.0170 61.95)",
+          "oklch(26% 0.0170 61.95)",
+          "oklch(38% 0.0170 61.95)",
+          "oklch(49% 0.0170 61.95)",
+          "oklch(61% 0.0170 61.95)",
+          "oklch(72% 0.0170 61.95)",
+          "oklch(84% 0.0170 61.95)",
+          "oklch(95% 0.0170 61.95)"
+        ]
+      },
+      "cancel-ink": {
+        "role": "neutral",
+        "displayName": "cancel-ink",
+        "canonical": "#8a5a3c",
+        "tonalRamp": [
+          "oklch(15% 0.0770 52.26)",
+          "oklch(26% 0.0770 52.26)",
+          "oklch(38% 0.0770 52.26)",
+          "oklch(49% 0.0770 52.26)",
+          "oklch(61% 0.0770 52.26)",
+          "oklch(72% 0.0770 52.26)",
+          "oklch(84% 0.0770 52.26)",
+          "oklch(95% 0.0770 52.26)"
+        ]
+      },
+      "low-stock": {
+        "role": "neutral",
+        "displayName": "low-stock",
+        "canonical": "#855127",
+        "tonalRamp": [
+          "oklch(15% 0.0898 57.28)",
+          "oklch(26% 0.0898 57.28)",
+          "oklch(38% 0.0898 57.28)",
+          "oklch(49% 0.0898 57.28)",
+          "oklch(61% 0.0898 57.28)",
+          "oklch(72% 0.0898 57.28)",
+          "oklch(84% 0.0898 57.28)",
+          "oklch(95% 0.0898 57.28)"
+        ]
+      },
+      "selection": {
+        "role": "secondary",
+        "displayName": "selection",
+        "canonical": "#d5ed87",
+        "tonalRamp": [
+          "oklch(15% 0.1302 119.91)",
+          "oklch(26% 0.1302 119.91)",
+          "oklch(38% 0.1302 119.91)",
+          "oklch(49% 0.1302 119.91)",
+          "oklch(61% 0.1302 119.91)",
+          "oklch(72% 0.1302 119.91)",
+          "oklch(84% 0.1302 119.91)",
+          "oklch(95% 0.1302 119.91)"
+        ]
+      },
+      "lime": {
+        "role": "secondary",
+        "displayName": "lime",
+        "canonical": "#d5ed87",
+        "tonalRamp": [
+          "oklch(15% 0.1302 119.91)",
+          "oklch(26% 0.1302 119.91)",
+          "oklch(38% 0.1302 119.91)",
+          "oklch(49% 0.1302 119.91)",
+          "oklch(61% 0.1302 119.91)",
+          "oklch(72% 0.1302 119.91)",
+          "oklch(84% 0.1302 119.91)",
+          "oklch(95% 0.1302 119.91)"
+        ]
+      },
+      "header-ink": {
+        "role": "neutral",
+        "displayName": "header-ink",
+        "canonical": "#fff",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "header-muted": {
+        "role": "neutral",
+        "displayName": "header-muted",
+        "canonical": "#e6efdf",
+        "tonalRamp": [
+          "oklch(15% 0.0233 131.15)",
+          "oklch(26% 0.0233 131.15)",
+          "oklch(38% 0.0233 131.15)",
+          "oklch(49% 0.0233 131.15)",
+          "oklch(61% 0.0233 131.15)",
+          "oklch(72% 0.0233 131.15)",
+          "oklch(84% 0.0233 131.15)",
+          "oklch(95% 0.0233 131.15)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "headline",
+        "purpose": "Заголовок страницы и итог документа."
+      },
+      "title": {
+        "displayName": "title",
+        "purpose": "Заголовок раздела и номер заказа."
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Текст интерфейса."
+      },
+      "product-price": {
+        "displayName": "product-price",
+        "purpose": "Цена товара, Rubik 400 с плотным трекингом."
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Подписи полей и навигация."
+      },
+      "brand": {
+        "displayName": "Бренд",
+        "purpose": "Название магазина в тёмной шапке."
+      },
+      "receipt": {
+        "displayName": "Номер получения",
+        "purpose": "Номер заказа в тёмном заголовке документа."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "duration-base",
+        "value": "160ms",
+        "purpose": "Изменение цвета и состояния."
+      },
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "purpose": "Переходы состояний."
+      },
+      {
+        "name": "duration-shimmer",
+        "value": "1500ms",
+        "purpose": "Загрузка; отключается при reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-gutter",
+        "value": "360px"
+      },
+      {
+        "name": "framed-shell",
+        "value": "600px"
+      }
+    ],
+    "extraction": {
+      "mode": "source-scan",
+      "sources": [
+        "src/styles.css",
+        "src/main.ts",
+        "src/App.vue",
+        "src/features/catalog/Catalog.vue",
+        "src/features/catalog/ProductCard.vue",
+        "src/ui/BottomNav.vue",
+        "src/features/orders/OrderReceipt.vue"
+      ],
+      "renderedComputedStylesSampled": false,
+      "tonalRamps": "Синтезированы в OKLCH только для панели; не являются токенами приложения.",
+      "notCanonized": "Размеры единичных иллюстраций и скелетона не расширены до правил системы. Дефекты интерфейса в рамках этой документирующей проверки не исправлялись; отдельная finish-проверка не потребовала UI-правок."
+    }
+  },
+  "components": [
+    {
+      "name": "Основная кнопка",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Кнопка действия из оформления и истории.",
+      "html": "<button class=\"ds-primary\">Оформить заказ</button>",
+      "css": ".ds-primary{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);display:inline-flex;align-items:center;justify-content:center;min-height:var(--control);padding:var(--space-3) var(--space-4);border:0;border-radius:var(--radius-md);font-weight:var(--weight-bold);cursor:pointer;transition:background-color var(--duration-base) var(--ease-standard);background:var(--green);color:var(--white);}@media(hover:hover){.ds-primary:hover{background:var(--green-hover);}}.ds-primary:active{background:var(--green-dark);}.ds-primary:focus-visible{outline:2px solid var(--focus);outline-offset:2px} .ds-primary:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Вторичная кнопка",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Кнопка действия из оформления и истории.",
+      "html": "<button class=\"ds-secondary\">Повторить заказ</button>",
+      "css": ".ds-secondary{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);display:inline-flex;align-items:center;justify-content:center;min-height:var(--control);padding:var(--space-3) var(--space-4);border:0;border-radius:var(--radius-md);font-weight:var(--weight-bold);cursor:pointer;transition:background-color var(--duration-base) var(--ease-standard);background:var(--mint);color:var(--green);}@media(hover:hover){.ds-secondary:hover{background:var(--mint-strong);}}.ds-secondary:active{background:var(--mint-strong);}.ds-secondary:focus-visible{outline:2px solid var(--focus);outline-offset:2px} .ds-secondary:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Поле получателя",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Подписанное поле с рамкой и видимым фокусом.",
+      "html": "<label class=\"ds-field\">Получатель<input value=\"Анна\" /></label>",
+      "css": ".ds-field{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);display:grid;gap:var(--space-2);font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--ink);}.ds-field input{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);min-height:var(--control);padding:var(--space-2) var(--space-3);border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--white);color:var(--ink);}.ds-field input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}"
+    },
+    {
+      "name": "Категории",
+      "kind": "chip",
+      "refersTo": "category-selected",
+      "description": "Категории каталога с явным выбранным состоянием.",
+      "html": "<div class=\"ds-categories\"><button aria-pressed=\"true\">Все</button><button aria-pressed=\"false\">Бакалея</button><button aria-pressed=\"false\">Напитки</button></div>",
+      "css": ".ds-categories{display:flex;gap:var(--space-1);}.ds-categories button{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);flex:1;min-height:var(--target);padding:var(--space-2) var(--space-1);border:0;border-radius:var(--radius-sm);background:transparent;color:var(--muted);font-size:var(--text-sm);font-weight:var(--weight-semibold);}.ds-categories [aria-pressed=true]{background:var(--lime);color:var(--green-dark);}.ds-categories button:focus-visible{outline:2px solid var(--focus);outline-offset:2px} .ds-categories button[aria-pressed=false]:hover{background:var(--mint-strong);}"
+    },
+    {
+      "name": "Статус заказа",
+      "kind": "chip",
+      "refersTo": "status",
+      "description": "Компактный статус истории и документа получения.",
+      "html": "<span class=\"ds-status\">Принят</span>",
+      "css": ".ds-status{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);display:inline-block;padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);background:var(--lime);color:var(--green-dark);font-size:var(--text-sm);font-weight:var(--weight-semibold);}"
+    },
+    {
+      "name": "Строка заказа",
+      "kind": "card",
+      "refersTo": "order-container",
+      "description": "Плоская строка истории с номером и суммой; содержание примера относится только к панели.",
+      "html": "<article class=\"ds-order\"><a href=\"#order\">Заказ КР-104</a><span>К оплате при получении</span><strong>425 ₽</strong></article>",
+      "css": ".ds-order{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);display:grid;gap:var(--space-3);padding:var(--space-5) 0;border-bottom:1px solid var(--border);background:var(--white);color:var(--ink);}.ds-order a{display:flex;align-items:center;min-height:var(--target);color:inherit;font-family:var(--font-display);font-size:var(--text-xl);font-weight:var(--weight-bold);text-decoration:none;}.ds-order a:hover{text-decoration:underline;text-underline-offset:var(--underline-offset);}.ds-order a:focus-visible{outline:2px solid var(--focus);outline-offset:2px} .ds-order span{color:var(--muted);font-size:var(--text-sm);}.ds-order strong{font-size:var(--text-xl);}"
+    },
+    {
+      "name": "Нижняя навигация",
+      "kind": "nav",
+      "refersTo": "cart-shortcut",
+      "description": "Трёхчастная навигация; вне оформления и документа получения.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Главное меню\"><a aria-current=\"page\" href=\"#catalog\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"2\"/></svg>Каталог</a><a href=\"#orders\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 3H18L20 7V20H4V7Z M4 7H20M9 11H15\"/></svg>Заказы</a><a class=\"ds-cart-shortcut\" href=\"#cart\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M2 3H5L8 16H19L22 7H6\"/><circle cx=\"9\" cy=\"21\" r=\"1\"/><circle cx=\"18\" cy=\"21\" r=\"1\"/></svg><span>Корзина<strong>425 ₽</strong></span></a></nav>",
+      "css": ".ds-nav{display:grid;grid-template-columns:1fr 1fr 1.4fr;padding:var(--space-1) var(--space-2) var(--space-2);border-top:1px solid var(--border);background:var(--white);}.ds-nav a{font-family:var(--font-body);font-size:var(--text-md);line-height:var(--leading-body);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-1);min-height:var(--nav-item);color:var(--muted);font-size:var(--text-sm);text-decoration:none;}.ds-nav a[aria-current]{color:var(--green);font-weight:var(--weight-bold);}.ds-nav svg{width:var(--icon);height:var(--icon);fill:none;stroke:currentColor;stroke-width:1.7;}.ds-nav a:hover{color:var(--ink);}.ds-nav a:focus-visible{outline:2px solid var(--focus);outline-offset:2px} .ds-nav a.ds-cart-shortcut{flex-direction:row;gap:var(--space-2);padding:var(--space-1) var(--space-2);border-radius:var(--radius-md);background:var(--green);color:var(--white);}.ds-cart-shortcut span{display:grid;gap:var(--space-1);}.ds-cart-shortcut strong{font-size:var(--text-sm);}.ds-nav a.ds-cart-shortcut[aria-current]{background:var(--green-dark);color:var(--white);}"
+    },
+    {
+      "name": "Вывеска документа получения",
+      "kind": "custom",
+      "refersTo": "receipt-heading",
+      "description": "Тёмный заголовок документа; номер и дата в примере иллюстративны.",
+      "html": "<header class=\"ds-receipt\"><span class=\"ds-mark\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m5 12 4 4L19 6\"/></svg></span><h1>Заказ КР-104</h1><span class=\"ds-pill\">Принят</span><p>26 октября</p></header>",
+      "css": ".ds-receipt{display:grid;justify-items:center;gap:var(--space-3);padding:var(--space-5) var(--space-4);border-radius:var(--radius-md);background:var(--green-dark);color:var(--header-ink);font-family:var(--font-body);text-align:center;}.ds-receipt h1{margin:0;font-family:var(--font-display);font-size:var(--text-receipt);line-height:var(--leading-heading);font-weight:var(--weight-bold);}.ds-receipt p{margin:0;color:var(--header-muted);font-size:var(--text-sm);}.ds-mark{display:grid;place-items:center;width:var(--receipt-mark);height:var(--receipt-mark);border-radius:50%;background:var(--lime);color:var(--green-dark);}.ds-mark svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;}.ds-pill{padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);background:var(--lime);color:var(--green-dark);font-size:var(--text-sm);font-weight:var(--weight-semibold);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Зелёная вывеска",
+    "overview": "Тёмно-зелёная вывеска объединяет название магазина, адрес самовывоза и поиск. На белой витрине открытые товарные позиции показывают упаковку, цену и название. Лаймовый цвет отмечает выбор и связывает категории, пункт получения и документ заказа.\n\nНа широком экране сохраняется компактная телефонная оболочка. Та же тёмная вывеска повторяется в заголовке документа получения; под ней размещены адрес, дата, состав и сумма конкретного заказа.",
+    "keyCharacteristics": [
+      "Тёмная вывеска над белой витриной.",
+      "Предметная упаковка на нейтральных светлых подложках.",
+      "Rubik в бренде и ценах, Nunito в названиях, подписях и формах.",
+      "Лаймовый выбор и зелёные действия."
+    ],
+    "rules": [
+      {
+        "name": "Правило вывески",
+        "body": "Шапка магазина и заголовок документа получения используют тёмно-зелёную поверхность со светлым текстом.",
+        "section": "colors"
+      },
+      {
+        "name": "Правило выбора",
+        "body": "Категории и статусы используют лаймовую заливку с тёмно-зелёным текстом; основной степпер и действия используют зелёную заливку с белым текстом.",
+        "section": "colors"
+      },
+      {
+        "name": "Правило ценника",
+        "body": "Цена товара набрана Rubik с плотным трекингом; название и вес остаются в Nunito.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Сохранять компактную оболочку на широком экране.",
+      "Использовать предметные изображения упаковки с object-fit: contain.",
+      "Различать лаймовый выбор и зелёное действие.",
+      "Оставлять видимый фокус и области нажатия от 44 px."
+    ],
+    "donts": [
+      "Не добавлять тени контейнерам по умолчанию.",
+      "Не расширять каталог до настольной сетки.",
+      "Не заменять предметную упаковку декоративными иллюстрациями."
+    ]
+  }
+}

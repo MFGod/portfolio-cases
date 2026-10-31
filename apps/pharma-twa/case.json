@@ -1,0 +1,42 @@
+{
+  "slug": "pharma-twa",
+  "device": "phone",
+  "title": {
+    "ru": "Практика, библиотека для врачей",
+    "en": "Practice, professional library"
+  },
+  "scenarios": [
+    {
+      "id": "library",
+      "path": "#/library",
+      "title": {
+        "ru": "Библиотека",
+        "en": "Library"
+      }
+    },
+    {
+      "id": "material",
+      "path": "#/material/learning-plan",
+      "title": {
+        "ru": "Материал",
+        "en": "Material"
+      }
+    },
+    {
+      "id": "calculation",
+      "path": "#/calculation",
+      "title": {
+        "ru": "Расчёт",
+        "en": "Calculation"
+      }
+    },
+    {
+      "id": "profile",
+      "path": "#/profile",
+      "title": {
+        "ru": "Профиль",
+        "en": "Profile"
+      }
+    }
+  ]
+}

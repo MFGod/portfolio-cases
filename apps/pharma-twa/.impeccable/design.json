@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-27T10:59:03.909117+00:00",
+  "title": "Design System: Практика",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Насыщенный синий"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Холодная бумага"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Тёмные синие чернила"
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "headline",
+        "purpose": "Заголовок страницы и материала на телефоне."
+      },
+      "headline-reading-wide": {
+        "displayName": "headline-reading-wide",
+        "purpose": "Заголовок материала от 600 px."
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Основной интерфейсный текст."
+      },
+      "reading": {
+        "displayName": "reading",
+        "purpose": "Основной текст материала."
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Подписи и метаданные."
+      },
+      "wordmark": {
+        "displayName": "wordmark",
+        "purpose": "Белый текстовый знак в шапке."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "fast",
+        "value": "160ms",
+        "purpose": "Переход фона и прозрачности."
+      },
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Кривая переходов и скелетона."
+      },
+      {
+        "name": "shimmer",
+        "value": "1.4s",
+        "purpose": "Цикл загрузочного скелетона."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Рассчитать",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Основное действие.",
+      "html": "<button class=\"ds-button-primary\">Рассчитать</button>",
+      "css": ".ds-button-primary {display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control);padding:var(--space-2) var(--space-4);border:1px solid transparent;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:var(--text-md);font-weight:var(--weight-medium);cursor:pointer;transition:background var(--fast) var(--ease);background:var(--c-accent);color:var(--c-accent-ink);border-color:transparent;} .ds-button-primary:hover:not(:disabled), .ds-button-primary:active:not(:disabled) {background:var(--c-accent-hover);} .ds-button-primary:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); } .ds-button-primary:disabled {opacity:var(--disabled-opacity);cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-primary {transition:none;}}"
+    },
+    {
+      "name": "Сохранить в PDF",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Вторичное действие.",
+      "html": "<button class=\"ds-button-secondary\">Сохранить в PDF</button>",
+      "css": ".ds-button-secondary {display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control);padding:var(--space-2) var(--space-4);border:1px solid transparent;border-radius:var(--radius-sm);font-family:var(--font-body);font-size:var(--text-md);font-weight:var(--weight-medium);cursor:pointer;transition:background var(--fast) var(--ease);background:var(--c-paper);color:var(--c-ink);border-color:var(--c-control);} .ds-button-secondary:hover:not(:disabled), .ds-button-secondary:active:not(:disabled) {background:var(--c-accent-soft);} .ds-button-secondary:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); } .ds-button-secondary:disabled {opacity:var(--disabled-opacity);cursor:not-allowed;} @media(prefers-reduced-motion:reduce) {.ds-button-secondary {transition:none;}}"
+    },
+    {
+      "name": "Текстовое действие",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Действие без рамки.",
+      "html": "<button class=\"ds-text\">Повторить</button>",
+      "css": ".ds-text {display:inline-flex;align-items:center;min-height:var(--control);padding:0;border:0;background:none;color:var(--c-accent);font-family:var(--font-body);font-size:var(--text-md);font-weight:var(--weight-medium);cursor:pointer;} .ds-text:hover {color:var(--c-accent-hover);} .ds-text:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); }"
+    },
+    {
+      "name": "Закладка",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Отдельное действие справа от материала.",
+      "html": "<button class=\"ds-bookmark\" aria-label=\"В избранное\" aria-pressed=\"false\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-6-4-6 4V3Z\"/></svg></button>",
+      "css": ".ds-bookmark {display:inline-grid;place-items:center;width:var(--control);height:var(--control);border:0;border-radius:var(--radius-sm);background:none;color:var(--c-muted);cursor:pointer;} .ds-bookmark:hover,.ds-bookmark:active {background:var(--c-accent-soft);} .ds-bookmark[aria-pressed=true] {color:var(--c-accent);} .ds-bookmark[aria-pressed=true] svg {fill:currentColor;} .ds-bookmark:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); }"
+    },
+    {
+      "name": "Поле ввода",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Подпись над полем.",
+      "html": "<label class=\"ds-field\">Начальное значение<input value=\"100\" /></label>",
+      "css": ".ds-field {display:grid;gap:var(--space-1);color:var(--c-ink-soft);font-family:var(--font-body);font-size:var(--text-sm);} .ds-field input {min-width:0;min-height:var(--control);padding:var(--space-2) var(--space-3);border:1px solid var(--c-control);border-radius:var(--radius-sm);background:var(--c-surface);color:var(--c-ink);font-family:var(--font-body);font-size:var(--text-md);caret-color:var(--c-accent);} .ds-field input[aria-invalid=true] {border-color:var(--c-danger);} .ds-field input:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); }"
+    },
+    {
+      "name": "Поиск",
+      "kind": "input",
+      "refersTo": "search",
+      "description": "Общая рамка охватывает иконку и ввод.",
+      "html": "<label class=\"ds-search\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 5 5\"/></svg><input type=\"search\" aria-label=\"Поиск по библиотеке\" placeholder=\"Поиск материалов\" /></label>",
+      "css": ".ds-search {display:flex;align-items:center;min-height:var(--control);gap:var(--space-2);padding-inline:var(--space-3);border:1px solid var(--c-control);border-radius:var(--radius-sm);color:var(--c-muted);} .ds-search input {width:100%;min-width:0;min-height:calc(var(--control) - var(--ring));padding:0;border:0;outline:none;background:transparent;color:var(--c-ink);font-family:var(--font-body);font-size:var(--text-md);} .ds-search input::placeholder {color:var(--c-muted);} .ds-search:focus-within {outline:var(--ring) solid var(--c-accent);outline-offset:var(--ring);}"
+    },
+    {
+      "name": "Верхняя навигация",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Три раздела с нижней линией выбранного.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Разделы\"><a href=\"#/library\" aria-current=\"page\">Библиотека</a><a href=\"#/calculation\">Расчёт</a><a href=\"#/profile\">Профиль</a></nav>",
+      "css": ".ds-nav {display:flex;background:var(--c-paper);border-bottom:1px solid var(--c-line);font-family:var(--font-body);} .ds-nav a {position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:var(--control);color:var(--c-muted);font-size:var(--text-sm);text-decoration:none;} .ds-nav a[aria-current] {color:var(--c-accent);font-weight:var(--weight-strong);} .ds-nav a[aria-current]::after {content:\"\";position:absolute;inset-inline:var(--space-2);bottom:0;height:var(--ring);background:var(--c-accent);} .ds-nav a:hover {color:var(--c-accent-hover);} .ds-nav a:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); } @media(min-width:600px) {.ds-nav a {flex:0 0 auto;padding-inline:var(--space-5);font-size:var(--text-md);} .ds-nav a[aria-current]::after {inset-inline:var(--space-5);}}"
+    },
+    {
+      "name": "Строка материала",
+      "kind": "custom",
+      "refersTo": "material-row",
+      "description": "Открытый индекс с временем справа.",
+      "html": "<article class=\"ds-row\"><div><a href=\"#/library\">Как читать научную статью</a><p>Медицинское образование</p></div><span>5 мин</span></article>",
+      "css": ".ds-row {display:grid;grid-template-columns:minmax(0,1fr) var(--control);gap:var(--space-3);padding-block:var(--space-3);border-block:1px solid var(--c-line);font-family:var(--font-body);color:var(--c-ink);} .ds-row a {display:block;min-height:var(--control);font-size:var(--text-lg);line-height:var(--leading-tight);font-weight:var(--weight-regular);color:inherit;text-decoration:none;} .ds-row p {margin:var(--space-1) 0 0;} .ds-row p,.ds-row span {font-size:var(--text-sm);color:var(--c-muted);} .ds-row span {white-space:nowrap;} .ds-row:has(a:hover) {background:var(--c-accent-soft);} .ds-row a:hover {color:var(--c-accent-hover);} .ds-row a:focus-visible { outline: var(--ring) solid var(--c-accent); outline-offset: var(--ring); } @media(min-width:600px) {.ds-row {padding-block:var(--space-5);} .ds-row a {font-size:var(--text-xl);max-width:60ch;}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Открытый профессиональный индекс",
+    "overview": "Опорный образ: «Открытый профессиональный индекс». Белый текстовый знак «практика» расположен на синей полосе; ниже расположена верхняя навигация. Светлое поле, короткие подписи и открытые строки дают библиотеке компактный ритм.\n\nСистема объединяет список, чтение, профиль и учебный расчёт. Поля и действия сохраняют обычные формы веб-интерфейса. Бренд задают цвет, кириллическая типографика и точные отступы.",
+    "keyCharacteristics": [
+      "Открытые строки с тонкими разделителями.",
+      "Один основной синий акцент для действий, навигации и графика.",
+      "Golos Text с табличными цифрами.",
+      "Верхняя навигация и область действия от 44 px."
+    ],
+    "rules": [
+      {
+        "name": "Общий синий",
+        "body": "Шапка, активный раздел, основное действие и линия графика используют accent; hover использует accent-hover.",
+        "section": "colors"
+      },
+      {
+        "name": "Открытая строка",
+        "body": "Материал отделён линиями. Справа закреплены время чтения и закладка, категория остаётся под названием.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "сохранять общую шкалу отступов и области действий от 44 px.",
+      "обозначать выбранный раздел цветом, начертанием и подчёркиванием.",
+      "сохранять правую колонку времени и закладки при переносе названия.",
+      "показывать ошибку текстом рядом с полем и сохранять видимый фокус."
+    ],
+    "donts": [
+      "добавлять слоганы, декоративные надзаголовки и растровый логотип вместо согласованного текстового знака.",
+      "превращать библиотеку в декоративную сетку карточек или переносить навигацию в плавающий док.",
+      "добавлять к плоским поверхностям тени и градиентную отделку; градиент используется только в скелетоне загрузки."
+    ]
+  }
+}

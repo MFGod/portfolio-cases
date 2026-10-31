@@ -1,0 +1,16 @@
+{
+  "name": "@cases/ecommerce-mini-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "vue-tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@cases/demo-kit": "*",
+    "vue": "3.5.44",
+    "@fontsource/nunito": "5.3.0",
+    "@fontsource/rubik": "5.3.0"
+  }
+}

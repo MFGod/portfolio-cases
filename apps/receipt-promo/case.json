@@ -1,0 +1,34 @@
+{
+  "slug": "receipt-promo",
+  "device": "phone",
+  "title": {
+    "ru": "Квиток, чековое промо",
+    "en": "Kvitok, receipt campaign"
+  },
+  "scenarios": [
+    {
+      "id": "upload",
+      "path": "#/upload",
+      "title": {
+        "ru": "Загрузка",
+        "en": "Upload"
+      }
+    },
+    {
+      "id": "history",
+      "path": "#/history",
+      "title": {
+        "ru": "История",
+        "en": "History"
+      }
+    },
+    {
+      "id": "admin",
+      "path": "#/admin",
+      "title": {
+        "ru": "Модерация",
+        "en": "Moderation"
+      }
+    }
+  ]
+}

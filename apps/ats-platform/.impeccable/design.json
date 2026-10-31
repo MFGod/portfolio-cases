@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-28T00:31:05.717901+00:00",
+  "title": "Design System: Лист Найма",
+  "extensions": {
+    "colorMeta": {
+      "c-bg": {
+        "role": "neutral",
+        "displayName": "c-bg",
+        "tonalRamp": [
+          "oklch(15% 0.00574 84.57)",
+          "oklch(26% 0.00574 84.57)",
+          "oklch(38% 0.00574 84.57)",
+          "oklch(49% 0.00574 84.57)",
+          "oklch(61% 0.00574 84.57)",
+          "oklch(72% 0.00574 84.57)",
+          "oklch(84% 0.00574 84.57)",
+          "oklch(95% 0.00574 84.57)"
+        ]
+      },
+      "c-surface": {
+        "role": "neutral",
+        "displayName": "c-surface",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26% 0.00000 89.88)",
+          "oklch(38% 0.00000 89.88)",
+          "oklch(49% 0.00000 89.88)",
+          "oklch(61% 0.00000 89.88)",
+          "oklch(72% 0.00000 89.88)",
+          "oklch(84% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "c-surface-sunken": {
+        "role": "neutral",
+        "displayName": "c-surface-sunken",
+        "tonalRamp": [
+          "oklch(15% 0.00744 80.72)",
+          "oklch(26% 0.00744 80.72)",
+          "oklch(38% 0.00744 80.72)",
+          "oklch(49% 0.00744 80.72)",
+          "oklch(61% 0.00744 80.72)",
+          "oklch(72% 0.00744 80.72)",
+          "oklch(84% 0.00744 80.72)",
+          "oklch(95% 0.00744 80.72)"
+        ]
+      },
+      "c-surface-hover": {
+        "role": "neutral",
+        "displayName": "c-surface-hover",
+        "tonalRamp": [
+          "oklch(15% 0.00622 75.41)",
+          "oklch(26% 0.00622 75.41)",
+          "oklch(38% 0.00622 75.41)",
+          "oklch(49% 0.00622 75.41)",
+          "oklch(61% 0.00622 75.41)",
+          "oklch(72% 0.00622 75.41)",
+          "oklch(84% 0.00622 75.41)",
+          "oklch(95% 0.00622 75.41)"
+        ]
+      },
+      "c-ink": {
+        "role": "neutral",
+        "displayName": "c-ink",
+        "tonalRamp": [
+          "oklch(15% 0.00794 264.43)",
+          "oklch(26% 0.00794 264.43)",
+          "oklch(38% 0.00794 264.43)",
+          "oklch(49% 0.00794 264.43)",
+          "oklch(61% 0.00794 264.43)",
+          "oklch(72% 0.00794 264.43)",
+          "oklch(84% 0.00794 264.43)",
+          "oklch(95% 0.00794 264.43)"
+        ]
+      },
+      "c-ink-soft": {
+        "role": "neutral",
+        "displayName": "c-ink-soft",
+        "tonalRamp": [
+          "oklch(15% 0.00695 84.58)",
+          "oklch(26% 0.00695 84.58)",
+          "oklch(38% 0.00695 84.58)",
+          "oklch(49% 0.00695 84.58)",
+          "oklch(61% 0.00695 84.58)",
+          "oklch(72% 0.00695 84.58)",
+          "oklch(84% 0.00695 84.58)",
+          "oklch(95% 0.00695 84.58)"
+        ]
+      },
+      "c-ink-muted": {
+        "role": "neutral",
+        "displayName": "c-ink-muted",
+        "tonalRamp": [
+          "oklch(15% 0.00935 73.66)",
+          "oklch(26% 0.00935 73.66)",
+          "oklch(38% 0.00935 73.66)",
+          "oklch(49% 0.00935 73.66)",
+          "oklch(61% 0.00935 73.66)",
+          "oklch(72% 0.00935 73.66)",
+          "oklch(84% 0.00935 73.66)",
+          "oklch(95% 0.00935 73.66)"
+        ]
+      },
+      "c-line": {
+        "role": "neutral",
+        "displayName": "c-line",
+        "tonalRamp": [
+          "oklch(15% 0.01047 81.79)",
+          "oklch(26% 0.01047 81.79)",
+          "oklch(38% 0.01047 81.79)",
+          "oklch(49% 0.01047 81.79)",
+          "oklch(61% 0.01047 81.79)",
+          "oklch(72% 0.01047 81.79)",
+          "oklch(84% 0.01047 81.79)",
+          "oklch(95% 0.01047 81.79)"
+        ]
+      },
+      "c-line-strong": {
+        "role": "neutral",
+        "displayName": "c-line-strong",
+        "tonalRamp": [
+          "oklch(15% 0.01429 78.24)",
+          "oklch(26% 0.01429 78.24)",
+          "oklch(38% 0.01429 78.24)",
+          "oklch(49% 0.01429 78.24)",
+          "oklch(61% 0.01429 78.24)",
+          "oklch(72% 0.01429 78.24)",
+          "oklch(84% 0.01429 78.24)",
+          "oklch(95% 0.01429 78.24)"
+        ]
+      },
+      "c-line-control": {
+        "role": "neutral",
+        "displayName": "c-line-control",
+        "tonalRamp": [
+          "oklch(15% 0.01699 77.00)",
+          "oklch(26% 0.01699 77.00)",
+          "oklch(38% 0.01699 77.00)",
+          "oklch(49% 0.01699 77.00)",
+          "oklch(61% 0.01699 77.00)",
+          "oklch(72% 0.01699 77.00)",
+          "oklch(84% 0.01699 77.00)",
+          "oklch(95% 0.01699 77.00)"
+        ]
+      },
+      "c-brand": {
+        "role": "primary",
+        "displayName": "c-brand",
+        "tonalRamp": [
+          "oklch(15% 0.11521 31.13)",
+          "oklch(26% 0.11521 31.13)",
+          "oklch(38% 0.11521 31.13)",
+          "oklch(49% 0.11521 31.13)",
+          "oklch(61% 0.11521 31.13)",
+          "oklch(72% 0.11521 31.13)",
+          "oklch(84% 0.11521 31.13)",
+          "oklch(95% 0.11521 31.13)"
+        ]
+      },
+      "c-brand-hover": {
+        "role": "primary",
+        "displayName": "c-brand-hover",
+        "tonalRamp": [
+          "oklch(15% 0.09975 31.38)",
+          "oklch(26% 0.09975 31.38)",
+          "oklch(38% 0.09975 31.38)",
+          "oklch(49% 0.09975 31.38)",
+          "oklch(61% 0.09975 31.38)",
+          "oklch(72% 0.09975 31.38)",
+          "oklch(84% 0.09975 31.38)",
+          "oklch(95% 0.09975 31.38)"
+        ]
+      },
+      "c-brand-soft": {
+        "role": "primary",
+        "displayName": "c-brand-soft",
+        "tonalRamp": [
+          "oklch(15% 0.01574 42.38)",
+          "oklch(26% 0.01574 42.38)",
+          "oklch(38% 0.01574 42.38)",
+          "oklch(49% 0.01574 42.38)",
+          "oklch(61% 0.01574 42.38)",
+          "oklch(72% 0.01574 42.38)",
+          "oklch(84% 0.01574 42.38)",
+          "oklch(95% 0.01574 42.38)"
+        ]
+      },
+      "c-brand-ink": {
+        "role": "primary",
+        "displayName": "c-brand-ink",
+        "tonalRamp": [
+          "oklch(15% 0.09673 31.51)",
+          "oklch(26% 0.09673 31.51)",
+          "oklch(38% 0.09673 31.51)",
+          "oklch(49% 0.09673 31.51)",
+          "oklch(61% 0.09673 31.51)",
+          "oklch(72% 0.09673 31.51)",
+          "oklch(84% 0.09673 31.51)",
+          "oklch(95% 0.09673 31.51)"
+        ]
+      },
+      "c-side-ink-strong": {
+        "role": "neutral",
+        "displayName": "c-side-ink-strong",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26% 0.00000 89.88)",
+          "oklch(38% 0.00000 89.88)",
+          "oklch(49% 0.00000 89.88)",
+          "oklch(61% 0.00000 89.88)",
+          "oklch(72% 0.00000 89.88)",
+          "oklch(84% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "c-side-active": {
+        "role": "neutral",
+        "displayName": "c-side-active",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26% 0.00000 89.88)",
+          "oklch(38% 0.00000 89.88)",
+          "oklch(49% 0.00000 89.88)",
+          "oklch(61% 0.00000 89.88)",
+          "oklch(72% 0.00000 89.88)",
+          "oklch(84% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "c-warn-soft": {
+        "role": "neutral",
+        "displayName": "c-warn-soft",
+        "tonalRamp": [
+          "oklch(15% 0.02502 89.21)",
+          "oklch(26% 0.02502 89.21)",
+          "oklch(38% 0.02502 89.21)",
+          "oklch(49% 0.02502 89.21)",
+          "oklch(61% 0.02502 89.21)",
+          "oklch(72% 0.02502 89.21)",
+          "oklch(84% 0.02502 89.21)",
+          "oklch(95% 0.02502 89.21)"
+        ]
+      },
+      "c-warn-ink": {
+        "role": "neutral",
+        "displayName": "c-warn-ink",
+        "tonalRamp": [
+          "oklch(15% 0.07747 85.81)",
+          "oklch(26% 0.07747 85.81)",
+          "oklch(38% 0.07747 85.81)",
+          "oklch(49% 0.07747 85.81)",
+          "oklch(61% 0.07747 85.81)",
+          "oklch(72% 0.07747 85.81)",
+          "oklch(84% 0.07747 85.81)",
+          "oklch(95% 0.07747 85.81)"
+        ]
+      },
+      "c-danger": {
+        "role": "neutral",
+        "displayName": "c-danger",
+        "tonalRamp": [
+          "oklch(15% 0.14353 27.73)",
+          "oklch(26% 0.14353 27.73)",
+          "oklch(38% 0.14353 27.73)",
+          "oklch(49% 0.14353 27.73)",
+          "oklch(61% 0.14353 27.73)",
+          "oklch(72% 0.14353 27.73)",
+          "oklch(84% 0.14353 27.73)",
+          "oklch(95% 0.14353 27.73)"
+        ]
+      },
+      "c-danger-soft": {
+        "role": "neutral",
+        "displayName": "c-danger-soft",
+        "tonalRamp": [
+          "oklch(15% 0.01363 34.30)",
+          "oklch(26% 0.01363 34.30)",
+          "oklch(38% 0.01363 34.30)",
+          "oklch(49% 0.01363 34.30)",
+          "oklch(61% 0.01363 34.30)",
+          "oklch(72% 0.01363 34.30)",
+          "oklch(84% 0.01363 34.30)",
+          "oklch(95% 0.01363 34.30)"
+        ]
+      },
+      "c-danger-line": {
+        "role": "neutral",
+        "displayName": "c-danger-line",
+        "tonalRamp": [
+          "oklch(15% 0.08344 28.90)",
+          "oklch(26% 0.08344 28.90)",
+          "oklch(38% 0.08344 28.90)",
+          "oklch(49% 0.08344 28.90)",
+          "oklch(61% 0.08344 28.90)",
+          "oklch(72% 0.08344 28.90)",
+          "oklch(84% 0.08344 28.90)",
+          "oklch(95% 0.08344 28.90)"
+        ]
+      },
+      "c-selection": {
+        "role": "neutral",
+        "displayName": "c-selection",
+        "tonalRamp": [
+          "oklch(15% 0.03596 41.93)",
+          "oklch(26% 0.03596 41.93)",
+          "oklch(38% 0.03596 41.93)",
+          "oklch(49% 0.03596 41.93)",
+          "oklch(61% 0.03596 41.93)",
+          "oklch(72% 0.03596 41.93)",
+          "oklch(84% 0.03596 41.93)",
+          "oklch(95% 0.03596 41.93)"
+        ]
+      },
+      "c-backdrop": {
+        "role": "neutral",
+        "displayName": "c-backdrop",
+        "tonalRamp": [
+          "oklch(15% 0.00794 264.43)",
+          "oklch(26% 0.00794 264.43)",
+          "oklch(38% 0.00794 264.43)",
+          "oklch(49% 0.00794 264.43)",
+          "oklch(61% 0.00794 264.43)",
+          "oklch(72% 0.00794 264.43)",
+          "oklch(84% 0.00794 264.43)",
+          "oklch(95% 0.00794 264.43)"
+        ]
+      },
+      "c-shadow": {
+        "role": "neutral",
+        "displayName": "c-shadow",
+        "tonalRamp": [
+          "oklch(15% 0.00794 264.43)",
+          "oklch(26% 0.00794 264.43)",
+          "oklch(38% 0.00794 264.43)",
+          "oklch(49% 0.00794 264.43)",
+          "oklch(61% 0.00794 264.43)",
+          "oklch(72% 0.00794 264.43)",
+          "oklch(84% 0.00794 264.43)",
+          "oklch(95% 0.00794 264.43)"
+        ]
+      },
+      "c-skeleton": {
+        "role": "neutral",
+        "displayName": "c-skeleton",
+        "tonalRamp": [
+          "oklch(15% 0.00920 78.28)",
+          "oklch(26% 0.00920 78.28)",
+          "oklch(38% 0.00920 78.28)",
+          "oklch(49% 0.00920 78.28)",
+          "oklch(61% 0.00920 78.28)",
+          "oklch(72% 0.00920 78.28)",
+          "oklch(84% 0.00920 78.28)",
+          "oklch(95% 0.00920 78.28)"
+        ]
+      },
+      "c-skeleton-light": {
+        "role": "neutral",
+        "displayName": "c-skeleton-light",
+        "tonalRamp": [
+          "oklch(15% 0.00739 80.72)",
+          "oklch(26% 0.00739 80.72)",
+          "oklch(38% 0.00739 80.72)",
+          "oklch(49% 0.00739 80.72)",
+          "oklch(61% 0.00739 80.72)",
+          "oklch(72% 0.00739 80.72)",
+          "oklch(84% 0.00739 80.72)",
+          "oklch(95% 0.00739 80.72)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "headline",
+        "purpose": "Заголовок страницы"
+      },
+      "title": {
+        "displayName": "title",
+        "purpose": "Имена и заголовки записей"
+      },
+      "body": {
+        "displayName": "body",
+        "purpose": "Рабочий текст"
+      },
+      "label": {
+        "displayName": "label",
+        "purpose": "Подписи и действия"
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet",
+        "value": "calc(var(--space-4) * -1) 0 var(--space-7) var(--c-shadow)",
+        "purpose": "Боковой лист от 800 px."
+      },
+      {
+        "name": "toast",
+        "value": "0 var(--space-2) var(--space-5) var(--c-shadow)",
+        "purpose": "Временное уведомление."
+      }
+    ],
+    "motion": [
+      {
+        "name": "fast",
+        "value": "160ms",
+        "purpose": "Переходы состояний."
+      },
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Появление уведомления."
+      },
+      {
+        "name": "shimmer",
+        "value": "1.4s",
+        "purpose": "Период загрузки."
+      },
+      {
+        "name": "reduced",
+        "value": "0.01ms",
+        "purpose": "Длительность при reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "form-columns",
+        "value": "560px"
+      },
+      {
+        "name": "desktop-register",
+        "value": "800px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Главная кнопка",
+      "kind": "button",
+      "description": "Основное действие формы.",
+      "html": "<div class=\"ds-demo\"><button class=\"ds-button ds-primary\">Сохранить</button></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-button{font:inherit;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control);padding:0 var(--space-3);border:1px solid transparent;border-radius:var(--radius);font-size:var(--text-sm);font-weight:var(--weight-medium);cursor:pointer;transition:background var(--fast),border-color var(--fast);} .ds-button:disabled{opacity:var(--disabled-opacity);cursor:not-allowed;}.ds-primary{background:var(--c-brand);color:var(--c-surface)}.ds-primary:hover:not(:disabled){background:var(--c-brand-hover)}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Вторичная кнопка",
+      "kind": "button",
+      "description": "Вторичное действие или экспорт.",
+      "html": "<div class=\"ds-demo\"><button class=\"ds-button ds-secondary\">Скачать CSV</button></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-button{font:inherit;display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--control);padding:0 var(--space-3);border:1px solid transparent;border-radius:var(--radius);font-size:var(--text-sm);font-weight:var(--weight-medium);cursor:pointer;transition:background var(--fast),border-color var(--fast);} .ds-button:disabled{opacity:var(--disabled-opacity);cursor:not-allowed;}.ds-secondary{background:var(--c-surface);color:var(--c-ink);border-color:var(--c-line-control)}.ds-secondary:hover:not(:disabled){background:var(--c-surface-hover)}",
+      "refersTo": "button-secondary"
+    },
+    {
+      "name": "Поиск",
+      "kind": "input",
+      "description": "Общее поле поиска реестра.",
+      "html": "<div class=\"ds-demo\"><label class=\"ds-search\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"6\"/><path d=\"m15 15 5 5\"/></svg><input type=\"search\" aria-label=\"Поиск кандидатов\" placeholder=\"Поиск\"/></label></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-search{display:flex;align-items:center;gap:var(--space-2);min-height:var(--control);padding:0 var(--space-2);background:var(--c-bg);border-radius:var(--radius);color:var(--c-ink-muted)}.ds-search input{font:inherit;min-width:0;width:100%;min-height:var(--control);border:0;background:transparent;color:var(--c-ink);outline:none}.ds-search input::placeholder{color:var(--c-ink-muted)}.ds-search:focus-within{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring)}",
+      "refersTo": "search-field"
+    },
+    {
+      "name": "Навигация",
+      "kind": "nav",
+      "description": "Активный раздел обозначен линией и весом.",
+      "html": "<div class=\"ds-demo\"><nav class=\"ds-nav\" aria-label=\"Разделы\"><a href=\"#vacancies\">Вакансии</a><a href=\"#pipeline\" aria-current=\"page\">Кандидаты</a><a href=\"#report\">Отчёт</a></nav></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-nav{display:flex;gap:var(--space-6)}.ds-nav a{display:flex;align-items:center;min-height:var(--control);color:inherit;text-decoration:none;border-bottom:2px solid transparent}.ds-nav a[aria-current]{border-bottom-color:var(--c-brand);font-weight:var(--weight-strong)}.ds-nav a:hover{color:var(--c-brand)}"
+    },
+    {
+      "name": "Открытая вакансия",
+      "kind": "chip",
+      "description": "Статус с текстовой подписью.",
+      "html": "<div class=\"ds-demo\"><span class=\"ds-badge\">Открыта</span></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-badge{display:inline-block;padding:var(--space-1) var(--space-2);border-radius:var(--radius-sm);font-size:var(--text-sm);background:var(--c-brand-soft);color:var(--c-brand-ink);white-space:nowrap}",
+      "refersTo": "badge-open"
+    },
+    {
+      "name": "Заметка",
+      "kind": "card",
+      "description": "Спокойное пояснение рабочего состояния.",
+      "html": "<div class=\"ds-demo\"><p class=\"ds-note\">Вакансия на паузе, этапы не меняются.</p></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-note{margin:0;padding:var(--space-3) var(--space-4);background:var(--c-bg);color:var(--c-ink-soft);font-size:var(--text-sm)}",
+      "refersTo": "note"
+    },
+    {
+      "name": "Индекс вакансий",
+      "kind": "custom",
+      "description": "Выбор рабочего контекста.",
+      "html": "<div class=\"ds-demo\"><div class=\"ds-index\"><button aria-pressed=\"true\"><span class=\"ds-index-title\">Frontend-разработчик</span><span class=\"ds-index-count\">9</span><span class=\"ds-index-detail\">Нанято 1 из 2</span></button></div></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-index{background:var(--c-bg);padding:var(--space-4);max-width:var(--index-width)}.ds-index button{font:inherit;display:grid;grid-template-columns:1fr auto;gap:var(--space-2);width:100%;border:0;border-bottom:1px solid var(--c-line);padding:var(--space-5) var(--space-4);background:transparent;text-align:left;color:inherit;cursor:pointer}.ds-index button[aria-pressed=\"true\"]{background:var(--c-surface)}.ds-index-title{font-weight:var(--weight-strong)}.ds-index-count{color:var(--c-brand);font-size:var(--text-lg);font-weight:var(--weight-strong)}.ds-index-detail{grid-column:1/-1;color:var(--c-ink-muted);font-size:var(--text-sm)}.ds-index button:hover:not([aria-pressed=\"true\"]){background:var(--c-surface-hover)}"
+    },
+    {
+      "name": "Строка кандидата",
+      "kind": "custom",
+      "description": "Имя, метаданные, этап и переход в открытой записи.",
+      "html": "<div class=\"ds-demo\"><div class=\"ds-row\"><div><button class=\"ds-name\">Алексей Морозов</button><p class=\"ds-skills\">React, TypeScript</p></div><span>4 года</span><span>180 000 ₽</span><span class=\"ds-stage\">Оффер</span><button class=\"ds-next\">Дальше <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></button></div></div>",
+      "css": ".ds-demo{--c-bg:#f3f1ed;--c-surface:#ffffff;--c-surface-sunken:#edeae5;--c-surface-hover:#f8f5f1;--c-ink:#25272b;--c-ink-soft:#55534f;--c-ink-muted:#65615c;--c-line:#dcd8d1;--c-line-strong:#bdb7ae;--c-line-control:#8c857b;--c-brand:#9d493b;--c-brand-hover:#803a2e;--c-brand-soft:#f4e7e2;--c-brand-ink:#813d31;--c-side:var(--c-ink);--c-side-ink-strong:#ffffff;--c-side-active:#ffffff1a;--c-warn-soft:#f2ebd9;--c-warn-ink:#705923;--c-danger:#9b3029;--c-danger-soft:#fbefec;--c-danger-line:#c7857b;--c-focus:var(--c-brand);--c-selection:#eed1c6;--c-backdrop:#25272b66;--c-shadow:#25272b26;--c-skeleton:#e4e0da;--c-skeleton-light:#f5f2ed;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--gutter:var(--space-4);--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:22px;--text-2xl:30px;--leading:1.5;--leading-tight:1.25;--tracking-tight:-0.03em;--weight-regular:400;--weight-medium:500;--weight-strong:600;--radius-sm:3px;--radius:4px;--radius-lg:8px;--focus-ring:2px;--disabled-opacity:0.5;--control:44px;--icon-hit:44px;--sheet:480px;--sheet-wide:640px;--field-max:360px;--content-max:1440px;--label-col:80px;--avatar:48px;--toast-max:420px;--index-width:248px;--role-select:132px;--min-viewport:320px;--header-height:72px;--ease:cubic-bezier(0.16, 1, 0.3, 1);--fast:160ms;--shimmer:1.4s;--reduced:0.01ms;--underline-offset:3px;font-family:'Manrope', system-ui, sans-serif;font-size:var(--text-md);line-height:var(--leading);color:var(--c-ink);font-variant-numeric:tabular-nums;} .ds-demo :focus-visible{outline:var(--focus-ring) solid var(--c-focus);outline-offset:var(--focus-ring);} .ds-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-2);padding:var(--space-2) 0;border-block:1px solid var(--c-line);font-size:var(--text-sm)}.ds-row>div{grid-column:1/-1}.ds-row:hover{background:var(--c-surface-hover)}.ds-name,.ds-next{font:inherit;border:0;background:transparent;padding:0;cursor:pointer}.ds-name{min-height:var(--control);font-size:var(--text-lg);font-weight:var(--weight-strong);color:var(--c-ink)}.ds-name:hover{color:var(--c-brand);text-decoration:underline;text-underline-offset:var(--underline-offset)}.ds-skills{margin:0;color:var(--c-ink-muted)}.ds-stage{color:var(--c-brand);font-weight:var(--weight-medium)}.ds-next{display:inline-flex;align-items:center;justify-self:end;gap:var(--space-2);min-height:var(--control);color:var(--c-brand);font-weight:var(--weight-medium)}@media(min-width:800px){.ds-row{grid-template-columns:minmax(180px,1fr) 10% 16% 13% 10%;padding:calc(var(--space-1)*2.5) 0}.ds-row>div{grid-column:auto}.ds-name{min-height:calc(var(--space-6) - var(--space-1))}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Реестр найма",
+    "overview": "«Реестр найма» строится на открытых строках, выровненных полях и коротких русских подписях. Тёплая оболочка удерживает контекст, белая поверхность отведена записям и формам.\n\nПлотность помогает просматривать людей и вакансии. Оксидный акцент отмечает действия, счётчики и отдельные этапы. Текстовый знак и линейные SVG поддерживают рабочий характер.",
+    "keyCharacteristics": [
+      "Открытые строки с тонкими разделителями.",
+      "Единый Manrope и табличные цифры.",
+      "Сохранение полей записи на узком экране."
+    ],
+    "rules": [
+      {
+        "name": "Контекст и запись",
+        "body": "Тёплый фон служит оболочке и индексу вакансий, белый фон служит рабочим данным и выбранной вакансии.",
+        "section": "colors"
+      },
+      {
+        "name": "Сопоставимые числа",
+        "body": "Числа используют tabular-nums; числовые столбцы широких таблиц выровнены вправо.",
+        "section": "typography"
+      },
+      {
+        "name": "Плоский реестр",
+        "body": "Строки разделяются линиями и состоянием наведения; тени остаются у временных слоёв.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do сохранять подписи полей и доступные названия у действий.",
+      "Do переносить поля таблицы в полную строку на узком экране.",
+      "Do использовать токены styles.css для повторяющихся значений."
+    ],
+    "donts": [
+      "Don't заменять открытые строки декоративными карточками.",
+      "Don't добавлять надзаголовки, слоганы и придуманные показатели.",
+      "Don't заменять линейные SVG символами шрифта."
+    ]
+  }
+}

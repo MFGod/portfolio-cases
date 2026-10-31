@@ -1,0 +1,34 @@
+{
+  "slug": "tobacco-loyalty",
+  "device": "phone",
+  "title": {
+    "ru": "Клуб Мозаика",
+    "en": "Mosaic Club"
+  },
+  "scenarios": [
+    {
+      "id": "club",
+      "path": "#/club",
+      "title": {
+        "ru": "Клуб",
+        "en": "Club"
+      }
+    },
+    {
+      "id": "game",
+      "path": "#/game",
+      "title": {
+        "ru": "Игра",
+        "en": "Game"
+      }
+    },
+    {
+      "id": "offers",
+      "path": "#/offers",
+      "title": {
+        "ru": "Предложения",
+        "en": "Offers"
+      }
+    }
+  ]
+}

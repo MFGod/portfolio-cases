@@ -1,0 +1,53 @@
+{
+  "name": "portfolio-cases",
+  "private": true,
+  "type": "module",
+  "description": "Lightweight interactive reconstructions of portfolio case studies.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "scan": "node scripts/nda-scan.mjs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check": "npm run typecheck && npm run format:check && npm run build && npm run scan",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/node": "22.19.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "@vitejs/plugin-vue": "6.0.10",
+    "prettier": "^3.9.10",
+    "typescript": "5.9.3",
+    "vite": "8.3.5",
+    "vue-tsc": "3.3.13"
+  },
+  "dependencies": {
+    "@fontsource/comfortaa": "^5.3.0",
+    "@fontsource/commissioner": "^5.3.0",
+    "@fontsource/golos-text": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/nunito": "^5.3.0",
+    "@fontsource/onest": "^5.3.1",
+    "@fontsource/oswald": "^5.3.0",
+    "@fontsource/rubik": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.1",
+    "@fontsource/unbounded": "^5.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "vue": "3.5.44",
+    "wouter": "3.13.0"
+  }
+}
