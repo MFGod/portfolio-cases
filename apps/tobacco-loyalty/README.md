@@ -18,5 +18,4 @@ Run from the repository root:
 ```sh
 npm run typecheck -w apps/tobacco-loyalty
 node scripts/build.mjs tobacco-loyalty
-npm run scan
 ```

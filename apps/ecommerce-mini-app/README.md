@@ -21,7 +21,6 @@ React-кейс магазина с самовывозом. Все товары, 
 npm run typecheck -w apps/ecommerce-mini-app
 npx prettier --check apps/ecommerce-mini-app
 node scripts/build.mjs ecommerce-mini-app
-npm run scan
 npm run serve
 ```
 

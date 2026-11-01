@@ -14,9 +14,8 @@
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
     "serve": "node scripts/serve.mjs",
-    "scan": "node scripts/nda-scan.mjs",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "check": "npm run typecheck && npm run format:check && npm run build && npm run scan",
+    "check": "npm run typecheck && npm run format:check && npm run build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

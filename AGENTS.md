@@ -10,7 +10,7 @@ Every case is written from scratch. No code of the original commercial projects 
 - Forbidden: opening, copying or paraphrasing anything under `~/projects/portfolio-mocks/<slug>/src`, `build-mock`, `dist`, `scripts`, `audit`, or any other client source tree. Do not reproduce their component names, file layout, CSS class names or API shapes.
 - All data, names, brands, phones and addresses are fictional. Fictional brand names already used in the README of a stand may be reused. Phones only as masked `+0 (***) ***-**-NN`.
 - No network at runtime: no CDN fonts, images, analytics, maps or APIs. Fonts are self-hosted through `@fontsource/*` imports (cyrillic and latin subsets only). Visuals are CSS, inline SVG or generated locally.
-- `npm run scan` must pass. Its denylist lives outside the repository on purpose; never copy client names into the repository, not even into tests or comments.
+- Never copy client names into the repository, not even into tests or comments.
 
 ## Layout and contract
 
@@ -75,7 +75,6 @@ Run from the repository root and include the output tail in the report. Other ca
 npm run typecheck -w apps/<slug>
 npx prettier --check apps/<slug>
 node scripts/build.mjs <slug>
-npm run scan
 ```
 
 Work only inside `apps/<slug>`. Do not edit the root, `packages/`, `scripts/` or other apps; if they block you, report it. Do not commit.

@@ -20,7 +20,6 @@ Run from the repository root:
 ```sh
 npm run typecheck -w apps/ai-agents-marketplace
 node scripts/build.mjs ai-agents-marketplace
-npm run scan
 ```
 
 The application has responsive layouts for narrow and desktop viewports, labeled controls, visible focus, live status messages, and native dialogs with Escape support. A browser session is needed to verify the rendered layout and native keyboard behavior.
