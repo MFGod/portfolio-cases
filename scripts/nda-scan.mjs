@@ -4,11 +4,9 @@ import { basename, join, relative, resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const denylistFile = process.env.NDA_DENYLIST ?? resolve(root, '../.portfolio-cases-nda.txt');
 
-const denylistText =
-  process.env.NDA_DENYLIST_TEXT ??
-  (existsSync(denylistFile) ? readFileSync(denylistFile, 'utf8') : null);
+const denylistText = existsSync(denylistFile) ? readFileSync(denylistFile, 'utf8') : null;
 if (denylistText === null) {
-  console.error(`NDA denylist not found: set NDA_DENYLIST_TEXT or create ${denylistFile}`);
+  console.error(`NDA denylist not found: create ${denylistFile}`);
   process.exit(1);
 }
 
