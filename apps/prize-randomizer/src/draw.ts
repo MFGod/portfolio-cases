@@ -1,4 +1,4 @@
-import { computed, onBeforeUnmount, ref, type Ref } from 'vue';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { createCase } from '@cases/demo-kit';
 import { categories, type CategoryKey } from './tickets.js';
 import { HistoryError, remainingCount, type HistoryFailure, type Pick } from './domain/history.js';
@@ -9,123 +9,134 @@ export type { Pick } from './domain/history.js';
 type CaseKit = ReturnType<typeof createCase>;
 type Operation = 'draw' | 'undo' | 'recover' | 'export';
 
-export const useDraw = (kit: CaseKit, category: Ref<CategoryKey>) => {
-  const history = ref<Pick[]>([]);
-  const current = computed(() => history.value[0] ?? null);
-  const loading = ref(true);
-  const operation = ref<Operation | null>(null);
-  const pending = computed(() => loading.value || operation.value !== null);
-  const error = ref<string | null>(null);
-  const failure = ref<HistoryFailure | null>(null);
-  const lastOperation = ref<Operation | 'load'>('load');
-  const notice = ref('');
-  let disposed = false;
-  let refreshId = 0;
-  let requestedCategory = category.value;
-  let undoTarget: Pick | null = null;
+export const useDraw = (kit: CaseKit, category: CategoryKey) => {
+  const [history, setHistory] = useState<Pick[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [operation, setOperation] = useState<Operation | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [failure, setFailure] = useState<HistoryFailure | null>(null);
+  const [lastOperation, setLastOperation] = useState<Operation | 'load'>('load');
+  const [notice, setNotice] = useState('');
+  const disposed = useRef(false);
+  const refreshId = useRef(0);
+  const requestedCategory = useRef(category);
+  const undoTarget = useRef<Pick | null>(null);
+  const repositoryRef = useRef<ReturnType<typeof createHistoryRepository> | null>(null);
 
-  const runLocked: RunLocked = async (resolve) => {
-    if (!navigator.locks) throw new HistoryError('locks');
-    return navigator.locks.request('prize-randomizer:history', resolve);
-  };
-  const repository = createHistoryRepository({
-    store: kit.store,
-    runLocked,
-    request: kit.demo.request,
-  });
-  const available = computed(() => remainingCount(history.value, category.value));
-  const range = computed(() => categories[category.value]);
+  if (repositoryRef.current === null) {
+    const runLocked: RunLocked = async (resolve) => {
+      if (!navigator.locks) throw new HistoryError('locks');
+      return navigator.locks.request('prize-randomizer:history', resolve);
+    };
+    repositoryRef.current = createHistoryRepository({
+      store: kit.store,
+      runLocked,
+      request: kit.demo.request,
+    });
+  }
+  const repository = repositoryRef.current;
+  const current = history[0] ?? null;
+  const pending = loading || operation !== null;
+  const available = remainingCount(history, category);
+  const range = categories[category];
 
   const reportError = (caught: unknown) => {
-    failure.value = caught instanceof HistoryError ? caught.code : null;
-    error.value =
-      caught instanceof HistoryError ? caught.message : 'Не удалось завершить действие. Повторите.';
+    setFailure(caught instanceof HistoryError ? caught.code : null);
+    setError(
+      caught instanceof HistoryError ? caught.message : 'Не удалось завершить действие. Повторите.',
+    );
   };
   const clearError = () => {
-    error.value = null;
-    failure.value = null;
+    setError(null);
+    setFailure(null);
   };
 
   const load = async (background = false) => {
-    if (operation.value) return;
-    const requestId = ++refreshId;
+    if (operation) return;
+    const requestId = ++refreshId.current;
     if (!background) {
-      lastOperation.value = 'load';
-      loading.value = true;
+      setLastOperation('load');
+      setLoading(true);
       clearError();
     }
     try {
       const next = await kit.demo.request(repository.read);
-      if (!disposed && requestId === refreshId) {
-        const changed = JSON.stringify(history.value) !== JSON.stringify(next);
-        history.value = next;
-        if (background && lastOperation.value === 'load') clearError();
-        if (background && changed) notice.value = 'История обновлена в другой вкладке.';
+      if (!disposed.current && requestId === refreshId.current) {
+        const changed = JSON.stringify(history) !== JSON.stringify(next);
+        setHistory(next);
+        if (background && lastOperation === 'load') clearError();
+        if (background && changed) setNotice('История обновлена в другой вкладке.');
       }
     } catch (caught) {
-      if (!disposed && requestId === refreshId) {
-        if (background && error.value && lastOperation.value !== 'load') return;
-        lastOperation.value = 'load';
+      if (!disposed.current && requestId === refreshId.current) {
+        if (background && error && lastOperation !== 'load') return;
+        setLastOperation('load');
         reportError(caught);
       }
     } finally {
-      if (!disposed && requestId === refreshId) loading.value = false;
+      if (!disposed.current && requestId === refreshId.current) setLoading(false);
     }
   };
 
-  const change = async (kind: Operation, resolve: () => Promise<Pick[]>) => {
-    if (pending.value) return;
-    ++refreshId;
-    operation.value = kind;
-    lastOperation.value = kind;
-    notice.value = '';
+  const change = async (
+    kind: Operation,
+    resolve: () => Promise<Pick[]>,
+  ): Promise<Pick[] | undefined> => {
+    if (pending) return undefined;
+    ++refreshId.current;
+    setOperation(kind);
+    setLastOperation(kind);
+    setNotice('');
     clearError();
     try {
       const next = await resolve();
-      if (disposed) return;
-      history.value = next;
-      notice.value =
+      if (disposed.current) return undefined;
+      setHistory(next);
+      setNotice(
         kind === 'draw'
           ? 'Билет выбран и сохранён.'
           : kind === 'undo'
             ? 'Последний выбор отменён. Билет снова участвует.'
-            : 'История восстановлена.';
+            : 'История восстановлена.',
+      );
+      return next;
     } catch (caught) {
-      if (!disposed) {
+      if (!disposed.current) {
         reportError(caught);
         if (caught instanceof HistoryError && caught.code === 'conflict') {
           try {
-            history.value = repository.read();
+            setHistory(repository.read());
           } catch {}
         }
       }
+      return undefined;
     } finally {
-      if (!disposed) operation.value = null;
+      if (!disposed.current) setOperation(null);
     }
   };
 
   const draw = () => {
-    if (pending.value) return;
-    requestedCategory = category.value;
-    return change('draw', () => repository.draw(requestedCategory));
+    if (pending) return undefined;
+    requestedCategory.current = category;
+    return change('draw', () => repository.draw(requestedCategory.current));
   };
-  const undoLast = (target: Pick | null = current.value) => {
-    if (pending.value || !target) return;
-    undoTarget = target;
+  const undoLast = (target: Pick | null = current) => {
+    if (pending || !target) return undefined;
+    undoTarget.current = target;
     return change('undo', () => repository.undo(target));
   };
   const recover = () => change('recover', repository.recover);
   const downloadCsv = async () => {
-    if (pending.value) return;
-    ++refreshId;
-    operation.value = 'export';
-    lastOperation.value = 'export';
+    if (pending) return;
+    ++refreshId.current;
+    setOperation('export');
+    setLastOperation('export');
     clearError();
-    notice.value = '';
+    setNotice('');
     try {
       const next = await kit.demo.request(repository.read);
-      if (disposed) return;
-      history.value = next;
+      if (disposed.current) return;
+      setHistory(next);
       const url = URL.createObjectURL(
         new Blob([historyCsv(next)], { type: 'text/csv;charset=utf-8' }),
       );
@@ -135,42 +146,48 @@ export const useDraw = (kit: CaseKit, category: Ref<CategoryKey>) => {
       });
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      notice.value = 'История выгружена в CSV.';
+      setNotice('История выгружена в CSV.');
     } catch (caught) {
-      if (!disposed) reportError(caught);
+      if (!disposed.current) reportError(caught);
     } finally {
-      if (!disposed) operation.value = null;
+      if (!disposed.current) setOperation(null);
     }
   };
   const retry = () => {
-    if (lastOperation.value === 'draw')
-      return change('draw', () => repository.draw(requestedCategory));
-    if (lastOperation.value === 'undo') return undoLast(undoTarget);
-    if (lastOperation.value === 'recover') return recover();
-    if (lastOperation.value === 'export') return downloadCsv();
+    if (lastOperation === 'draw') {
+      return change('draw', () => repository.draw(requestedCategory.current));
+    }
+    if (lastOperation === 'undo') return undoLast(undoTarget.current);
+    if (lastOperation === 'recover') return recover();
+    if (lastOperation === 'export') return downloadCsv();
     return load();
   };
 
-  const sync = () => {
-    if (!pending.value) void load(true);
-  };
-  const onStorage = (event: StorageEvent) => {
-    if (event.key === null || event.key === 'prize-randomizer:history') sync();
-  };
-  const onVisibility = () => {
-    if (document.visibilityState === 'visible') sync();
-  };
-  window.addEventListener('storage', onStorage);
-  window.addEventListener('focus', sync);
-  document.addEventListener('visibilitychange', onVisibility);
-  onBeforeUnmount(() => {
-    disposed = true;
-    ++refreshId;
-    window.removeEventListener('storage', onStorage);
-    window.removeEventListener('focus', sync);
-    document.removeEventListener('visibilitychange', onVisibility);
+  const loadEvent = useEffectEvent(load);
+  const syncEvent = useEffectEvent(() => {
+    if (!pending) void load(true);
   });
-  void load();
+
+  useEffect(() => {
+    disposed.current = false;
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === null || event.key === 'prize-randomizer:history') syncEvent();
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') syncEvent();
+    };
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('focus', syncEvent);
+    document.addEventListener('visibilitychange', onVisibility);
+    void loadEvent();
+    return () => {
+      disposed.current = true;
+      ++refreshId.current;
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('focus', syncEvent);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
 
   return {
     history,

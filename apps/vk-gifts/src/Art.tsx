@@ -15,7 +15,8 @@ export type IconName =
   | 'gift'
   | 'photo'
   | 'lock'
-  | 'chevron';
+  | 'chevron'
+  | 'sort';
 export function Icon({ name, size = 24 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, React.ReactNode> = {
     heart: (
@@ -44,6 +45,7 @@ export function Icon({ name, size = 24 }: { name: IconName; size?: number }) {
     ),
     close: <path d="m6 6 12 12M18 6 6 18" />,
     chevron: <path d="m9 5 7 7-7 7" />,
+    sort: <path d="M8 5v14m0 0-3-3m3 3 3-3M16 19V5m0 0-3 3m3-3 3 3" />,
     check: <path d="m5 12 4 4L19 6" />,
     edit: (
       <>

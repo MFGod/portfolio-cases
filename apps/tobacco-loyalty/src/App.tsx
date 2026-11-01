@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useEffectEvent, useRef, useState, type ReactNode } from 'react';
 import type { createCase } from '@cases/demo-kit';
 import { goal, isFinished, isRound, newRound, playTurn } from './engine';
 import {
@@ -61,16 +61,13 @@ export function App({ kit }: { kit: Kit }) {
   const rewardBusy = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
 
-  const save = useCallback(
-    (next: Account) => {
-      kit.store.set('account-v1', next);
-      accountRef.current = next;
-      setAccount(next);
-    },
-    [kit],
-  );
+  const save = (next: Account) => {
+    kit.store.set('account-v1', next);
+    accountRef.current = next;
+    setAccount(next);
+  };
 
-  const load = useCallback(async () => {
+  const load = async () => {
     setLoading(true);
     setLoadError(false);
     try {
@@ -83,10 +80,11 @@ export function App({ kit }: { kit: Kit }) {
     } finally {
       setLoading(false);
     }
-  }, [kit, save]);
+  };
+  const loadEvent = useEffectEvent(load);
   useEffect(() => {
-    void load();
-  }, [load]);
+    void loadEvent();
+  }, []);
   useEffect(() => {
     function navigate() {
       setView(currentView());
@@ -106,25 +104,24 @@ export function App({ kit }: { kit: Kit }) {
     return () => clearTimeout(timer);
   }, [notice]);
 
-  const syncGame = useCallback(
-    (note?: string, rewardError = false) => {
-      const state = accountRef.current;
-      iframe.current?.contentWindow?.postMessage(
-        {
-          channel: 'mosaic-shell',
-          session,
-          type: 'sync',
-          round: state?.round,
-          rewarded: state?.round ? state.rewarded.includes(state.round.id) : false,
-          pending: rewardBusy.current,
-          rewardError,
-          note,
-        },
-        location.origin,
-      );
-    },
-    [session],
-  );
+  const syncGame = (note?: string, rewardError = false) => {
+    const state = accountRef.current;
+    iframe.current?.contentWindow?.postMessage(
+      {
+        channel: 'mosaic-shell',
+        session,
+        type: 'sync',
+        round: state?.round,
+        rewarded: state?.round ? state.rewarded.includes(state.round.id) : false,
+        pending: rewardBusy.current,
+        rewardError,
+        note,
+      },
+      location.origin,
+    );
+  };
+  const syncGameEvent = useEffectEvent(syncGame);
+  const saveEvent = useEffectEvent(save);
 
   useEffect(() => {
     async function receive(event: MessageEvent<unknown>) {
@@ -137,19 +134,19 @@ export function App({ kit }: { kit: Kit }) {
       const state = accountRef.current;
       if (!state?.round) return;
       if (data.type === 'ready') {
-        syncGame();
+        syncGameEvent();
         return;
       }
       if (data.roundId !== state.round.id) return;
       if (data.type === 'start') {
         if (state.round.startedAt === null)
-          save({ ...state, round: { ...state.round, startedAt: Date.now() } });
-        syncGame();
+          saveEvent({ ...state, round: { ...state.round, startedAt: Date.now() } });
+        syncGameEvent();
       }
       if (data.type === 'turn' && data.from !== undefined && data.to !== undefined) {
         const turn = playTurn(state.round, data.from, data.to, Date.now());
-        if (turn) save({ ...state, round: turn.round });
-        syncGame();
+        if (turn) saveEvent({ ...state, round: turn.round });
+        syncGameEvent();
       }
       if (data.type === 'restart') restartRef.current();
       if (data.type === 'reward') {
@@ -158,14 +155,14 @@ export function App({ kit }: { kit: Kit }) {
         rewardBusy.current = true;
         setBusy(true);
         setGameIssue(false);
-        syncGame();
+        syncGameEvent();
         let failed = false;
         try {
           await kit.demo.request(() => {
             const latest = accountRef.current;
             if (latest) {
               const credited = creditRound(latest, data.roundId, Date.now());
-              if (credited !== latest) save(credited);
+              if (credited !== latest) saveEvent(credited);
             }
           });
         } catch {
@@ -174,13 +171,13 @@ export function App({ kit }: { kit: Kit }) {
         } finally {
           rewardBusy.current = false;
           setBusy(false);
-          syncGame(undefined, failed);
+          syncGameEvent(undefined, failed);
         }
       }
     }
     window.addEventListener('message', receive);
     return () => window.removeEventListener('message', receive);
-  }, [kit, save, session, syncGame]);
+  }, [kit, session]);
 
   async function mutate(action: (state: Account) => Account, success: string, after?: () => void) {
     if (busyRef.current || rewardBusy.current) return;

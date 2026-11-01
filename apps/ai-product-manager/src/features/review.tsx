@@ -117,8 +117,14 @@ export function Review({
       {ready && (
         <footer className="step-bar">
           <div className="actions">
-            <button className="button secondary" disabled={!!editing} onClick={() => download(job)}>
-              Скачать Markdown
+            <button
+              className="button secondary download-action"
+              disabled={!!editing}
+              aria-label="Скачать Markdown"
+              data-tooltip="Скачать Markdown"
+              onClick={() => download(job)}
+            >
+              <Icon name="download" />
             </button>
             <a
               className={'button export-action ' + (editing ? 'secondary' : 'primary')}

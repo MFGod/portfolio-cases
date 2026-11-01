@@ -10,11 +10,12 @@ import '@fontsource/rubik/cyrillic-500.css';
 import '@fontsource/rubik/latin-500.css';
 import '@fontsource/rubik/cyrillic-700.css';
 import '@fontsource/rubik/latin-700.css';
-import { createApp } from 'vue';
+import { createRoot } from 'react-dom/client';
 import { createCase } from '@cases/demo-kit';
-import App from './App.vue';
+import { App } from './App';
 import manifest from '../case.json';
 import './styles.css';
+
 const kit = createCase(manifest);
 await kit.boot();
-createApp(App, { kit }).mount('#app');
+createRoot(document.getElementById('app')!).render(<App kit={kit} />);

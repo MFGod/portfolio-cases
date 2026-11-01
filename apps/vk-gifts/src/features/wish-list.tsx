@@ -1,7 +1,8 @@
 import { Icon } from '../Art';
 import type { Friend, Gift, Snapshot } from '../model';
 import type { ListContext, Sort } from '../ui/use-list-context';
-import { categories, type Category } from './categories';
+import { Select, type SelectOption } from '../ui/select';
+import { categories } from './categories';
 import { GiftCard } from './gift-card';
 import { wishCount } from './plural';
 
@@ -53,37 +54,31 @@ export function WishList({
           </a>
         )}
       </div>
-      {friend && (
-        <p className="friend-note">
-          <Icon name="lock" size={16} />
-          {friend.name.split(' ')[0]} не узнает, что вы выбрали.
-        </p>
-      )}
       <div className="list-controls">
-        <label>
-          <span className="sr-only">Категория желаний</span>
-          <select
-            value={context.category}
-            onChange={(event) => onChange({ category: event.target.value as Category })}
-          >
-            {categories.map((item) => (
-              <option value={item.id} key={item.id}>
-                {item.id === 'all' ? 'Все категории' : item.title}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          <span className="sr-only">Сортировка</span>
-          <select
-            value={context.sort}
-            onChange={(event) => onChange({ sort: event.target.value as Sort })}
-          >
-            <option value="recent">Новые</option>
-            <option value="price-up">Дешевле</option>
-            <option value="price-down">Дороже</option>
-          </select>
-        </label>
+        <Select
+          label="Категории"
+          hideLabel
+          value={context.category}
+          options={categories.map((item) => ({
+            value: item.id,
+            label: item.id === 'all' ? 'Все категории' : item.title,
+          }))}
+          onChange={(category) => onChange({ category })}
+        />
+        <Select
+          label="Сортировка"
+          hideLabel
+          triggerIcon="sort"
+          value={context.sort}
+          options={
+            [
+              { value: 'recent', label: 'Новые' },
+              { value: 'price-up', label: 'Дешевле' },
+              { value: 'price-down', label: 'Дороже' },
+            ] satisfies SelectOption<Sort>[]
+          }
+          onChange={(sort) => onChange({ sort })}
+        />
       </div>
       {gifts.length ? (
         <div className="gift-grid">

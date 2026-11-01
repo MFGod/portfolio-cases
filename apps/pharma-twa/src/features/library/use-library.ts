@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { materials, type Material } from '../../domain/content';
 import { FavoritesPersistence } from '../../domain/favorites-persistence';
 import { kit } from '../../kit';
@@ -11,7 +11,8 @@ export function useLibrary(notify: (message: string) => void) {
   const [attempt, setAttempt] = useState(0);
   const [persistence] = useState(() => new FavoritesPersistence(kit.store));
   const [snapshot, setSnapshot] = useState(persistence.getSnapshot);
-  const refresh = useCallback(() => setSnapshot(persistence.getSnapshot()), [persistence]);
+  const refresh = () => setSnapshot(persistence.getSnapshot());
+  const refreshEvent = useEffectEvent(refresh);
 
   useEffect(() => {
     let active = true;
@@ -21,7 +22,7 @@ export function useLibrary(notify: (message: string) => void) {
       .then((data) => {
         if (!active) return;
         persistence.sync();
-        refresh();
+        refreshEvent();
         setCatalog(data);
         setState('ready');
       })
@@ -31,12 +32,12 @@ export function useLibrary(notify: (message: string) => void) {
     return () => {
       active = false;
     };
-  }, [attempt, persistence, refresh]);
+  }, [attempt, persistence]);
 
   useEffect(() => {
     const sync = () => {
       persistence.sync();
-      refresh();
+      refreshEvent();
     };
     const onStorage = (event: StorageEvent) => {
       if (event.key === null || event.key === `${kit.slug}:favorites`) sync();
@@ -47,21 +48,18 @@ export function useLibrary(notify: (message: string) => void) {
       window.removeEventListener('storage', onStorage);
       window.removeEventListener('focus', sync);
     };
-  }, [persistence, refresh]);
+  }, [persistence]);
 
-  const toggleFavorite = useCallback(
-    async (id: string) => {
-      const operation = persistence.toggleFavorite(
-        id,
-        async (write) => await kit.demo.request(write),
-      );
-      refresh();
-      const added = await operation;
-      refresh();
-      if (added !== null) notify(added ? 'Добавлено в избранное' : 'Убрано из избранного');
-    },
-    [persistence, refresh, notify],
-  );
+  const toggleFavorite = async (id: string) => {
+    const operation = persistence.toggleFavorite(
+      id,
+      async (write) => await kit.demo.request(write),
+    );
+    refresh();
+    const added = await operation;
+    refresh();
+    if (added !== null) notify(added ? 'Добавлено в избранное' : 'Убрано из избранного');
+  };
 
   return {
     catalog,

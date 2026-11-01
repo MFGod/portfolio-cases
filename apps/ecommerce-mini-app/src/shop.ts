@@ -1,13 +1,18 @@
-import { computed, reactive, readonly, ref, shallowRef, watch } from 'vue';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import type { createCase } from '@cases/demo-kit';
 import { products } from './data';
 import { changeQuantity, previewRepeat, repeatOrder } from './domain/cart';
 import { browserCoordination, type ShopCoordination } from './domain/coordination';
 import { PersistedStateError, ShopActionError } from './domain/errors';
-import { emptyFilters, restoreFilters } from './domain/filters';
+import { emptyFilters, restoreFilters, type ShopFilters } from './domain/filters';
 import { cancelOrder, checkoutOrder, updateDetails as changeDetails } from './domain/orders';
 import { createRepository } from './domain/repository';
-import { checkoutFingerprint as fingerprint, seedShop, type DeliveryDetails } from './domain/state';
+import {
+  checkoutFingerprint as fingerprint,
+  seedShop,
+  type DeliveryDetails,
+  type ShopState,
+} from './domain/state';
 export { money, readableDate, deliveryDates } from './domain/format';
 export type { DeliveryDetails } from './domain/state';
 export type Kit = ReturnType<typeof createCase>;
@@ -16,51 +21,74 @@ export interface ShopOptions {
   coordination?: ShopCoordination;
 }
 
+type RetryAction = {
+  run: () => Promise<boolean>;
+  kind: 'load' | 'filters' | 'mutation';
+};
+
 export function useShop(kit: Kit, options: ShopOptions = {}) {
-  const state = reactive(seedShop());
-  const filters = reactive(emptyFilters());
-  const loading = ref(true);
-  const ready = ref(false);
-  const pending = ref(false);
-  const error = ref('');
-  const notice = ref('');
-  const retryAction = shallowRef<(() => Promise<boolean>) | undefined>();
-  const coordination = options.coordination ?? browserCoordination(kit.slug);
-  const repository = createRepository(kit, coordination, (next) => Object.assign(state, next));
-  let disposed = false;
-  let hydratingFilters = false;
+  const [state, setState] = useState<ShopState>(seedShop);
+  const [filters, setFilters] = useState<ShopFilters>(emptyFilters);
+  const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+  const [retryAction, setRetryAction] = useState<RetryAction | null>(null);
+  const stateRef = useRef(state);
+  const pendingRef = useRef(false);
+  const disposed = useRef(false);
+  const filtersHydrated = useRef(false);
+  const coordinationRef = useRef<ShopCoordination | null>(null);
+  const repositoryRef = useRef<ReturnType<typeof createRepository> | null>(null);
+
+  const receive = (next: ShopState) => {
+    stateRef.current = next;
+    if (!disposed.current) setState(next);
+  };
+  if (coordinationRef.current === null) {
+    coordinationRef.current = options.coordination ?? browserCoordination(kit.slug);
+  }
+  if (repositoryRef.current === null) {
+    repositoryRef.current = createRepository(kit, coordinationRef.current, receive);
+  }
+  const repository = repositoryRef.current;
 
   function report(cause: unknown, retry?: () => Promise<boolean>) {
-    error.value = cause instanceof Error ? cause.message : 'Действие не выполнено.';
+    setError(cause instanceof Error ? cause.message : 'Действие не выполнено.');
     if (cause instanceof PersistedStateError) {
-      ready.value = false;
-      retryAction.value = load;
-    } else retryAction.value = cause instanceof ShopActionError ? undefined : retry;
+      setReady(false);
+      setRetryAction({ run: load, kind: 'load' });
+    } else if (cause instanceof ShopActionError || !retry) {
+      setRetryAction(null);
+    } else {
+      setRetryAction({ run: retry, kind: 'mutation' });
+    }
   }
 
   async function load(): Promise<boolean> {
-    if (pending.value || disposed) return false;
-    loading.value = true;
-    error.value = '';
+    if (pendingRef.current || disposed.current) return false;
+    setLoading(true);
+    setError('');
     try {
       const result = await kit.demo.request(async () => ({
         state: await repository.refresh(),
         filters: restoreFilters(kit.store.get<unknown>('filters-v1', undefined)),
       }));
-      if (disposed) return false;
-      Object.assign(state, result.state);
-      hydratingFilters = true;
-      Object.assign(filters, result.filters);
-      hydratingFilters = false;
-      ready.value = true;
-      retryAction.value = undefined;
+      if (disposed.current) return false;
+      receive(result.state);
+      setFilters(result.filters);
+      setReady(true);
+      setRetryAction(null);
       return true;
     } catch (cause) {
-      ready.value = false;
-      report(cause, load);
+      if (!disposed.current) {
+        setReady(false);
+        report(cause, load);
+      }
       return false;
     } finally {
-      loading.value = false;
+      if (!disposed.current) setLoading(false);
     }
   }
 
@@ -68,68 +96,84 @@ export function useShop(kit: Kit, options: ShopOptions = {}) {
     action: Parameters<typeof repository.commit>[0],
     retry: () => Promise<boolean>,
   ): Promise<boolean> {
-    if (pending.value || !ready.value || disposed) return false;
-    pending.value = true;
-    error.value = '';
-    notice.value = '';
+    if (pendingRef.current || !ready || disposed.current) return false;
+    pendingRef.current = true;
+    setPending(true);
+    setError('');
+    setNotice('');
     try {
-      notice.value = await kit.demo.request(() => repository.commit(action));
-      retryAction.value = undefined;
+      const message = await kit.demo.request(() => repository.commit(action));
+      if (!disposed.current) {
+        setNotice(message);
+        setRetryAction(null);
+      }
       return true;
     } catch (cause) {
-      report(cause, retry);
+      if (!disposed.current) report(cause, retry);
       return false;
     } finally {
-      pending.value = false;
+      pendingRef.current = false;
+      if (!disposed.current) setPending(false);
     }
   }
 
-  const stopSync = coordination.subscribe(() => {
-    if (!ready.value || disposed) return;
-    try {
-      Object.assign(state, repository.read());
-    } catch (cause) {
-      report(cause, load);
-    }
-  });
-  const saveFilters = async (): Promise<boolean> => {
+  async function saveFilters(): Promise<boolean> {
     try {
       kit.store.set('filters-v1', restoreFilters(filters));
-      if (retryAction.value === saveFilters) {
-        error.value = '';
-        retryAction.value = undefined;
+      if (retryAction?.kind === 'filters') {
+        setError('');
+        setRetryAction(null);
       }
       return true;
     } catch (cause) {
       report(cause, saveFilters);
+      setRetryAction({ run: saveFilters, kind: 'filters' });
       return false;
     }
-  };
-  const stopFilters = watch(
-    filters,
-    () => {
-      if (!hydratingFilters && ready.value) void saveFilters();
-    },
-    { flush: 'sync' },
-  );
-  const lines = computed(() =>
-    state.cart.flatMap((line) => {
-      const product = products.find((item) => item.id === line.productId);
-      return product ? [{ ...line, product }] : [];
-    }),
-  );
-  const total = computed(() =>
-    lines.value.reduce((sum, line) => sum + line.product.price * line.quantity, 0),
-  );
-  const count = computed(() => state.cart.reduce((sum, line) => sum + line.quantity, 0));
-  const checkoutFingerprint = computed(() => fingerprint(state));
+  }
+
+  const syncEvent = useEffectEvent(() => {
+    if (!ready || disposed.current) return;
+    try {
+      receive(repository.read());
+    } catch (cause) {
+      report(cause, load);
+    }
+  });
+  const saveFiltersEvent = useEffectEvent(saveFilters);
+
+  useEffect(() => {
+    disposed.current = false;
+    const stopSync = coordinationRef.current!.subscribe(syncEvent);
+    return () => {
+      disposed.current = true;
+      stopSync();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    if (!filtersHydrated.current) {
+      filtersHydrated.current = true;
+      return;
+    }
+    void saveFiltersEvent();
+  }, [filters, ready]);
+
+  const lines = state.cart.flatMap((line) => {
+    const product = products.find((item) => item.id === line.productId);
+    return product ? [{ ...line, product }] : [];
+  });
+  const total = lines.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
+  const count = state.cart.reduce((sum, line) => sum + line.quantity, 0);
+  const checkoutFingerprint = fingerprint(state);
   const change = (id: string, amount: number): Promise<boolean> =>
     mutate(
       (current) => changeQuantity(current, id, amount),
       () => change(id, amount),
     );
   const checkout = (
-    expected = checkoutFingerprint.value,
+    expected = checkoutFingerprint,
     details?: DeliveryDetails,
   ): Promise<boolean> => {
     const reviewed = details === undefined ? undefined : { ...details };
@@ -143,11 +187,7 @@ export function useShop(kit: Kit, options: ShopOptions = {}) {
       (current) => cancelOrder(current, id),
       () => cancel(id),
     );
-  const repeat = (
-    id: number,
-    replace = false,
-    expected = checkoutFingerprint.value,
-  ): Promise<boolean> =>
+  const repeat = (id: number, replace = false, expected = checkoutFingerprint): Promise<boolean> =>
     mutate(
       (current) => repeatOrder(current, id, replace, expected),
       () => repeat(id, replace, expected),
@@ -162,7 +202,7 @@ export function useShop(kit: Kit, options: ShopOptions = {}) {
   };
 
   return {
-    state: readonly(state),
+    state,
     filters,
     loading,
     ready,
@@ -173,26 +213,24 @@ export function useShop(kit: Kit, options: ShopOptions = {}) {
     total,
     count,
     checkoutFingerprint,
-    retryAvailable: computed(() => Boolean(retryAction.value)),
+    retryAvailable: retryAction !== null,
     stock: (id: string) => state.stock[id] ?? 0,
     quantity: (id: string) => state.cart.find((line) => line.productId === id)?.quantity ?? 0,
     previewRepeat: (id: number) => previewRepeat(state, id),
+    getState: () => stateRef.current,
+    updateFilters: (patch: Partial<ShopFilters>) =>
+      setFilters((current) => ({ ...current, ...patch })),
     load,
     change,
     checkout,
     cancel,
     repeat,
     updateDetails,
-    retry: async () =>
-      retryAction.value && !pending.value && !loading.value ? retryAction.value() : false,
+    retry: async () => (retryAction && !pendingRef.current && !loading ? retryAction.run() : false),
     dismissError: () => {
-      error.value = '';
-      retryAction.value = undefined;
+      setError('');
+      setRetryAction(null);
     },
-    dispose: () => {
-      disposed = true;
-      stopSync();
-      stopFilters();
-    },
+    dismissNotice: () => setNotice(''),
   };
 }

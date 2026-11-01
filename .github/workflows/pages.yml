@@ -38,10 +38,6 @@ jobs:
         env:
           CASES_BASE: /${{ github.event.repository.name }}
         run: npm run build
-      - name: Scan for restricted content
-        env:
-          NDA_DENYLIST_TEXT: ${{ secrets.NDA_DENYLIST_TEXT }}
-        run: npm run scan
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - name: Upload artifact

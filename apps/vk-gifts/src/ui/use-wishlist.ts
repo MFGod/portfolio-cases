@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { errorText, kit, load, WishlistError, type Snapshot } from '../model';
 
 export type ActionKind = 'save' | 'book' | 'copy' | 'delete' | 'read' | 'restore';
@@ -16,7 +16,7 @@ export function useWishlist() {
   const mounted = useRef(true);
   const generation = useRef(0);
   const refreshAfterSave = useRef(false);
-  const reload = useCallback(async (background = false) => {
+  const reload = async (background = false) => {
     if (pending.current) {
       refreshAfterSave.current = true;
       return;
@@ -36,12 +36,13 @@ export function useWishlist() {
     } finally {
       if (mounted.current && version === generation.current) setLoading(false);
     }
-  }, []);
+  };
+  const reloadEvent = useEffectEvent(reload);
   useEffect(() => {
     mounted.current = true;
-    void reload();
+    void reloadEvent();
     const sync = (event: StorageEvent) => {
-      if (event.key === null || event.key === `${kit.slug}:wishlist-v1`) void reload(true);
+      if (event.key === null || event.key === `${kit.slug}:wishlist-v1`) void reloadEvent(true);
     };
     window.addEventListener('storage', sync);
     return () => {
@@ -49,7 +50,7 @@ export function useWishlist() {
       generation.current += 1;
       window.removeEventListener('storage', sync);
     };
-  }, [reload]);
+  }, []);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(''), 4500);

@@ -1,10 +1,3 @@
-<script setup lang="ts">
-const props = withDefaults(defineProps<{ name: keyof typeof paths; size?: number }>(), {
-  size: 18,
-});
-</script>
-
-<script lang="ts">
 const paths = {
   plus: 'M12 5v14M5 12h14',
   minus: 'M5 12h14',
@@ -17,20 +10,19 @@ const paths = {
   forward: 'M5 12h14m-6-6 6 6-6 6',
   close: 'M6 6l12 12M18 6 6 18',
 };
-</script>
 
-<template>
+export const AppIcon = ({ name, size = 18 }: { name: keyof typeof paths; size?: number }) => (
   <svg
-    :width="props.size"
-    :height="props.size"
+    width={size}
+    height={size}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     aria-hidden="true"
   >
-    <path :d="paths[props.name]" />
+    <path d={paths[name]} />
   </svg>
-</template>
+);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type SetStateAction } from 'react';
+import { useEffect, useEffectEvent, useRef, useState, type SetStateAction } from 'react';
 import {
   loadWorkspace,
   restoreWorkspace,
@@ -25,12 +25,12 @@ export function useWorkspace() {
   const generationRef = useRef(0);
   const refreshAfterPendingRef = useRef(false);
 
-  const setWorkspace = useCallback((next: SetStateAction<Workspace>) => {
+  const setWorkspace = (next: SetStateAction<Workspace>) => {
     generationRef.current += 1;
     if (mountedRef.current) setWorkspaceState(next);
-  }, []);
+  };
 
-  const reload = useCallback(async (background = false) => {
+  const reload = async (background = false) => {
     if (pendingRef.current) {
       refreshAfterPendingRef.current = true;
       return;
@@ -50,13 +50,14 @@ export function useWorkspace() {
     } finally {
       if (mountedRef.current && generation === generationRef.current) setLoading(false);
     }
-  }, []);
+  };
+  const reloadEvent = useEffectEvent(reload);
 
   useEffect(() => {
     mountedRef.current = true;
-    void reload();
+    void reloadEvent();
     const sync = (event: StorageEvent) => {
-      if (event.key === null || event.key === `${kit.slug}:${workspaceKey}`) void reload(true);
+      if (event.key === null || event.key === `${kit.slug}:${workspaceKey}`) void reloadEvent(true);
     };
     window.addEventListener('storage', sync);
     return () => {
@@ -64,7 +65,7 @@ export function useWorkspace() {
       generationRef.current += 1;
       window.removeEventListener('storage', sync);
     };
-  }, [reload]);
+  }, []);
 
   useEffect(() => {
     if (!notice) return;

@@ -3,11 +3,10 @@ import type { Pick } from './history.js';
 
 export const historyCsv = (history: readonly Pick[]) => {
   const rows = [
-    ['Билет', 'Имя', 'Телефон', 'Категория', 'Время'],
+    ['Билет', 'Имя', 'Категория', 'Время'],
     ...history.map((pick) => [
       ticketNumber(pick.number),
       pick.name,
-      pick.phone,
       categories[pick.category].title,
       new Date(pick.at).toLocaleString('ru-RU'),
     ]),

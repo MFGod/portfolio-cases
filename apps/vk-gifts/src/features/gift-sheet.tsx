@@ -39,7 +39,7 @@ export function GiftSheet(props: Props) {
               ? 'Вы забронировали этот подарок.'
               : booking === 'other'
                 ? 'Этот подарок уже выбрал другой друг.'
-                : 'Забронируйте, чтобы друзья не подарили то же самое.'}
+                : `${friend.name.split(' ')[0]} не увидит бронь, а друзья увидят, что подарок уже выбрали.`}
           </p>
           {booking !== 'other' && (
             <button className="button primary full" disabled={busy} onClick={props.onBook}>

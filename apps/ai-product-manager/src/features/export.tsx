@@ -163,11 +163,13 @@ function ExportDocument({
           )}
           <div className="actions">
             <button
-              className={'button ' + (done ? 'primary' : 'secondary')}
+              className={'button download-action ' + (done ? 'primary' : 'secondary')}
               disabled={busy}
+              aria-label="Скачать Markdown"
+              data-tooltip="Скачать Markdown"
               onClick={() => download(job)}
             >
-              Скачать Markdown
+              <Icon name="download" />
             </button>
             {!done && (
               <button

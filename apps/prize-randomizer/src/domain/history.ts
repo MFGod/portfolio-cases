@@ -45,7 +45,6 @@ export const validateHistory = (value: unknown): Pick[] => {
       number < range.from ||
       number > range.to ||
       item.name !== ticket.name ||
-      item.phone !== ticket.phone ||
       typeof item.at !== 'string' ||
       !/^\d{4}-\d{2}-\d{2}T/.test(item.at) ||
       !Number.isFinite(Date.parse(item.at))

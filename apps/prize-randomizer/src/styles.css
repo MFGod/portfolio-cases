@@ -246,9 +246,6 @@ button:disabled {
   font-size: var(--text-md);
   font-weight: var(--weight-strong);
 }
-.result-phone {
-  white-space: nowrap;
-}
 .result-empty {
   font-size: var(--text-md);
 }

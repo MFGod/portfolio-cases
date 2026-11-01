@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import { Icon, ProductArt } from '../Art';
 import { errorText, type Gift } from '../model';
+import { Select } from '../ui/select';
 import { categories } from './categories';
 
 type FormError = { field: 'title' | 'price' | 'photo' | 'save'; message: string };
@@ -217,21 +218,14 @@ export function GiftForm({ initial, editing = false, disabled = false, onSave, o
               }}
             />
           </label>
-          <label>
-            Категория
-            <select
-              value={category}
-              onChange={(event) => setCategory(event.target.value as Gift['category'])}
-            >
-              {categories
-                .filter((entry) => entry.id !== 'all')
-                .map((entry) => (
-                  <option key={entry.id} value={entry.id}>
-                    {entry.title}
-                  </option>
-                ))}
-            </select>
-          </label>
+          <Select
+            label="Категория"
+            value={category}
+            options={categories.flatMap((entry) =>
+              entry.id === 'all' ? [] : [{ value: entry.id, label: entry.title }],
+            )}
+            onChange={setCategory}
+          />
         </div>
         <label>
           Пожелания к подарку <span className="optional">необязательно</span>

@@ -5,6 +5,7 @@ type IconName =
   | 'document'
   | 'layers'
   | 'export'
+  | 'download'
   | 'upload'
   | 'edit'
   | 'close'
@@ -24,6 +25,7 @@ const iconPaths: Record<IconName, ReactNode> = {
   ),
   layers: <path d="m12 3 10 5-10 5L2 8zM3 12l9 5 9-5M3 16l9 5 9-5" />,
   export: <path d="M14 3h7v7M21 3l-11 11M10 4H4v16h16v-6" />,
+  download: <path d="M12 3v13m-5-5 5 5 5-5M4 15v6h16v-6" />,
   upload: <path d="M12 16V3m-5 5 5-5 5 5M4 15v6h16v-6" />,
   edit: <path d="m14 4 6 6M4 20l5-1L21 7l-4-4L5 15z" />,
   close: <path d="m6 6 12 12M6 18 18 6" />,

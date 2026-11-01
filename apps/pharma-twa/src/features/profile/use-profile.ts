@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { type Profile } from '../../domain/content';
 import { profileNameError } from '../../domain/persistence';
 import { ProfilePersistence } from '../../domain/profile-persistence';
@@ -13,7 +13,8 @@ export function useProfile() {
   const [loadState, setLoadState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [saveAttempt, setSaveAttempt] = useState(0);
-  const refresh = useCallback(() => setSnapshot(persistence.getSnapshot()), [persistence]);
+  const refresh = () => setSnapshot(persistence.getSnapshot());
+  const refreshEvent = useEffectEvent(refresh);
   const nameError = profileNameError(snapshot.profile);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export function useProfile() {
       .request(() => persistence.sync())
       .then(() => {
         if (!active) return;
-        refresh();
+        refreshEvent();
         setLoadState(persistence.getSnapshot().storageError ? 'error' : 'ready');
       })
       .catch(() => {
@@ -32,12 +33,12 @@ export function useProfile() {
     return () => {
       active = false;
     };
-  }, [loadAttempt, persistence, refresh]);
+  }, [loadAttempt, persistence]);
 
   useEffect(() => {
     const sync = () => {
       persistence.sync();
-      refresh();
+      refreshEvent();
     };
     const onStorage = (event: StorageEvent) => {
       if (event.key === null || event.key.startsWith(`${kit.slug}:profile-`)) sync();
@@ -48,17 +49,14 @@ export function useProfile() {
       window.removeEventListener('storage', onStorage);
       window.removeEventListener('focus', sync);
     };
-  }, [persistence, refresh]);
+  }, [persistence]);
 
-  const update = useCallback(
-    <K extends keyof Profile>(key: K, value: Profile[K]) => {
-      persistence.update(key, value);
-      refresh();
-      setSaveState('waiting');
-      void persistence.persistDraft().then(refresh);
-    },
-    [persistence, refresh],
-  );
+  const update = <K extends keyof Profile>(key: K, value: Profile[K]) => {
+    persistence.update(key, value);
+    refresh();
+    setSaveState('waiting');
+    void persistence.persistDraft().then(refresh);
+  };
 
   useEffect(() => {
     if (loadState !== 'ready') return;
@@ -83,7 +81,7 @@ export function useProfile() {
         .request(() => (active ? persistence.confirm(revision) : false))
         .then((saved) => {
           if (!active) return;
-          refresh();
+          refreshEvent();
           setSaveState(saved ? 'saved' : 'error');
         })
         .catch(() => {
@@ -94,7 +92,7 @@ export function useProfile() {
       active = false;
       window.clearTimeout(timer);
     };
-  }, [snapshot, nameError, loadState, saveAttempt, persistence, refresh]);
+  }, [snapshot, nameError, loadState, saveAttempt, persistence]);
 
   const runRecovery = async (action: () => Promise<void>) => {
     await action();

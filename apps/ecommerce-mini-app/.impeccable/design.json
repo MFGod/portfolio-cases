@@ -427,12 +427,12 @@
       "mode": "source-scan",
       "sources": [
         "src/styles.css",
-        "src/main.ts",
-        "src/App.vue",
-        "src/features/catalog/Catalog.vue",
-        "src/features/catalog/ProductCard.vue",
-        "src/ui/BottomNav.vue",
-        "src/features/orders/OrderReceipt.vue"
+        "src/main.tsx",
+        "src/App.tsx",
+        "src/features/catalog/Catalog.tsx",
+        "src/features/catalog/ProductCard.tsx",
+        "src/ui/BottomNav.tsx",
+        "src/features/orders/OrderReceipt.tsx"
       ],
       "renderedComputedStylesSampled": false,
       "tonalRamps": "Синтезированы в OKLCH только для панели; не являются токенами приложения.",

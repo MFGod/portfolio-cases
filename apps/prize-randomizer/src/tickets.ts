@@ -19,7 +19,7 @@ export const categories: Record<CategoryKey, Category> = {
 export const isCategory = (value: unknown): value is CategoryKey =>
   typeof value === 'string' && Object.hasOwn(categories, value);
 
-export type Ticket = { number: number; name: string; phone: string };
+export type Ticket = { number: number; name: string };
 
 const firstNames = ['Мира', 'Тим', 'Ника', 'Лев', 'Ева', 'Ян', 'Ада', 'Марк', 'Вера'];
 const lastInitials = ['О', 'С', 'К', 'Б', 'З', 'М'];
@@ -36,8 +36,7 @@ export const isTicket = (number: unknown): number is number =>
 export const ticketOf = (number: number): Ticket => {
   const first = firstNames[number % firstNames.length]!;
   const last = lastInitials[(number * 7) % lastInitials.length]!;
-  const suffix = String((number * 37) % 100).padStart(2, '0');
-  return { number, name: `${first} ${last}.`, phone: `+0 (***) ***-**-${suffix}` };
+  return { number, name: `${first} ${last}.` };
 };
 
 export const pickIndex = (length: number) => {

@@ -1,17 +1,19 @@
-import { inject, type InjectionKey } from 'vue';
+import { createContext, useContext } from 'react';
 import type { useShop } from '../shop';
-import type { createDeliveryDraft } from '../features/checkout/use-delivery-form';
+import type { useDeliveryDraft } from '../features/checkout/use-delivery-form';
 
 export type Shop = ReturnType<typeof useShop>;
-export interface ShopContext {
+export interface ShopContextValue {
   shop: Shop;
-  delivery: ReturnType<typeof createDeliveryDraft>;
+  delivery: ReturnType<typeof useDeliveryDraft>;
   navigate: (path: string) => void;
   openPickup: () => void;
 }
-export const shopKey: InjectionKey<ShopContext> = Symbol('shop');
+
+export const ShopContext = createContext<ShopContextValue | null>(null);
+
 export function useShopContext() {
-  const context = inject(shopKey);
+  const context = useContext(ShopContext);
   if (!context) throw new Error('Shop context is unavailable.');
   return context;
 }

@@ -1,107 +1,148 @@
-import { computed, onScopeDispose, onUnmounted, reactive, ref, watch } from 'vue';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useShopContext, type Shop } from '../../ui/shop-context';
 
 type Field = 'customer' | 'date';
-export function createDeliveryDraft(shop: Shop) {
-  const form = reactive({ customer: shop.state.customer, date: shop.state.date });
-  const dirty = reactive({ customer: false, date: false });
-  const saving = ref(false);
-  const hasChanges = computed(() => dirty.customer || dirty.date);
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  let queued = false;
-  let paused = false;
-  let disposed = false;
-  let blocked = false;
+type DeliveryForm = Pick<Shop['state'], Field>;
+type DirtyFields = Record<Field, boolean>;
+
+export function useDeliveryDraft(shop: Shop) {
+  const [form, setForm] = useState<DeliveryForm>({
+    customer: shop.state.customer,
+    date: shop.state.date,
+  });
+  const [dirty, setDirty] = useState<DirtyFields>({ customer: false, date: false });
+  const [saving, setSaving] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [blocked, setBlocked] = useState(false);
+  const hasChanges = dirty.customer || dirty.date;
+  const queued = useRef(false);
+  const disposed = useRef(false);
+  const previousError = useRef(shop.error);
+  const latest = useRef({ form, dirty, hasChanges, saving, shop });
+  latest.current = { form, dirty, hasChanges, saving, shop };
 
   function syncSaved() {
+    const current = latest.current;
+    const savedState = current.shop.getState();
+    const nextForm = { ...current.form };
+    const nextDirty = { ...current.dirty };
     for (const field of ['customer', 'date'] as const) {
-      const normalized = field === 'customer' ? form[field].trim() : form[field];
-      const saved = field === 'customer' ? shop.state[field].trim() : shop.state[field];
-      if (dirty[field] && saved === normalized) dirty[field] = false;
-      if (!dirty[field]) form[field] = shop.state[field];
+      const normalized = field === 'customer' ? nextForm[field].trim() : nextForm[field];
+      const saved = field === 'customer' ? savedState[field].trim() : savedState[field];
+      if (nextDirty[field] && saved === normalized) nextDirty[field] = false;
+      if (!nextDirty[field]) nextForm[field] = savedState[field];
     }
+    latest.current.form = nextForm;
+    latest.current.dirty = nextDirty;
+    latest.current.hasChanges = nextDirty.customer || nextDirty.date;
+    setForm(nextForm);
+    setDirty(nextDirty);
   }
-  watch(() => [shop.state.customer, shop.state.date], syncSaved);
-  watch(
-    () => [shop.pending.value, shop.ready.value],
-    () => {
-      if (queued && !saving.value && !blocked) void save();
-    },
-  );
-  watch(
-    () => shop.error.value,
-    (error, previous) => {
-      if (!error && previous && hasChanges.value && !saving.value) {
-        blocked = false;
-        void flush();
-      }
-    },
-  );
 
-  function clearTimer() {
-    clearTimeout(timer);
-    timer = undefined;
-  }
-  function schedule() {
-    clearTimer();
-    if (!paused && !disposed) timer = setTimeout(() => void flush(), 800);
-  }
   async function save(): Promise<boolean> {
-    if (disposed || paused || blocked || saving.value || !hasChanges.value) return false;
-    if (shop.pending.value || !shop.ready.value) {
-      queued = true;
+    const current = latest.current;
+    if (disposed.current || paused || blocked || current.saving || !current.hasChanges) {
       return false;
     }
-    const patch: Partial<typeof form> = {};
-    if (dirty.customer && form.customer.trim()) patch.customer = form.customer;
-    if (dirty.date) patch.date = form.date;
-    queued = false;
-    if (!Object.keys(patch).length) return false;
-    saving.value = true;
-    const ok = await shop.updateDetails(patch);
-    saving.value = false;
-    if (disposed) return ok;
-    if (ok) syncSaved();
-    else if (shop.error.value) {
-      blocked = true;
-      queued = false;
+    if (current.shop.pending || !current.shop.ready) {
+      queued.current = true;
+      return false;
     }
-    if (queued) void save();
-    else if (ok && hasChanges.value) schedule();
+    const patch: Partial<DeliveryForm> = {};
+    if (current.dirty.customer && current.form.customer.trim()) {
+      patch.customer = current.form.customer;
+    }
+    if (current.dirty.date) patch.date = current.form.date;
+    queued.current = false;
+    if (!Object.keys(patch).length) return false;
+    latest.current.saving = true;
+    setSaving(true);
+    const ok = await current.shop.updateDetails(patch);
+    if (disposed.current) return ok;
+    latest.current.saving = false;
+    setSaving(false);
+    if (ok) syncSaved();
+    else if (latest.current.shop.error) {
+      setBlocked(true);
+      queued.current = false;
+    }
+    if (queued.current) void save();
     return ok;
   }
+
   function flush() {
-    clearTimer();
-    queued = true;
+    queued.current = true;
     return save();
   }
+
   function changed(field: Field) {
-    dirty[field] = true;
-    blocked = false;
+    setDirty((current) => ({ ...current, [field]: true }));
+    setBlocked(false);
     shop.dismissError();
-    schedule();
   }
+
   function stopSave() {
-    clearTimer();
-    queued = false;
-    paused = true;
+    queued.current = false;
+    setPaused(true);
   }
+
   function finishCheckout(ok: boolean) {
-    paused = false;
+    setPaused(false);
     syncSaved();
-    if (!ok && hasChanges.value && !shop.error.value) schedule();
+    if (!ok && latest.current.hasChanges && !latest.current.shop.error) queued.current = true;
   }
-  onScopeDispose(() => {
-    disposed = true;
-    clearTimer();
+
+  const syncSavedEvent = useEffectEvent(syncSaved);
+  const resumeEvent = useEffectEvent(() => {
+    if (queued.current && !saving && !blocked) void save();
   });
-  return { form, changed, saving, hasChanges, stopSave, finishCheckout, flush };
+  const flushEvent = useEffectEvent(flush);
+
+  useEffect(() => {
+    disposed.current = false;
+    return () => {
+      disposed.current = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    syncSavedEvent();
+  }, [shop.state.customer, shop.state.date]);
+
+  useEffect(() => {
+    resumeEvent();
+  }, [shop.pending, shop.ready]);
+
+  useEffect(() => {
+    const previous = previousError.current;
+    previousError.current = shop.error;
+    if (!shop.error && previous && hasChanges && !saving) {
+      setBlocked(false);
+      queued.current = true;
+    }
+  }, [shop.error, hasChanges, saving]);
+
+  useEffect(() => {
+    if (!hasChanges || paused || blocked || saving || disposed.current) return undefined;
+    const timer = setTimeout(() => void flushEvent(), 800);
+    return () => clearTimeout(timer);
+  }, [form, dirty, hasChanges, paused, blocked, saving]);
+
+  return {
+    form,
+    setForm,
+    changed,
+    saving,
+    hasChanges,
+    stopSave,
+    finishCheckout,
+    flush,
+  };
 }
 
 export function useDeliveryForm() {
   const { delivery } = useShopContext();
-  onUnmounted(() => {
-    void delivery.flush();
-  });
+  const flushEvent = useEffectEvent(delivery.flush);
+  useEffect(() => () => void flushEvent(), []);
   return delivery;
 }
