@@ -39,19 +39,7 @@ function saveMessage(editor: Editor) {
   }
 }
 
-export function ProfilePage({
-  editor,
-  exportBlocked,
-  printing,
-  printError,
-  onExport,
-}: {
-  editor: Editor;
-  exportBlocked: boolean;
-  printing: boolean;
-  printError: boolean;
-  onExport: () => void;
-}) {
+export function ProfilePage({ editor }: { editor: Editor }) {
   const { profile } = editor;
   const failed = editor.saveState === 'error' || editor.storageError;
   return (
@@ -100,7 +88,7 @@ export function ProfilePage({
               aria-label={`Цвет аватара: ${label}`}
               aria-pressed={profile.avatar === color}
               onClick={() => editor.update('avatar', color)}
-              disabled={printing || !!editor.recoveryWarning}
+              disabled={!!editor.recoveryWarning}
             />
           ))}
         </fieldset>
@@ -110,7 +98,7 @@ export function ProfilePage({
         aria-busy={editor.loadState === 'loading'}
         onSubmit={(event) => event.preventDefault()}
       >
-        <fieldset className="profile-fields" disabled={printing || !!editor.recoveryWarning}>
+        <fieldset className="profile-fields" disabled={!!editor.recoveryWarning}>
           <legend className="sr-only">Данные профиля</legend>
           <label>
             Имя и фамилия
@@ -175,14 +163,6 @@ export function ProfilePage({
           </button>
         )}
       </div>
-      <button
-        className="button secondary export-button"
-        disabled={exportBlocked || printing}
-        onClick={onExport}
-      >
-        {printing ? 'Готовим печать…' : 'Печать профиля'}
-      </button>
-      {printError && <Failure retry={onExport}>Печать не подготовилась.</Failure>}
     </>
   );
 }

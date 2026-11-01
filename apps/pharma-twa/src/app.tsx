@@ -4,7 +4,6 @@ import { LibraryPage } from './features/library/library-page';
 import { MaterialPage } from './features/library/material-page';
 import { useLibrary } from './features/library/use-library';
 import { useLibraryView } from './features/library/use-library-view';
-import { PrintSheet } from './features/profile/print-sheet';
 import { ProfilePage } from './features/profile/profile-page';
 import { useProfile } from './features/profile/use-profile';
 import { kit } from './kit';
@@ -18,9 +17,6 @@ const readRoute = () => location.hash.slice(1) || '/library';
 export function App() {
   const [route, setRoute] = useState(readRoute);
   const [notice, setNotice] = useState('');
-  const [printing, setPrinting] = useState(false);
-  const [printError, setPrintError] = useState(false);
-  const printRequest = useRef(0);
   const editor = useProfile();
   const library = useLibrary(setNotice);
   const context = useLibraryView();
@@ -43,39 +39,12 @@ export function App() {
     window.scrollTo({ top: returning ? listPosition.current : 0, behavior: 'instant' });
     main.current?.focus({ preventScroll: true });
     previousRoute.current = path;
-    printRequest.current += 1;
-    setPrinting(false);
   }, [path]);
   useEffect(() => {
     if (!notice) return;
     const timer = window.setTimeout(() => setNotice(''), 4500);
     return () => window.clearTimeout(timer);
   }, [notice]);
-
-  const exportBlocked =
-    editor.loadState !== 'ready' ||
-    editor.saveState !== 'saved' ||
-    !!editor.nameError ||
-    !!editor.recoveryWarning ||
-    !!editor.conflict ||
-    !!library.recoveryWarning ||
-    library.state !== 'ready' ||
-    library.favoritePending;
-  const exportProfile = async () => {
-    if (printing || exportBlocked) return;
-    const request = ++printRequest.current;
-    setPrinting(true);
-    setPrintError(false);
-    try {
-      await kit.demo.request(() => true);
-      await document.fonts.ready;
-      if (request === printRequest.current) window.print();
-    } catch {
-      if (request === printRequest.current) setPrintError(true);
-    } finally {
-      if (request === printRequest.current) setPrinting(false);
-    }
-  };
 
   const failedItem = library.catalog.find((item) => item.id === library.favoriteFailure);
   const page = () => {
@@ -93,16 +62,7 @@ export function App() {
     if (path.startsWith('/material/'))
       return <MaterialPage id={path.split('/')[2] ?? ''} library={library} returnTo={returnTo} />;
     if (path === '/calculation') return <CalculationPage />;
-    if (path === '/profile')
-      return (
-        <ProfilePage
-          editor={editor}
-          exportBlocked={exportBlocked}
-          printing={printing}
-          printError={printError}
-          onExport={() => void exportProfile()}
-        />
-      );
+    if (path === '/profile') return <ProfilePage editor={editor} />;
     return (
       <Empty title="Такого раздела нет">
         <AppLink to="/library" className="button primary">
@@ -113,51 +73,45 @@ export function App() {
   };
 
   return (
-    <>
-      <div className="application">
-        <a
-          className="skip-link"
-          href="#main-content"
-          onClick={(event) => {
-            event.preventDefault();
-            main.current?.focus();
-          }}
-        >
-          К содержимому
-        </a>
-        <header className="app-header">
-          <div className="header-inner">
-            <AppLink to="/library" className="brand">
-              практика
-            </AppLink>
-          </div>
-          <SectionNav route={path} />
-        </header>
-        <main id="main-content" ref={main} tabIndex={-1}>
-          {library.favoriteFailure && (
-            <div className="favorite-failure">
-              <Failure retry={() => void library.toggleFavorite(library.favoriteFailure!)}>
-                Избранное не изменилось{failedItem ? `: ${failedItem.title}` : ''}.
-              </Failure>
-              <button
-                className="icon-button"
-                onClick={library.dismissFailure}
-                aria-label="Скрыть ошибку"
-              >
-                <Icon name="close" size={18} />
-              </button>
-            </div>
-          )}
-          {page()}
-        </main>
-        <div className={notice ? 'toast toast-visible' : 'toast'} role="status" aria-live="polite">
-          {notice}
+    <div className="application">
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault();
+          main.current?.focus();
+        }}
+      >
+        К содержимому
+      </a>
+      <header className="app-header">
+        <div className="header-inner">
+          <AppLink to="/library" className="brand">
+            практика
+          </AppLink>
         </div>
+        <SectionNav route={path} />
+      </header>
+      <main id="main-content" ref={main} tabIndex={-1}>
+        {library.favoriteFailure && (
+          <div className="favorite-failure">
+            <Failure retry={() => void library.toggleFavorite(library.favoriteFailure!)}>
+              Избранное не изменилось{failedItem ? `: ${failedItem.title}` : ''}.
+            </Failure>
+            <button
+              className="icon-button"
+              onClick={library.dismissFailure}
+              aria-label="Скрыть ошибку"
+            >
+              <Icon name="close" size={18} />
+            </button>
+          </div>
+        )}
+        {page()}
+      </main>
+      <div className={notice ? 'toast toast-visible' : 'toast'} role="status" aria-live="polite">
+        {notice}
       </div>
-      <PrintSheet
-        profile={editor.profile}
-        selected={library.catalog.filter((item) => library.favorites.includes(item.id))}
-      />
-    </>
+    </div>
   );
 }

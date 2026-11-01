@@ -56,9 +56,6 @@
   --ring: 2px;
   --disabled-opacity: 0.45;
   --chart-max: 440px;
-  --print-margin: 18mm;
-  --print-title: 28pt;
-  --print-body: 11pt;
   font-family: var(--font-body);
   font-size: var(--text-md);
   line-height: var(--leading);
@@ -549,9 +546,6 @@ input[aria-invalid='true'] {
 .status-invalid {
   color: var(--c-danger);
 }
-.export-button {
-  justify-self: start;
-}
 .calculation-page,
 .calculation-form {
   display: grid;
@@ -722,9 +716,6 @@ input[aria-invalid='true'] {
   opacity: 1;
   visibility: visible;
 }
-.print-sheet {
-  display: none;
-}
 select:not([multiple]):not([size]) {
   --chevron: calc(var(--space-1) * 1.25);
   appearance: none;
@@ -803,49 +794,6 @@ select:not([multiple]):not([size]) {
   *::after {
     animation: none !important;
     transition: none !important;
-  }
-}
-@page {
-  size: A4;
-  margin: var(--print-margin);
-}
-@media print {
-  :root,
-  body {
-    background: var(--c-surface);
-    color: var(--c-ink);
-    font-size: var(--print-body);
-  }
-  .application,
-  case-demo-bar {
-    display: none !important;
-  }
-  .print-sheet {
-    display: grid;
-    gap: var(--space-5);
-  }
-  .print-sheet .brand {
-    color: var(--c-accent);
-  }
-  .brand-mark {
-    width: var(--space-5);
-    height: var(--space-5);
-    margin-right: var(--space-2);
-  }
-  .print-sheet h1 {
-    font-size: var(--print-title);
-  }
-  .print-sheet dl {
-    display: grid;
-    gap: var(--space-4);
-  }
-  .print-sheet dt,
-  .print-sheet footer {
-    color: var(--c-muted);
-  }
-  .print-sheet li {
-    margin-bottom: var(--space-4);
-    break-inside: avoid;
   }
 }
 
