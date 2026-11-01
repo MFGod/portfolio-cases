@@ -194,7 +194,6 @@ export function Editor({
                 : dirty
                   ? 'Есть несохранённые изменения'
                   : 'Черновик сохранён'}
-              <small>Опубликована версия {working.revision}</small>
             </p>
             <div className="actions">
               <button
