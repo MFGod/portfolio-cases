@@ -10,9 +10,14 @@ const styles = `
     --bar-border: #d2d2d7;
     --bar-accent: #1d1d1f;
     --bar-accent-text: #ffffff;
-    position: fixed;
-    inset: auto 16px 16px auto;
-    z-index: 2147483000;
+    position: sticky;
+    inset: 0 0 auto;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--bar-border);
+    background: var(--bar-surface);
     font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
     color: var(--bar-text);
   }
@@ -34,11 +39,11 @@ const styles = `
     border-radius: 999px;
     background: var(--bar-surface);
     cursor: pointer;
-    box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
   }
   .panel {
     position: absolute;
-    inset: auto 0 44px auto;
+    inset: calc(100% + 8px) 16px auto auto;
+    box-sizing: border-box;
     width: min(300px, calc(100vw - 32px));
     display: grid;
     gap: 12px;
@@ -100,26 +105,25 @@ export const mountDemoBar = (options: DemoBarOptions) => {
 
   const panel = root.querySelector<HTMLElement>('.panel')!;
   const toggle = root.querySelector<HTMLButtonElement>('.toggle')!;
+  const close = root.querySelector<HTMLButtonElement>('.close')!;
 
-  const setOpen = (open: boolean) => {
+  const setOpen = (open: boolean, restoreFocus = false) => {
     panel.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
+    if (open) close.focus();
+    if (!open && restoreFocus) toggle.focus();
   };
 
   toggle.addEventListener('click', () => setOpen(panel.hidden));
-  root.querySelector('.close')!.addEventListener('click', () => {
-    setOpen(false);
-    toggle.focus();
-  });
+  close.addEventListener('click', () => setOpen(false, true));
   document.addEventListener('click', (event) => {
     if (!panel.hidden && !event.composedPath().includes(host)) setOpen(false);
   });
   root.querySelector('.reset')!.addEventListener('click', options.reset);
   host.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
-    setOpen(false);
-    toggle.focus();
+    setOpen(false, true);
   });
 
-  document.body.append(host);
+  document.body.prepend(host);
 };
