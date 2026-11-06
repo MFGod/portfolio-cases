@@ -73,6 +73,11 @@ let loading = true;
 let loadError = '';
 let routeVersion = 0;
 let notice = '';
+const toastBox = document.createElement('div');
+toastBox.className = 'toast';
+toastBox.setAttribute('role', 'status');
+toastBox.setAttribute('aria-live', 'polite');
+document.body.append(toastBox);
 let pending = false;
 let draft: {
   sample: Sample | null;
@@ -139,18 +144,47 @@ function emptyState(admin: boolean): string {
     <h2>${admin ? 'Чеков не найдено' : 'Чеков пока нет'}</h2>${action}
   </div>`;
 }
+function focusedSelector(): string | null {
+  const element = document.activeElement;
+  if (!(element instanceof HTMLElement) || !app.contains(element)) return null;
+  if (element.id) return `#${CSS.escape(element.id)}`;
+  const attributes = [
+    'data-action',
+    'data-receipt',
+    'data-sample',
+    'data-label',
+    'data-history-status',
+    'data-admin-status',
+  ]
+    .filter((name) => element.hasAttribute(name))
+    .map((name) => `[${name}="${CSS.escape(element.getAttribute(name) ?? '')}"]`);
+  return attributes.length ? attributes.join('') : null;
+}
+let resumeFocus: string | null = null;
 function render(): void {
+  const focused = focusedSelector() ?? resumeFocus;
+  const caret =
+    document.activeElement instanceof HTMLInputElement
+      ? document.activeElement.selectionStart
+      : null;
   const admin = route() === '#/admin';
   const participantView = route() === '#/history' ? historyView() : uploadView();
   document.body.classList.toggle('admin-page', admin);
   app.innerHTML = `${header(admin)}
-    <main id="main" class="${admin ? 'admin-shell' : 'phone-shell'}">
+    <main id="main" tabindex="-1" class="${admin ? 'admin-shell' : 'phone-shell'}">
       ${admin ? adminView() : navigation() + participantView}
-    </main>
-    <div class="toast ${notice ? 'visible' : ''}" role="status" aria-live="polite">
-      ${icon('check', 18)}${h(notice)}
-    </div>`;
+    </main>`;
   bindInputs();
+  resumeFocus = null;
+  if (!focused) return;
+  const target = app.querySelector<HTMLElement>(focused);
+  if (pending && (!target || target.matches(':disabled'))) {
+    resumeFocus = focused;
+    return;
+  }
+  (target ?? app.querySelector<HTMLElement>('#main'))?.focus({ preventScroll: true });
+  if (caret !== null && target instanceof HTMLInputElement && target.type === 'search')
+    target.setSelectionRange(caret, caret);
 }
 function dataState(): string {
   if (loading) return loadingState();
@@ -173,7 +207,7 @@ function successView(receipt: Receipt): string {
 function uploadView(): string {
   if (uploadSuccess) return successView(uploadSuccess);
   const total = ready()
-    ? `<a class="tape-total" href="#/history"><span>Итого</span>${pointsLabel(balance())}</a>`
+    ? `<a class="tape-total" href="#/history"><span>Баланс</span>${pointsLabel(balance())}</a>`
     : '';
   return `<section class="campaign tape">
       <h1>Баллы за чеки</h1>
@@ -206,8 +240,7 @@ function photoPicker(): string {
 }
 function recognition(): string {
   if (!draft) return '';
-  if (!draft.sample)
-    return '<p class="fallback-note">QR‑код не прочитан. Выберите чек из списка ниже.</p>';
+  if (!draft.sample) return '<p class="fallback-note">QR‑код не прочитан.</p>';
   const { sample } = draft;
   return `<div class="fiscal-summary">
     ${icon('check', 18)}
@@ -253,7 +286,7 @@ function uploadForm(): string {
   return `<div class="upload-form tape" ${pending ? 'aria-busy="true"' : ''}>
     ${photoPicker()}
     <input class="visually-hidden" id="receipt-photo" type="file"
-      accept="image/jpeg,image/png,image/webp" aria-label="Фото чека" ${pending ? 'disabled' : ''}>
+      accept="image/jpeg,image/png,image/webp" aria-label="Фото чека" tabindex="-1" ${pending ? 'disabled' : ''}>
     ${recognition()}${error}${progress}
     ${draft ? submitButton() : ''}
     ${sampleList()}
@@ -361,7 +394,7 @@ function filterBar(): string {
     .join('');
   return `<div class="filter-bar">
     <label class="search-field">${icon('search', 18)}
-      <input type="search" id="admin-search" placeholder="Номер, участник или магазин"
+      <input type="search" id="admin-search" placeholder="Чек, участник, магазин"
         aria-label="Поиск по чекам" value="${h(search)}">
     </label>
     <label class="filter-field"><span>Сумма от, ₽</span>
@@ -561,11 +594,13 @@ function download(blob: Blob, filename: string): void {
 }
 function toast(message: string): void {
   notice = message;
+  toastBox.innerHTML = `${icon('check', 18)}${h(message)}`;
+  toastBox.classList.add('visible');
   render();
   setTimeout(() => {
     if (notice === message) {
       notice = '';
-      render();
+      toastBox.classList.remove('visible');
     }
   }, 5000);
 }
@@ -639,7 +674,7 @@ function moderationForm(receipt: Receipt): string {
 function participantResult(receipt: Receipt): string {
   const comment = receipt.comment ? `<p>${h(receipt.comment)}</p>` : '';
   return `<div class="participant-result">
-    <strong>${pointsLabel(points(receipt))}</strong>${comment}
+    ${receipt.status === 'accepted' ? `<strong>${pointsLabel(points(receipt))}</strong>` : ''}${comment}
   </div>`;
 }
 function receiptDialog(receipt: Receipt, admin: boolean): string {
@@ -681,13 +716,16 @@ async function showReceipt(id: string): Promise<void> {
   });
   form?.addEventListener('input', () => {
     const values = new FormData(form);
-    const sum = basketPoints({
-      drinks: Math.max(0, Number(values.get('drinks'))),
-      snacks: Math.max(0, Number(values.get('snacks'))),
-      lemonade: Math.max(0, Number(values.get('lemonade'))),
-    });
+    const basket = {
+      drinks: Number(values.get('drinks')),
+      snacks: Number(values.get('snacks')),
+      lemonade: Number(values.get('lemonade')),
+    };
+    const valid = Object.values(basket).every(
+      (count) => Number.isInteger(count) && count >= 0 && count <= 100,
+    );
     const preview = dialog.querySelector('#points-preview');
-    if (preview) preview.textContent = pointsLabel(sum);
+    if (preview) preview.textContent = valid ? pointsLabel(basketPoints(basket)) : '—';
   });
   dialog.showModal();
   await renderPhoto(receipt);
@@ -732,11 +770,13 @@ async function saveModeration(event: SubmitEvent): Promise<void> {
   if (!errorBox) return;
   if (Object.values(basket).some((count) => !Number.isInteger(count) || count < 0 || count > 100)) {
     errorBox.textContent = 'Количество товаров: целое число от 0 до 100.';
+    errorBox.scrollIntoView({ block: 'center' });
     return;
   }
   if (!comment) {
     errorBox.textContent = 'Добавьте комментарий к решению.';
     dialog.querySelector<HTMLTextAreaElement>('textarea[name="comment"]')?.focus();
+    errorBox.scrollIntoView({ block: 'center' });
     return;
   }
   errorBox.textContent = '';
@@ -850,6 +890,7 @@ app.addEventListener('click', (event) => {
 });
 window.addEventListener('hashchange', () => {
   if (dialog.open) dialog.close();
+  uploadSuccess = null;
   void refresh();
   window.scrollTo({ top: 0 });
 });

@@ -147,8 +147,9 @@ button {
 }
 
 button:disabled {
-  cursor: default;
-  opacity: 0.5;
+  cursor: not-allowed;
+  opacity: 1;
+  color: var(--disabled-ink);
 }
 
 a {
@@ -161,11 +162,23 @@ a {
   outline-offset: 2px;
 }
 
+body:not(.admin-page) .topbar,
+.participant-nav,
+.history-tools {
+  --focus: var(--on-night);
+}
+
 h1,
 h2,
 h3,
 p {
   margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 h1 {
@@ -676,8 +689,17 @@ textarea::placeholder {
   scrollbar-width: none;
 }
 
+main:focus-visible {
+  outline: none;
+}
+
+.history-tabs button:focus-visible {
+  outline-offset: -2px;
+}
+
 .history-tabs button {
   flex-shrink: 0;
+  min-width: var(--target);
   min-height: var(--target);
   padding: 0 var(--space-1);
   border-bottom: 2px solid transparent;
@@ -702,6 +724,11 @@ textarea::placeholder {
   border-radius: 50%;
   background: transparent;
   color: var(--muted);
+}
+
+.history-tools .icon-button {
+  display: none;
+  color: var(--on-night-muted);
 }
 
 .receipt-list {
@@ -843,7 +870,7 @@ textarea::placeholder {
   padding: 0 var(--space-2);
   border: 0;
   background: transparent;
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   outline-offset: 0;
 }
 
@@ -866,7 +893,7 @@ textarea::placeholder {
   padding: 0 var(--space-3);
   border: 1px solid var(--line-strong);
   background: var(--surface);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
 }
 
 .moderation-table {
@@ -1078,6 +1105,7 @@ textarea::placeholder {
   height: var(--target);
   border: 1px solid var(--line-strong);
   background: var(--surface);
+  font-size: var(--text-lg);
   text-align: center;
 }
 
@@ -1106,14 +1134,18 @@ textarea::placeholder {
   min-height: var(--comment-min);
   padding: var(--space-3);
   border: 1px solid var(--line-strong);
-  font-size: var(--text-sm);
+  font-size: var(--text-lg);
   font-weight: var(--weight-regular);
   resize: vertical;
 }
 
 .decision-actions {
+  position: sticky;
+  bottom: 0;
   display: flex;
   gap: var(--space-2);
+  padding-block: var(--space-2);
+  background: var(--surface);
 }
 
 .decision-actions .button {
@@ -1217,6 +1249,9 @@ textarea::placeholder {
   .role-link:hover {
     color: var(--purple);
   }
+  body:not(.admin-page) .role-link:hover {
+    color: var(--on-night);
+  }
 
   .dropzone:hover:not(:disabled) {
     border-color: var(--purple);
@@ -1281,7 +1316,7 @@ textarea::placeholder {
   }
 
   .filter-bar {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .history-tabs button {
@@ -1418,4 +1453,23 @@ select:not([multiple]):not([size]) {
     right var(--chevron-inset, var(--space-3)) center;
   background-size: var(--chevron) var(--chevron);
   background-repeat: no-repeat;
+}
+
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):focus-visible {
+  outline: none;
+}
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):not(
+    [aria-invalid='true']
+  ):focus-visible {
+  border-color: var(--purple);
+}
+.search-field:focus-within {
+  outline: 1px solid var(--purple);
+  outline-offset: -1px;
+}
+
+@media (min-width: 375px) {
+  .history-tools .icon-button {
+    display: grid;
+  }
 }
