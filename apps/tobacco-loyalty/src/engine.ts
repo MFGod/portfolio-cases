@@ -1,4 +1,11 @@
-export const size = 8;
+const boardSize = () => {
+  try {
+    return (window.top ?? window).innerWidth < 360 ? 6 : 8;
+  } catch {
+    return 8;
+  }
+};
+export const size = boardSize();
 export const kinds = 5;
 export const goal = 300;
 export const durationMs = 60_000;
@@ -13,6 +20,7 @@ export type Round = {
   nextId: number;
   score: number;
   startedAt: number | null;
+  pausedAt?: number | null;
 };
 export type Step = {
   cleared: number[];
@@ -142,6 +150,14 @@ export function isRound(value: unknown): value is Round {
 export const timeLeft = (round: Round, now: number) =>
   round.startedAt === null ? durationMs : Math.max(0, round.startedAt + durationMs - now);
 
+export const pauseRound = (round: Round, now: number): Round =>
+  round.startedAt === null || round.pausedAt || isFinished(round, now)
+    ? round
+    : { ...round, pausedAt: now };
+export const resumeRound = (round: Round, now: number): Round =>
+  round.startedAt === null || !round.pausedAt
+    ? round
+    : { ...round, startedAt: round.startedAt + now - round.pausedAt, pausedAt: null };
 export const isFinished = (round: Round, now: number) =>
   round.startedAt !== null && now >= round.startedAt + durationMs - graceMs;
 

@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useRef, useState, type ReactNode } from 'react';
 import type { createCase } from '@cases/demo-kit';
-import { goal, isFinished, isRound, newRound, playTurn } from './engine';
+import { goal, isFinished, isRound, newRound, pauseRound, playTurn, resumeRound } from './engine';
 import {
   initialAccount,
   readGameMessage,
@@ -122,6 +122,20 @@ export function App({ kit }: { kit: Kit }) {
   };
   const syncGameEvent = useEffectEvent(syncGame);
   const saveEvent = useEffectEvent(save);
+  const holdRound = useEffectEvent((active: boolean) => {
+    const state = accountRef.current;
+    if (!state?.round) return;
+    const now = Date.now();
+    const round = active ? resumeRound(state.round, now) : pauseRound(state.round, now);
+    if (round !== state.round) save({ ...state, round });
+  });
+  useEffect(() => {
+    if (loading) return;
+    const sync = () => holdRound(view === 'game' && document.visibilityState === 'visible');
+    sync();
+    document.addEventListener('visibilitychange', sync);
+    return () => document.removeEventListener('visibilitychange', sync);
+  }, [view, loading]);
 
   useEffect(() => {
     async function receive(event: MessageEvent<unknown>) {
@@ -211,11 +225,25 @@ export function App({ kit }: { kit: Kit }) {
       (state) => ({ ...state, round: newRound() }),
       '',
       () => {
+        restarted.current = true;
         setSession(crypto.randomUUID());
         setGameIssue(false);
       },
     );
   }
+  const restarted = useRef(false);
+  const focusRestartedGame = () => {
+    if (!restarted.current) return;
+    restarted.current = false;
+    const frame = iframe.current;
+    frame?.focus();
+    const focusStart = (attempt: number) => {
+      const start = frame?.contentDocument?.querySelector<HTMLElement>('.game-start button');
+      if (start) start.focus();
+      else if (attempt < 30) requestAnimationFrame(() => focusStart(attempt + 1));
+    };
+    focusStart(0);
+  };
   const restartRef = useRef(restart);
   restartRef.current = restart;
   const frameUrl = `${location.pathname}?play=1&session=${session}`;
@@ -259,22 +287,36 @@ export function App({ kit }: { kit: Kit }) {
         {view === 'club' && (
           <>
             <MemberCard balance={account.balance} />
-            <a className="feature-card" href="#/game">
-              <div>
+            <a className="feature-card" href="#/game" aria-label="Играть в Мозаику">
+              <div className="feature-copy">
                 <h2>Мозаика</h2>
-                <p>+20</p>
+              </div>
+              <div className="mosaic-preview" aria-hidden="true">
+                {[0, 2, 4, 1, 2, 3, 4, 2, 0].map((kind, index) => (
+                  <span key={index}>
+                    <i className={`gem gem-${kind}`} />
+                  </span>
+                ))}
+              </div>
+              <div className="feature-actions">
+                <span className="feature-reward">
+                  +20 <small>баллов</small>
+                </span>
                 <span className="round-link">
                   Играть <Icon name="arrow" />
                 </span>
               </div>
-              <Art variant="mosaic" />
             </a>
             <a className="task-row" href="#/tasks">
               <span>
                 <strong>Анкета</strong>
                 {account.taskDone && <small>Выполнено</small>}
               </span>
-              {!account.taskDone && <span className="task-reward">+15</span>}
+              {!account.taskDone && (
+                <span className="task-reward">
+                  +15 <small>баллов</small>
+                </span>
+              )}
               <Icon name="arrow" />
             </a>
             <section className="history" aria-labelledby="history-title">
@@ -300,7 +342,10 @@ export function App({ kit }: { kit: Kit }) {
                 ref={iframe}
                 src={frameUrl}
                 title="Игра Мозаика: три в ряд"
-                onLoad={() => syncGame()}
+                onLoad={() => {
+                  syncGame();
+                  focusRestartedGame();
+                }}
               />
             </section>
           </>
@@ -413,10 +458,12 @@ function MemberCard({ balance }: { balance: number }) {
   const progress = next ? (balance - tier.from) / (next.from - tier.from) : 1;
   return (
     <section className="member-card" aria-label="Карта участника">
-      <div className="member-head">{tier.name}</div>
-      <p className="member-balance">
-        <strong>{balance}</strong> баллов
-      </p>
+      <div className="member-summary">
+        <p className="member-balance">
+          <strong>{balance}</strong> баллов
+        </p>
+        <span className="member-head">{tier.name}</span>
+      </div>
       <div className="member-progress">
         <i style={{ width: `${Math.min(100, progress * 100)}%` }} />
       </div>

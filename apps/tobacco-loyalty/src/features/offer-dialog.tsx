@@ -22,6 +22,12 @@ export function OfferDialog({ offer, account, busy, retry, onBuy, onClose }: Pro
   const code = offer && account?.redeemed[offer.id];
   const shortfall = offer && account ? offer.cost - account.balance : 0;
 
+  useEffect(() => {
+    const node = dialog.current;
+    if (!code || !node?.open || node.contains(document.activeElement)) return;
+    node.querySelector<HTMLElement>('.dialog-close')?.focus();
+  }, [code]);
+
   return (
     <dialog
       ref={dialog}
@@ -48,6 +54,7 @@ export function OfferDialog({ offer, account, busy, retry, onBuy, onClose }: Pro
           <p>{offer.detail}</p>
           {code ? (
             <div className="code-box">
+              <span>Код предложения</span>
               <strong>{code}</strong>
             </div>
           ) : (

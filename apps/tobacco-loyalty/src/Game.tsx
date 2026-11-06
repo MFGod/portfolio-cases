@@ -60,7 +60,6 @@ function fallsOf(previous: Cell[], next: Cell[], drops: Record<number, number>) 
 export function Game() {
   const session = new URLSearchParams(location.search).get('session') ?? '';
   const animated = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const touch = matchMedia('(pointer: coarse)').matches;
   const swapMs = animated ? 180 : 0;
   const popMs = animated ? 170 : 0;
   const fallMs = (rows: number) => (animated ? Math.min(140 + 70 * rows, 560) : 0);
@@ -160,6 +159,11 @@ export function Game() {
   const left = round ? timeLeft(round, now) : durationMs;
   const playing = started && left > 0;
   const over = started && left <= 0;
+  useEffect(() => {
+    if (document.activeElement !== document.body) return;
+    const selector = over ? '.game-result .primary' : started ? '.board [tabindex="0"]' : null;
+    if (selector) document.querySelector<HTMLElement>(selector)?.focus({ preventScroll: true });
+  }, [started, over, rewardPending]);
 
   useEffect(() => {
     if (!playing) return;
@@ -263,7 +267,7 @@ export function Game() {
   const tiles = cells.map((cell, index) => ({ cell, index })).sort((a, b) => a.cell.id - b.cell.id);
 
   return (
-    <div className="game-body">
+    <div className="game-body" style={{ '--board-size': size } as CSSProperties}>
       <div className="game-metrics">
         <div>
           <span>Очки</span>
@@ -281,15 +285,27 @@ export function Game() {
         <i style={{ transform: `scaleX(${left / durationMs})` }} />
       </div>
       {!started ? (
-        <button className="game-start" onClick={() => send('start')}>
-          <span aria-hidden="true" className="game-start-glow" />
-          <span aria-hidden="true" className="gem gem-2" />
-          <span>{touch ? 'Коснитесь, чтобы начать' : 'Нажмите, чтобы начать'}</span>
-        </button>
+        <div className="game-start">
+          <p className="game-rules">
+            Меняйте соседние фишки и собирайте три в ряд. {goal} очков дают 20 баллов.
+          </p>
+          <button className="primary full" onClick={() => send('start')}>
+            Начать игру
+          </button>
+          <div className="game-preview" aria-hidden="true">
+            {cells.map((cell) => (
+              <span key={cell.id}>
+                <i className={`gem gem-${cell.kind}`} />
+              </span>
+            ))}
+          </div>
+        </div>
       ) : over ? (
         <div className="game-result" role="status">
           <h2>Время вышло</h2>
-          {round.score >= goal && <div className="reward-pill">+20 баллов</div>}
+          {round.score < goal && <p>Для 20 баллов нужно {goal} очков.</p>}
+          {rewarded && <div className="reward-pill">+20 баллов зачислено</div>}
+          {round.score >= goal && !rewarded && !rewardError && <p>Начисляем 20 баллов…</p>}
           {rewardError && !rewarded && (
             <>
               <p>Баллы не начислены</p>
@@ -420,18 +436,26 @@ export function Game() {
                 setCursor(indexOf(row, column));
             }}
           >
-            {cells.map((cell, index) => (
-              <button
-                key={index}
-                ref={(node) => {
-                  buttonsRef.current[index] = node;
-                }}
-                data-cell={index}
-                tabIndex={index === cursor ? 0 : -1}
-                aria-pressed={selected === index}
-                aria-label={`${tileNames[cell.kind]}, ${rowOf(index) + 1}×${columnOf(index) + 1}`}
-                onClick={() => tap(index)}
-              />
+            {Array.from({ length: size }, (_, row) => (
+              <div role="row" className="board-row" key={row}>
+                {cells.slice(row * size, (row + 1) * size).map((cell, column) => {
+                  const index = indexOf(row, column);
+                  return (
+                    <span role="gridcell" className="board-row" key={index}>
+                      <button
+                        ref={(node) => {
+                          buttonsRef.current[index] = node;
+                        }}
+                        data-cell={index}
+                        tabIndex={index === cursor ? 0 : -1}
+                        aria-pressed={selected === index}
+                        aria-label={`${tileNames[cell.kind]}, ${row + 1}×${column + 1}`}
+                        onClick={() => tap(index)}
+                      />
+                    </span>
+                  );
+                })}
+              </div>
             ))}
           </div>
         </div>
