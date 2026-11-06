@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { categories, type Content, type Entry } from './data';
-import { Glyph, Price } from './components';
+import { AgentCover, Glyph, Price } from './components';
 
 const allCategories = 'Все';
 
@@ -10,6 +10,7 @@ function AgentCard({ entry }: { entry: Entry }) {
   return (
     <li className="agent-card">
       <a className="card-link" href={`#/agents/${entry.id}`}>
+        <AgentCover id={entry.id} visual={entry.visual} />
         <h3>{entry.title}</h3>
         <p>{entry.summary}</p>
         <Price value={entry.price} />
@@ -70,7 +71,7 @@ export function Catalog({ content }: { content: Content }) {
             <label className="sort-field">
               <span className="sr-only">Сортировка</span>
               <select value={sort} onChange={(e) => setSort(e.target.value as SortOrder)}>
-                <option value="selection">По популярности</option>
+                <option value="selection">По умолчанию</option>
                 <option value="price">Сначала дешевле</option>
                 <option value="name">По названию</option>
               </select>

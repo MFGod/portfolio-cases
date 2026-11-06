@@ -1,5 +1,13 @@
 import type { CSSProperties, ReactNode } from 'react';
 import type { Entry } from './data';
+import meetingCover from './assets/covers/meeting.webp';
+import notesCover from './assets/covers/notes.webp';
+import replyCover from './assets/covers/reply.webp';
+import tableCover from './assets/covers/table.webp';
+import shiftCover from './assets/covers/shift.webp';
+import publicationCover from './assets/covers/publication.webp';
+import sourcesCover from './assets/covers/sources.webp';
+import feedbackCover from './assets/covers/feedback.webp';
 
 type GlyphName = 'close' | 'search' | 'edit' | 'back';
 
@@ -128,5 +136,41 @@ export function EditorSkeleton() {
         <span className="skeleton skeleton-panel" />
       </div>
     </div>
+  );
+}
+
+const agentCovers: Record<string, string> = {
+  meeting: meetingCover,
+  notes: notesCover,
+  reply: replyCover,
+  table: tableCover,
+  shift: shiftCover,
+  publication: publicationCover,
+  sources: sourcesCover,
+  feedback: feedbackCover,
+};
+
+export function AgentCover({ id, visual }: { id: string; visual: number }) {
+  const cover = agentCovers[id];
+  if (!cover) return <OutputPreview visual={visual} />;
+  return (
+    <span className="agent-cover" aria-hidden="true">
+      <img src={cover} alt="" loading="lazy" />
+    </span>
+  );
+}
+
+const outputShapes = ['document', 'groups', 'chat', 'table', 'checklist'] as const;
+
+export function OutputPreview({ visual }: { visual: number }) {
+  const shape = outputShapes[visual % outputShapes.length];
+  return (
+    <span className={`output-preview output-${shape}`} aria-hidden="true">
+      <span className="output-sheet">
+        {Array.from({ length: 6 }, (_, index) => (
+          <i key={index} />
+        ))}
+      </span>
+    </span>
   );
 }

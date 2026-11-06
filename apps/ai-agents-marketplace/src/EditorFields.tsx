@@ -42,7 +42,7 @@ export function EditorFields({
             <label>
               Краткое описание
               <textarea
-                rows={2}
+                rows={3}
                 value={entry.summary}
                 maxLength={300}
                 onChange={(e) => update('summary', e.target.value)}
@@ -75,8 +75,10 @@ export function EditorFields({
                     inputMode="numeric"
                     min={0}
                     max={9999999}
-                    value={entry.price}
-                    onChange={(e) => update('price', Number(e.target.value))}
+                    value={Number.isFinite(entry.price) ? entry.price : ''}
+                    onChange={(e) =>
+                      update('price', e.target.value === '' ? Number.NaN : Number(e.target.value))
+                    }
                   />
                 </label>
               )}

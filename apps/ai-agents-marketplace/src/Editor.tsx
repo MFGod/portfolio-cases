@@ -29,7 +29,7 @@ export function Editor({
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [attempt, setAttempt] = useState(0);
-  const [retryAction, setRetryAction] = useState<'load' | 'save' | 'publish'>('load');
+  const [retryAction, setRetryAction] = useState<'load' | 'save' | 'publish' | null>('load');
   const preview = useRef<HTMLDialogElement>(null);
   const previewButton = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -109,18 +109,20 @@ export function Editor({
   }
   async function save(publishing = false) {
     if (!working || pending) return;
-    if (
-      !target?.title.trim() ||
-      !target.seoTitle.trim() ||
-      !target.seoDescription.trim() ||
-      (entry &&
-        (!entry.summary.trim() ||
-          !entry.body.trim() ||
-          !Number.isFinite(entry.price) ||
-          entry.price < 0))
-    ) {
-      setError('Заполните все поля. Цена не может быть отрицательной.');
-      setRetryAction(publishing ? 'publish' : 'save');
+    if (!target) return;
+    const empty = [
+      !target.title.trim() && 'Название',
+      entry && !entry.summary.trim() && 'Краткое описание',
+      entry && !entry.body.trim() && (entry.kind === 'article' ? 'Текст статьи' : 'Описание'),
+      entry?.kind === 'agent' &&
+        (!Number.isFinite(entry.price) || entry.price < 0) &&
+        'Цена в месяц',
+      !target.seoTitle.trim() && 'SEO: заголовок',
+      !target.seoDescription.trim() && 'SEO: описание',
+    ].filter(Boolean);
+    if (empty.length) {
+      setError(`Заполните поля: ${empty.join(', ')}.`);
+      setRetryAction(null);
       return;
     }
     setPending(true);
@@ -231,12 +233,15 @@ export function Editor({
             {error && (
               <Notice
                 error
-                retry={() =>
-                  retryAction === 'save'
-                    ? void save()
-                    : retryAction === 'publish'
-                      ? void publish()
-                      : setAttempt((n) => n + 1)
+                retry={
+                  retryAction === null
+                    ? undefined
+                    : () =>
+                        retryAction === 'save'
+                          ? void save()
+                          : retryAction === 'publish'
+                            ? void publish()
+                            : setAttempt((n) => n + 1)
                 }
               >
                 {error}
@@ -278,7 +283,9 @@ export function Editor({
               </div>
               {dirty && (
                 <div className="dirty-hint">
-                  <p>Сохраните или отмените правки, чтобы открыть другую запись.</p>
+                  <p>
+                    Сохраните или отмените правки, чтобы открыть предпросмотр или другую запись.
+                  </p>
                   <button
                     className="text-button"
                     onClick={() => {
