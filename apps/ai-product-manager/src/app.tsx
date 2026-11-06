@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { workspace } from './kit';
-import { errorMessage, Icon } from './ui';
+import { errorMessage, Icon, type IconName } from './ui';
 import { Analyze } from './features/analyze';
 import { Export } from './features/export';
 import { Review } from './features/review';
@@ -36,12 +36,28 @@ function Loading({ error, retry }: { error: string; retry: () => void }) {
   );
 }
 
+const UNSAVED = 'Есть правки';
+const WARNINGS = new Set([UNSAVED, 'Передача остановлена']);
+const TOAST_ICONS: Partial<Record<string, IconName>> = {
+  'Документ загружен': 'upload',
+  'Документ добавлен': 'document',
+  'Исправление добавлено': 'document',
+  'Задачи переданы': 'export',
+  'Передача остановлена': 'warning',
+  [UNSAVED]: 'warning',
+  'Обработка отменена': 'close',
+  'Изменения сохранены': 'edit',
+  'Обработка возобновлена': 'refresh',
+};
+
 export function App() {
   const state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot);
   const [route, setRoute] = useState(readRoute);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [toast, setToast] = useState('');
+  if (notice && notice !== toast) setToast(notice);
   const [editingDirty, setEditingDirty] = useState(false);
   const dirtyRef = useRef(false);
   const routeHash = useRef(location.hash);
@@ -66,7 +82,7 @@ export function App() {
     const navigate = () => {
       if (dirtyRef.current && location.hash !== routeHash.current) {
         location.replace(routeHash.current);
-        setNotice('Сохраните или отмените правки');
+        setNotice(UNSAVED);
         return;
       }
       const next = readRoute();
@@ -155,10 +171,15 @@ export function App() {
         )}
       </main>
       <div className={'toast ' + (notice ? 'visible' : '')} role="status" aria-live="polite">
-        {notice && (
+        {toast && (
           <>
-            <Icon name="check" />
-            {notice}
+            <span>{toast}</span>
+            <span
+              className={'toast-icon ' + (WARNINGS.has(toast) ? 'warning' : '')}
+              aria-hidden="true"
+            >
+              <Icon name={TOAST_ICONS[toast] ?? 'check'} size={14} />
+            </span>
           </>
         )}
       </div>

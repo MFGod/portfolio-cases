@@ -592,9 +592,13 @@ function download(blob: Blob, filename: string): void {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-function toast(message: string): void {
+function toast(
+  message: string,
+  name: keyof typeof iconPaths = 'check',
+  tone: 'done' | 'declined' = 'done',
+): void {
   notice = message;
-  toastBox.innerHTML = `${icon('check', 18)}${h(message)}`;
+  toastBox.innerHTML = `<span>${h(message)}</span><span class="toast-icon ${tone}" aria-hidden="true">${icon(name, 14)}</span>`;
   toastBox.classList.add('visible');
   render();
   setTimeout(() => {
@@ -797,7 +801,8 @@ async function saveModeration(event: SubmitEvent): Promise<void> {
     );
     dialogBusy = false;
     dialog.close();
-    toast(status === 'accepted' ? 'Чек принят' : 'Чек отклонён');
+    if (status === 'accepted') toast('Чек принят');
+    else toast('Чек отклонён', 'close', 'declined');
     const nextFocus = Array.from(app.querySelectorAll<HTMLButtonElement>('[data-receipt]')).find(
       (button) => button.dataset.receipt === receipt.id,
     );
@@ -869,7 +874,7 @@ app.addEventListener('click', (event) => {
         new Blob([csvContent(filteredRecords())], { type: 'text/csv;charset=utf-8' }),
         'kvitok-receipts.csv',
       );
-      toast(`Скачано чеков: ${filteredRecords().length}`);
+      toast('CSV скачан', 'download');
       break;
     case 'download-sample': {
       const sample = draft?.sample ?? samples[0];

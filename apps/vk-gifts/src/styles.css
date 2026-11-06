@@ -24,6 +24,7 @@
   --color-friend-ink: #5f615c;
   --color-toast: #282126;
   --color-toast-ink: #ffffff;
+  --color-toast-icon: #f08aa3;
   --color-skeleton: #f0eaed;
   --color-scrim: #28212666;
   --color-shadow: #28212629;
@@ -1008,22 +1009,26 @@ fieldset {
   left: var(--gutter);
   bottom: calc(var(--mobile-nav-height) + var(--safe-bottom) + var(--space-4));
   z-index: 30;
-  background: var(--color-toast);
-  color: var(--color-toast-ink);
-  padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4);
-  border-radius: var(--radius);
-  font-size: var(--text-sm);
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-2);
+  width: fit-content;
+  max-width: calc(100% - var(--gutter) * 2);
+  min-height: var(--target);
+  margin-inline: auto;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-toast);
+  color: var(--color-toast-ink);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(var(--space-2));
+  transform: translateY(var(--space-2)) scale(0.98);
   box-shadow: 0 var(--space-3) var(--space-8) var(--color-shadow);
   transition:
-    opacity var(--duration),
-    transform var(--duration),
+    opacity var(--duration) var(--ease),
+    transform 220ms var(--ease),
     visibility var(--duration);
 }
 .toast.visible {
@@ -1031,9 +1036,11 @@ fieldset {
   visibility: visible;
   transform: none;
 }
-.toast .icon-button {
-  --color-focus: var(--color-toast-ink);
-  color: inherit;
+
+.toast-icon {
+  display: grid;
+  flex: none;
+  color: var(--color-toast-icon);
 }
 @media (min-width: 375px) {
   :root {
@@ -1148,6 +1155,7 @@ fieldset {
   }
   .toast {
     left: auto;
+    margin-inline: 0;
     max-width: calc(var(--space-10) * 12);
   }
 }

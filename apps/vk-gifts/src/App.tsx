@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Icon } from './Art';
+import { Icon, type IconName } from './Art';
 import {
   bookGift,
   catalog,
@@ -26,12 +26,23 @@ const currentPath = () => location.hash.slice(1) || '/wishlist';
 const go = (path: string) => {
   location.hash = path;
 };
+const TOAST_ICONS: Partial<Record<string, IconName>> = {
+  'Подарок забронирован': 'lock',
+  'Бронь снята': 'close',
+  'Желание добавлено': 'heart',
+  'Подарок добавлен': 'gift',
+  'Изменения сохранены': 'edit',
+  'Желание удалено': 'trash',
+};
+
 export function App() {
   const [path, setPath] = useState(currentPath);
   const [modal, setModal] = useState<GiftDialogState>();
   const [addVisited, setAddVisited] = useState(() => currentPath() === '/add');
   const [addVersion, setAddVersion] = useState(0);
   const state = useWishlist();
+  const [shownToast, setShownToast] = useState('');
+  if (state.toast && state.toast !== shownToast) setShownToast(state.toast);
   const context = useListContext();
   const { snapshot, busy } = state;
   useEffect(() => {
@@ -101,13 +112,7 @@ export function App() {
   const isList = path === '/' || path === '/wishlist' || Boolean(friend);
   const listKey = friend?.id === 'lev' || friend?.id === 'asya' ? friend.id : 'own';
   const copy = (gift: Gift) =>
-    void perform(
-      () => saveWish(gift, false),
-      'copy',
-      'Подарок добавлен в ваш список',
-      true,
-      gift.id,
-    );
+    void perform(() => saveWish(gift, false), 'copy', 'Подарок добавлен', true, gift.id);
   let screen;
   if (isList && snapshot)
     screen = (
@@ -229,16 +234,12 @@ export function App() {
         </WorkspaceState>
       </main>
       <div className={`toast ${state.toast ? 'visible' : ''}`} role="status" aria-live="polite">
-        {state.toast && (
+        {shownToast && (
           <>
-            <span>{state.toast}</span>
-            <button
-              className="icon-button"
-              aria-label="Скрыть сообщение"
-              onClick={() => state.setToast('')}
-            >
-              <Icon name="close" size={18} />
-            </button>
+            <span>{shownToast}</span>
+            <span className="toast-icon" aria-hidden="true">
+              <Icon name={TOAST_ICONS[shownToast] ?? 'check'} size={14} />
+            </span>
           </>
         )}
       </div>
@@ -266,7 +267,7 @@ export function App() {
               void perform(
                 () => bookGift(modal.friend!, modal.gift, cancel),
                 'book',
-                cancel ? 'Бронь снята' : 'Подарок забронирован за вами',
+                cancel ? 'Бронь снята' : 'Подарок забронирован',
                 false,
                 modal.gift.id,
               );

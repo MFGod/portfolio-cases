@@ -8,6 +8,7 @@
   --c-accent: #223dcc;
   --c-accent-hover: #182da3;
   --c-accent-ink: #ffffff;
+  --c-toast-icon: #a9b8ff;
   --c-accent-soft: #e8edff;
   --c-line: #d9deed;
   --c-control: #8993af;
@@ -696,24 +697,38 @@ input[aria-invalid='true'] {
   position: fixed;
   z-index: 6;
   inset-inline: var(--gutter);
-  bottom: var(--space-4);
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   width: fit-content;
   max-width: calc(100% - var(--gutter) * 2);
+  min-height: var(--control);
   margin: auto;
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
   background: var(--c-ink);
+  box-shadow: 0 10px 28px rgb(30 38 64 / 0.28);
   color: var(--c-paper);
   font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
   opacity: 0;
   visibility: hidden;
+  transform: translateY(var(--space-2)) scale(0.98);
   transition:
     opacity var(--fast) var(--ease),
+    transform 220ms var(--ease),
     visibility var(--fast);
 }
 .toast-visible {
   opacity: 1;
   visibility: visible;
+  transform: none;
+}
+.toast-icon {
+  display: grid;
+  flex: none;
+  color: var(--c-toast-icon);
 }
 select:not([multiple]):not([size]) {
   --chevron: calc(var(--space-1) * 1.25);

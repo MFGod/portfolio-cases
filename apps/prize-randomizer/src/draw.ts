@@ -71,7 +71,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
         const changed = JSON.stringify(history) !== JSON.stringify(next);
         setHistory(next);
         if (background && lastOperation === 'load') clearError();
-        if (background && changed) setNotice('История обновлена в другой вкладке.');
+        if (background && changed) setNotice('История обновлена');
       }
     } catch (caught) {
       if (!disposed.current && requestId === refreshId.current) {
@@ -102,13 +102,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
       if (kind === 'draw') {
         setPresentation(next[0] ? { history, result: next[0] } : null);
       }
-      setNotice(
-        kind === 'draw'
-          ? ''
-          : kind === 'undo'
-            ? 'Последний выбор отменён. Билет снова участвует.'
-            : 'История восстановлена.',
-      );
+      setNotice(kind === 'draw' ? '' : kind === 'undo' ? 'Выбор отменён' : 'История восстановлена');
       return next;
     } catch (caught) {
       if (!disposed.current) {
@@ -129,7 +123,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
   const finishReveal = (result: Pick | null) => {
     if (!result || presentation?.result !== result) return;
     setPresentation(null);
-    setNotice('Билет выбран и сохранён.');
+    setNotice('Билет выбран');
   };
 
   const draw = () => {
@@ -163,7 +157,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
       });
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setNotice('История выгружена в CSV.');
+      setNotice('CSV выгружен');
     } catch (caught) {
       if (!disposed.current) reportError(caught);
     } finally {

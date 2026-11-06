@@ -114,7 +114,7 @@ export function useWorkspace() {
         setRecoveryRequired(false);
         setLoadError('');
       }
-    }, 'Исходные данные восстановлены.');
+    }, 'Данные восстановлены');
 
   return {
     workspace,

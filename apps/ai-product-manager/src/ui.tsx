@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { markdown, type Job } from './domain';
 
-type IconName =
+export type IconName =
   | 'document'
   | 'layers'
   | 'export'
@@ -14,7 +14,8 @@ type IconName =
   | 'chevron'
   | 'arrow'
   | 'source'
-  | 'warning';
+  | 'warning'
+  | 'refresh';
 
 const iconPaths: Record<IconName, ReactNode> = {
   document: (
@@ -44,6 +45,7 @@ const iconPaths: Record<IconName, ReactNode> = {
       <path d="M12 17h.01" />
     </>
   ),
+  refresh: <path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" />,
 };
 
 export function Icon({ name, size }: { name: IconName; size?: number }) {

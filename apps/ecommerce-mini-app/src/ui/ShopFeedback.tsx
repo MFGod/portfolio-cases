@@ -1,4 +1,10 @@
-import { AppIcon } from './AppIcon';
+import { AppIcon, type AppIconName } from './AppIcon';
+
+const NOTICE_ICONS: Partial<Record<string, AppIconName>> = {
+  'Товары добавлены': 'plus',
+  'Собрано частично': 'alert',
+  'Заказ отменён': 'close',
+};
 import { useShopContext } from './shop-context';
 
 export const ShopFeedback = ({ canRetry, onRetry }: { canRetry: boolean; onRetry: () => void }) => {
@@ -18,11 +24,10 @@ export const ShopFeedback = ({ canRetry, onRetry }: { canRetry: boolean; onRetry
       ) : (
         shop.notice && (
           <div className="message success">
-            <AppIcon name="check" size={16} />
             <span>{shop.notice}</span>
-            <button aria-label="Скрыть сообщение" onClick={shop.dismissNotice}>
-              <AppIcon name="close" size={16} />
-            </button>
+            <span className="toast-icon" aria-hidden="true">
+              <AppIcon name={NOTICE_ICONS[shop.notice] ?? 'check'} size={14} />
+            </span>
           </div>
         )
       )}

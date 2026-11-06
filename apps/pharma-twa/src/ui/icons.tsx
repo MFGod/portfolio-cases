@@ -8,6 +8,7 @@ const paths = {
     </>
   ),
   bookmark: <path d="M6 3h12v18l-6-4-6 4V3Z" />,
+  bookmarkFilled: <path d="M6 3h12v18l-6-4-6 4V3Z" fill="currentColor" />,
   user: (
     <>
       <circle cx="12" cy="8" r="4" />

@@ -74,7 +74,5 @@ export function repeatOrder(
   if (!preview.lines.length) throw new ShopActionError('Товары этого заказа закончились.');
   state.cart = preview.lines;
   state.cartRevision += 1;
-  return preview.partial
-    ? 'Корзина собрана по текущим остаткам. Проверьте количество.'
-    : 'Товары добавлены в корзину';
+  return preview.partial ? 'Собрано частично' : 'Товары добавлены';
 }

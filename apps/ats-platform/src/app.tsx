@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  moveCandidate,
-  saveVacancy,
-  stages,
-  type Vacancy,
-  type Workspace,
-} from './domain/workspace';
+import { moveCandidate, saveVacancy, type Vacancy, type Workspace } from './domain/workspace';
 import { CandidateSheet } from './features/pipeline/candidate-sheet';
 import { PipelineBoard } from './features/pipeline/pipeline-board';
 import { ReportPage } from './features/report/report-page';
@@ -79,10 +73,9 @@ export function App() {
     setEditor(vacancy);
   };
   const move = (id: string, stage: number) => {
-    const name = workspace.candidates.find((item) => item.id === id)?.name ?? 'Кандидат';
     void run(async () => {
       setWorkspace(await moveCandidate(workspace, id, stage));
-    }, `${name}: ${stages[stage]}`);
+    }, 'Этап изменён');
     focusAfterMove.current = personId ? null : id;
   };
   const person = workspace.candidates.find((item) => item.id === personId);
@@ -210,7 +203,7 @@ export function App() {
           {page()}
         </main>
       </div>
-      <Toast message={state.notice} onDismiss={() => state.setNotice('')} />
+      <Toast message={state.notice} />
       {editor && (
         <VacancyEditor
           vacancy={editor === 'new' ? null : editor}

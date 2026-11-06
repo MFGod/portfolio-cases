@@ -17,6 +17,8 @@ const readRoute = () => location.hash.slice(1) || '/library';
 export function App() {
   const [route, setRoute] = useState(readRoute);
   const [notice, setNotice] = useState('');
+  const [toast, setToast] = useState('');
+  if (notice && notice !== toast) setToast(notice);
   const editor = useProfile();
   const library = useLibrary(setNotice);
   const context = useLibraryView();
@@ -110,7 +112,14 @@ export function App() {
         {page()}
       </main>
       <div className={notice ? 'toast toast-visible' : 'toast'} role="status" aria-live="polite">
-        {notice}
+        {toast && (
+          <>
+            <span>{toast}</span>
+            <span className="toast-icon" aria-hidden="true">
+              <Icon name={toast === 'В избранном' ? 'bookmarkFilled' : 'bookmark'} size={14} />
+            </span>
+          </>
+        )}
       </div>
     </div>
   );

@@ -81,7 +81,7 @@ export function Analyze({
         ? (await workspace.revise(recovery.id, draft.title.trim(), draft.text, draft.filename),
           recovery.id)
         : await workspace.submit(draft.title.trim(), draft.text, draft.filename);
-      notify(recovery ? 'Исправленный документ добавлен в очередь' : 'Документ добавлен в очередь');
+      notify(recovery ? 'Исправление добавлено' : 'Документ добавлен');
       location.hash = '#/review/' + id;
     } catch (cause) {
       setError(errorMessage(cause, 'Не удалось добавить документ. Повторите попытку.'));

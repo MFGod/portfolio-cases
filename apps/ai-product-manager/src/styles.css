@@ -29,6 +29,8 @@
   --color-warning-surface: #fbf4e5;
   --color-toast: #243d39;
   --color-on-toast: #ffffff;
+  --color-toast-icon: #9fd8bf;
+  --color-toast-warning: #f1c27a;
 
   --font-body: 'IBM Plex Sans', system-ui, sans-serif;
   --font-code: 'IBM Plex Mono', ui-monospace, monospace;
@@ -452,26 +454,40 @@ body:has(.step-bar) .toast {
   position: fixed;
   z-index: 10;
   right: var(--gutter);
-  bottom: var(--space-5);
+  bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   max-width: calc(100vw - var(--gutter) * 2);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-sm);
+  min-height: var(--control);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
   background: var(--color-toast);
+  box-shadow: 0 10px 28px rgb(36 61 57 / 0.26);
   color: var(--color-on-toast);
   font-size: var(--text-md);
+  font-weight: var(--weight-medium);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transform: translateY(var(--space-2));
+  transform: translateY(var(--space-2)) scale(0.98);
   transition:
     opacity var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out);
+    transform 220ms var(--ease-out),
+    visibility var(--duration);
 }
 .toast.visible {
   opacity: 1;
+  visibility: visible;
   transform: none;
+}
+.toast-icon {
+  display: grid;
+  flex: none;
+  color: var(--color-toast-icon);
+}
+.toast-icon.warning {
+  color: var(--color-toast-warning);
 }
 .skeleton-page {
   display: grid;
@@ -608,6 +624,7 @@ body:has(.step-bar) .toast {
   .toast {
     left: var(--gutter);
     right: var(--gutter);
+    justify-content: space-between;
   }
   .form-footer {
     align-items: stretch;

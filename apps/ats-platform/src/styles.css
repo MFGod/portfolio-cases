@@ -15,6 +15,7 @@
   --c-brand-ink: #813d31;
   --c-side: var(--c-ink);
   --c-side-ink-strong: #ffffff;
+  --c-toast-icon: #e7a596;
   --c-side-active: #ffffff1a;
   --c-warn-soft: #f2ebd9;
   --c-warn-ink: #705923;
@@ -795,25 +796,29 @@ form[aria-busy='true'] .form-grid {
 .toast {
   position: fixed;
   right: var(--gutter);
-  bottom: var(--gutter);
+  bottom: calc(var(--gutter) + env(safe-area-inset-bottom));
   left: var(--gutter);
   z-index: 50;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-2);
-  padding: 0 var(--space-1) 0 var(--space-4);
-  border-radius: var(--radius);
+  width: fit-content;
+  max-width: calc(100% - var(--gutter) * 2);
+  min-height: var(--control);
+  margin-inline: auto;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
   background: var(--c-side);
   color: var(--c-side-ink-strong);
   font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
   box-shadow: 0 var(--space-2) var(--space-5) var(--c-shadow);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(var(--space-2));
+  transform: translateY(var(--space-2)) scale(0.98);
   transition:
     opacity var(--fast) var(--ease),
-    transform var(--fast) var(--ease),
+    transform 220ms var(--ease),
     visibility var(--fast);
 }
 .toast-visible {
@@ -821,11 +826,10 @@ form[aria-busy='true'] .form-grid {
   visibility: visible;
   transform: none;
 }
-.toast .icon-button {
-  color: inherit;
-}
-.toast .icon-button:active {
-  background: var(--c-side-active);
+.toast-icon {
+  display: grid;
+  flex: none;
+  color: var(--c-toast-icon);
 }
 
 .skeleton-list {
@@ -891,6 +895,7 @@ form[aria-busy='true'] .form-grid {
   }
   .toast {
     left: auto;
+    margin-inline: 0;
     max-width: var(--toast-max);
   }
 }

@@ -19,7 +19,7 @@ export function JobControls({
     setError('');
     try {
       await workspace[action](job.id);
-      notify(action === 'cancel' ? 'Обработка отменена' : 'Документ снова в очереди');
+      notify(action === 'cancel' ? 'Обработка отменена' : 'Обработка возобновлена');
     } catch (cause) {
       setError(errorMessage(cause, 'Не удалось изменить обработку. Повторите попытку.'));
     } finally {

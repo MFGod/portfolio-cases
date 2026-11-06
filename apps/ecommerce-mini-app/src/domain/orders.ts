@@ -77,7 +77,7 @@ export function checkoutOrder(
   state.orders.unshift(order);
   state.cart = [];
   state.cartRevision += 1;
-  return `Заказ КР-${order.id} принят`;
+  return 'Заказ принят';
 }
 
 export function cancelOrder(state: ShopState, id: number): string {
@@ -90,5 +90,5 @@ export function cancelOrder(state: ShopState, id: number): string {
     state.stock[line.productId] = next;
   }
   order.status = 'Отменён';
-  return `Заказ КР-${id} отменён`;
+  return 'Заказ отменён';
 }

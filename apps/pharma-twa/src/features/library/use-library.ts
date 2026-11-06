@@ -58,7 +58,7 @@ export function useLibrary(notify: (message: string) => void) {
     refresh();
     const added = await operation;
     refresh();
-    if (added !== null) notify(added ? 'Добавлено в избранное' : 'Убрано из избранного');
+    if (added !== null) notify(added ? 'В избранном' : 'Убрано из избранного');
   };
 
   return {

@@ -22,6 +22,8 @@
   --amber: #7d5f22;
   --amber-soft: #f8f0d9;
   --toast: #30223f;
+  --toast-icon: #8fd6b4;
+  --toast-icon-declined: #f2a2b0;
   --backdrop: #24133379;
   --spinner-track: #e0d6ed;
   --skeleton-a: #ece8f6;
@@ -1187,7 +1189,7 @@ main:focus-visible {
 
 .toast {
   position: fixed;
-  bottom: var(--space-5);
+  bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
   left: 50%;
   z-index: 20;
   display: flex;
@@ -1195,22 +1197,37 @@ main:focus-visible {
   gap: var(--space-2);
   width: max-content;
   max-width: calc(100% - var(--space-6));
-  padding: var(--space-3) var(--space-4);
+  min-height: calc(var(--space-1) * 11);
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius);
   background: var(--toast);
+  box-shadow: 0 10px 28px rgb(48 34 63 / 0.3);
   color: var(--surface);
   font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transform: translate(-50%, var(--space-4));
+  transform: translate(-50%, var(--space-2)) scale(0.98);
   transition:
     opacity var(--duration) var(--ease-standard),
-    transform var(--duration) var(--ease-standard);
+    transform 220ms var(--ease-standard),
+    visibility var(--duration);
 }
 
 .toast.visible {
   opacity: 1;
+  visibility: visible;
   transform: translate(-50%, 0);
+}
+
+.toast-icon {
+  display: grid;
+  flex: none;
+  color: var(--toast-icon);
+}
+.toast-icon.declined {
+  color: var(--toast-icon-declined);
 }
 
 .skeleton-stack {

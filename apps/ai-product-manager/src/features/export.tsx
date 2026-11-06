@@ -82,11 +82,7 @@ function ExportDocument({
     try {
       await workspace.exportJob(job.id, approved || !!job.missingAccepted);
       const updated = workspace.getSnapshot().jobs.find((item) => item.id === job.id);
-      notify(
-        updated?.exportStatus === 'done'
-          ? 'Все задачи переданы в Orbit Track'
-          : 'Передача остановлена. Созданные задачи сохранены.',
-      );
+      notify(updated?.exportStatus === 'done' ? 'Задачи переданы' : 'Передача остановлена');
     } catch (cause) {
       setError(errorMessage(cause, 'Не удалось передать задачи. Повторите попытку.'));
     } finally {

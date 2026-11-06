@@ -9,9 +9,12 @@ const paths = {
   back: 'M19 12H5m6-6-6 6 6 6',
   forward: 'M5 12h14m-6-6 6 6-6 6',
   close: 'M6 6l12 12M18 6 6 18',
+  alert: 'M12 7v6 M12 17h.01',
 };
 
-export const AppIcon = ({ name, size = 18 }: { name: keyof typeof paths; size?: number }) => (
+export type AppIconName = keyof typeof paths;
+
+export const AppIcon = ({ name, size = 18 }: { name: AppIconName; size?: number }) => (
   <svg
     width={size}
     height={size}
