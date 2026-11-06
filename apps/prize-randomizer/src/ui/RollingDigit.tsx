@@ -8,17 +8,27 @@ const stepMs = () =>
 type RollingDigitProps = {
   char: string;
   spinning: boolean;
+  animate: boolean;
   settleSteps: number;
   onSettled: () => void;
 };
 
-export const RollingDigit = ({ char, spinning, settleSteps, onSettled }: RollingDigitProps) => {
-  const [frame, setFrame] = useState({ shown: ' ', previous: ' ', flips: 0 });
-  const shown = useRef(' ');
+export const RollingDigit = ({
+  char,
+  spinning,
+  animate,
+  settleSteps,
+  onSettled,
+}: RollingDigitProps) => {
+  const [frame, setFrame] = useState({ shown: char, previous: char, flips: 0 });
+  const shown = useRef(char);
+  const hasSpun = useRef(false);
+  const element = useRef<HTMLSpanElement>(null);
   const notifySettled = useEffectEvent(onSettled);
 
   useEffect(() => {
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    if (spinning) hasSpun.current = true;
     const flipTo = (next: string) => {
       const previous = shown.current;
       shown.current = next;
@@ -29,35 +39,50 @@ export const RollingDigit = ({ char, spinning, settleSteps, onSettled }: Rolling
       }));
     };
 
-    if (reducedMotion.matches) {
+    if (!animate || !hasSpun.current || reducedMotion.matches) {
       shown.current = char;
-      setFrame((current) => ({ ...current, shown: char, previous: char }));
-      if (!spinning) notifySettled();
+      setFrame({ shown: char, previous: char, flips: 0 });
+      if (!spinning) {
+        hasSpun.current = false;
+        notifySettled();
+      }
       return undefined;
     }
 
     let steps = 0;
+    let active = true;
     const timer = setInterval(() => {
       if (!spinning && steps >= settleSteps && shown.current === char) {
         clearInterval(timer);
-        notifySettled();
+        const animations = element.current?.getAnimations({ subtree: true }) ?? [];
+        void Promise.allSettled(animations.map((animation) => animation.finished)).then(() => {
+          if (!active) return;
+          hasSpun.current = false;
+          notifySettled();
+        });
         return;
       }
       flipTo(after(shown.current));
       steps += 1;
     }, stepMs());
-    return () => clearInterval(timer);
-  }, [char, spinning, settleSteps]);
+    return () => {
+      active = false;
+      clearInterval(timer);
+    };
+  }, [char, spinning, animate, settleSteps]);
 
   return (
-    <span className="digit" aria-hidden="true">
-      {frame.flips > 0 && (
+    <span className="digit" ref={element} aria-hidden="true">
+      {animate && frame.flips > 0 && (
         <span key={`out-${frame.flips}`} className="digit-card digit-out">
           {frame.previous}
         </span>
       )}
-      <span key={`in-${frame.flips}`} className={`digit-card${frame.flips > 0 ? ' digit-in' : ''}`}>
-        {frame.shown}
+      <span
+        key={`in-${frame.flips}`}
+        className={`digit-card${animate && frame.flips > 0 ? ' digit-in' : ''}`}
+      >
+        {animate ? frame.shown : char}
       </span>
     </span>
   );

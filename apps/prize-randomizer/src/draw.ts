@@ -11,6 +11,10 @@ type Operation = 'draw' | 'undo' | 'recover' | 'export';
 
 export const useDraw = (kit: CaseKit, category: CategoryKey) => {
   const [history, setHistory] = useState<Pick[]>([]);
+  const [presentation, setPresentation] = useState<{
+    history: Pick[];
+    result: Pick | null;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [operation, setOperation] = useState<Operation | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -19,6 +23,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
   const [notice, setNotice] = useState('');
   const disposed = useRef(false);
   const refreshId = useRef(0);
+  const refreshQueued = useRef(false);
   const requestedCategory = useRef(category);
   const undoTarget = useRef<Pick | null>(null);
   const repositoryRef = useRef<ReturnType<typeof createHistoryRepository> | null>(null);
@@ -36,7 +41,8 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
   }
   const repository = repositoryRef.current;
   const current = history[0] ?? null;
-  const pending = loading || operation !== null;
+  const revealing = presentation !== null;
+  const pending = loading || operation !== null || revealing;
   const available = remainingCount(history, category);
   const range = categories[category];
 
@@ -85,6 +91,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
     if (pending) return undefined;
     ++refreshId.current;
     setOperation(kind);
+    if (kind === 'draw') setPresentation({ history, result: null });
     setLastOperation(kind);
     setNotice('');
     clearError();
@@ -92,9 +99,12 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
       const next = await resolve();
       if (disposed.current) return undefined;
       setHistory(next);
+      if (kind === 'draw') {
+        setPresentation(next[0] ? { history, result: next[0] } : null);
+      }
       setNotice(
         kind === 'draw'
-          ? 'Билет выбран и сохранён.'
+          ? ''
           : kind === 'undo'
             ? 'Последний выбор отменён. Билет снова участвует.'
             : 'История восстановлена.',
@@ -102,6 +112,7 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
       return next;
     } catch (caught) {
       if (!disposed.current) {
+        if (kind === 'draw') setPresentation(null);
         reportError(caught);
         if (caught instanceof HistoryError && caught.code === 'conflict') {
           try {
@@ -113,6 +124,12 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
     } finally {
       if (!disposed.current) setOperation(null);
     }
+  };
+
+  const finishReveal = (result: Pick | null) => {
+    if (!result || presentation?.result !== result) return;
+    setPresentation(null);
+    setNotice('Билет выбран и сохранён.');
   };
 
   const draw = () => {
@@ -165,8 +182,18 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
 
   const loadEvent = useEffectEvent(load);
   const syncEvent = useEffectEvent(() => {
-    if (!pending) void load(true);
+    if (pending) {
+      refreshQueued.current = true;
+      return;
+    }
+    void load(true);
   });
+
+  useEffect(() => {
+    if (pending || !refreshQueued.current) return;
+    refreshQueued.current = false;
+    void loadEvent(true);
+  }, [pending]);
 
   useEffect(() => {
     disposed.current = false;
@@ -191,7 +218,10 @@ export const useDraw = (kit: CaseKit, category: CategoryKey) => {
 
   return {
     history,
+    journalHistory: presentation?.history ?? history,
     current,
+    revealing,
+    finishReveal,
     pending,
     loading,
     operation,

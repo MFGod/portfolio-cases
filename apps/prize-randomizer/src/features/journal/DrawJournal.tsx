@@ -3,21 +3,34 @@ import { categories } from '../../tickets';
 import { clockTime, ticketNumber } from '../../ui/format';
 
 export const DrawJournal = ({ draw }: { draw: DrawController }) => {
-  const { history, pending, loading, operation, failure } = draw;
+  const { journalHistory: history, pending, loading, operation, failure } = draw;
 
   return (
     <section className="journal" aria-labelledby="journal-title">
       <div className="journal-head">
         <h2 id="journal-title" className="subtitle">
-          Журнал
+          История
         </h2>
         <button
           type="button"
-          className="secondary"
+          className="secondary export-button"
+          aria-label={operation === 'export' ? 'Готовим CSV' : 'Скачать CSV'}
           disabled={pending || history.length === 0}
           onClick={draw.downloadCsv}
         >
-          {operation === 'export' ? 'Готовим файл…' : 'Скачать CSV'}
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M12 3v12m-4-4 4 4 4-4M5 17v4h14v-4" />
+          </svg>
+          CSV
         </button>
       </div>
 

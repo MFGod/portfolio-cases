@@ -5,6 +5,15 @@ import { remainingCount } from './domain/history';
 import { DrawJournal } from './features/journal/DrawJournal';
 import { DrawResult } from './features/result/DrawResult';
 import { categories, CategoryKey, isCategory } from './tickets';
+import sodaImage from './assets/soda.webp';
+import snacksImage from './assets/snacks.webp';
+import drinksImage from './assets/drinks.webp';
+
+const categoryImages = {
+  [CategoryKey.Soda]: sodaImage,
+  [CategoryKey.Snacks]: snacksImage,
+  [CategoryKey.Drinks]: drinksImage,
+};
 
 const categoryFromHash = (): CategoryKey => {
   const value = location.hash.replace(/^#\/?/, '');
@@ -28,25 +37,49 @@ export const App = ({ kit }: { kit: ReturnType<typeof createCase> }) => {
   }, []);
 
   return (
-    <main className="page">
-      <h1 className="visually-hidden">Розыгрыш призов</h1>
+    <>
+      <header className="app-header">
+        <h1>Розыгрыш призов</h1>
+      </header>
 
-      <nav className="tabs" aria-label="Категории">
-        {tabs.map((tab) => (
-          <a
-            key={tab.key}
-            href={`#/${tab.key}`}
-            className="tab"
-            aria-current={category === tab.key ? 'page' : undefined}
-          >
-            {tab.title}
-            {countsKnown && <span className="tab-count">{tab.remaining}</span>}
-          </a>
-        ))}
-      </nav>
+      <main className="page">
+        <section className="draw-column" aria-label="Розыгрыш">
+          <nav className="tabs" aria-label="Категории">
+            {tabs.map((tab) => (
+              <a
+                key={tab.key}
+                href={`#/${tab.key}`}
+                className="tab"
+                aria-current={category === tab.key ? 'page' : undefined}
+              >
+                <span className="tab-copy">
+                  <span className="tab-title">{tab.title}</span>
+                  {countsKnown && <span className="tab-count">{tab.remaining}</span>}
+                </span>
+                <span
+                  className={`category-art${tab.key === CategoryKey.All ? ' category-art-all' : ''}`}
+                  aria-hidden="true"
+                >
+                  {Object.entries(categoryImages)
+                    .filter(([key]) => tab.key === CategoryKey.All || tab.key === key)
+                    .map(([key, src]) => (
+                      <img
+                        key={key}
+                        src={src}
+                        alt=""
+                        className={`category-image category-image-${key}`}
+                        decoding="async"
+                      />
+                    ))}
+                </span>
+              </a>
+            ))}
+          </nav>
 
-      <DrawResult draw={draw} />
-      <DrawJournal draw={draw} />
-    </main>
+          <DrawResult draw={draw} />
+        </section>
+        <DrawJournal draw={draw} />
+      </main>
+    </>
   );
 };
