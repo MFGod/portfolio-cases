@@ -2,6 +2,9 @@ import { useRef, useState } from 'react';
 import { pickupPoints, type OrderStatus } from '../../data';
 import { money, readableDate } from '../../shop';
 import { useShopContext } from '../../ui/shop-context';
+
+const revealConfirm = (element: HTMLDivElement | null) =>
+  element?.scrollIntoView({ block: 'nearest' });
 import { OrderItems } from './OrderItems';
 import { RepeatDialog, type RepeatDialogHandle } from './RepeatDialog';
 
@@ -103,7 +106,7 @@ export const Orders = () => {
             )}
           </div>
           {cancelId === order.id && (
-            <div className="cancel-confirm">
+            <div className="cancel-confirm" ref={revealConfirm}>
               <p>Отменить заказ КР-{order.id}?</p>
               <button
                 className="danger"

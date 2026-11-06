@@ -86,6 +86,8 @@ export const Checkout = () => {
                   disabled={shop.pending && !saving}
                   autoComplete="given-name"
                   required
+                  aria-invalid={!form.customer.trim()}
+                  aria-describedby={!form.customer.trim() ? 'customer-error' : undefined}
                   onChange={(event) => {
                     setForm((current) => ({ ...current, customer: event.target.value }));
                     changed('customer');
@@ -93,13 +95,19 @@ export const Checkout = () => {
                 />
               </label>
             </div>
-            {saving ? (
-              <p className="help-text" role="status">
-                Сохраняем данные получателя…
-              </p>
-            ) : (
-              hasChanges && <p className="help-text">Изменения ещё не сохранены.</p>
-            )}
+            <div className="field-status">
+              {saving ? (
+                <p className="help-text" role="status">
+                  Сохраняем данные получателя…
+                </p>
+              ) : !form.customer.trim() ? (
+                <p className="field-error" id="customer-error" role="alert">
+                  Введите имя получателя.
+                </p>
+              ) : (
+                hasChanges && <p className="help-text">Изменения ещё не сохранены.</p>
+              )}
+            </div>
           </section>
           <section className="checkout-section order-composition">
             <div className="section-heading">

@@ -18,6 +18,7 @@
   --error-soft: #f8e8df;
   --danger: #91472e;
   --cancel-soft: #f4e9e0;
+  --closed-soft: #e4e8e1;
   --cancel-ink: #8a5a3c;
   --low-stock: #855127;
   --selection: #d5ed87;
@@ -118,6 +119,11 @@ select {
   color: inherit;
 }
 
+input,
+select {
+  font-size: var(--text-lg);
+}
+
 button,
 a,
 input,
@@ -143,11 +149,6 @@ button {
     border-color var(--duration-base) var(--ease-standard);
 }
 
-button:disabled {
-  cursor: default;
-  opacity: 0.45;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -171,11 +172,6 @@ select {
   border-radius: var(--radius-sm);
   padding: var(--space-2) var(--space-3);
   background: var(--white);
-}
-
-input:disabled,
-select:disabled {
-  opacity: 0.45;
 }
 
 input[type='checkbox'],
@@ -954,7 +950,6 @@ main {
 
 .checkout-fields input,
 .checkout-fields select {
-  font-size: var(--text-md);
   font-weight: var(--weight-regular);
 }
 
@@ -992,6 +987,10 @@ main {
 
 .order-summary .primary {
   width: 100%;
+}
+
+.field-status {
+  min-height: calc(var(--text-sm) * var(--leading-body));
 }
 
 .field-error {
@@ -1034,6 +1033,7 @@ main {
 }
 
 .status-pill.closed {
+  background: var(--closed-soft);
   color: var(--muted);
 }
 
@@ -1211,6 +1211,10 @@ main {
 .map-tools button:active:not(:disabled),
 .category-tabs button:not(.active):active {
   background: var(--mint-strong);
+}
+
+.quantity-control {
+  display: contents;
 }
 
 case-demo-bar {
@@ -1653,4 +1657,141 @@ dialog::backdrop {
 .bottom-nav a.cart-shortcut.active {
   background: var(--green-dark);
   color: var(--white);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.primary:disabled,
+.secondary:disabled,
+.danger:disabled,
+.add-button:disabled {
+  background: var(--mint-strong);
+  color: var(--muted);
+}
+
+.stepper button:disabled,
+.map-tools button:disabled {
+  color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+input:disabled,
+select:disabled {
+  background: var(--mint);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.shop-shell {
+  background: var(--page);
+}
+
+.page-heading {
+  padding-top: var(--gutter);
+}
+
+.product-grid,
+.skeleton-grid {
+  gap: var(--space-2);
+}
+
+.product-card {
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+.product-image {
+  border-radius: var(--space-2);
+}
+
+.product-copy {
+  padding: var(--space-2) var(--space-1);
+}
+
+.cart-lines {
+  padding-inline: var(--space-3);
+  border-top: 0;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+.cart-line:last-child {
+  border-bottom: 0;
+}
+
+.pickup-summary,
+.checkout-form .pickup-summary {
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+.checkout-form .checkout-section {
+  gap: var(--space-2);
+}
+
+.checkout-fields,
+.order-composition .order-items {
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+.order-summary,
+.checkout-form .order-summary {
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  border-top: 0;
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+.order-summary .summary-total {
+  align-items: baseline;
+  padding: var(--space-3) 0 var(--space-3);
+  font-size: var(--text-lg);
+}
+
+.summary-total strong:last-child {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.order-card {
+  margin-bottom: var(--space-2);
+  padding: var(--space-4);
+  border-bottom: 0;
+  border-radius: var(--radius-lg);
+}
+
+.product-detail-art {
+  background: var(--paper);
+}
+
+@media (min-width: 360px) {
+  .product-grid,
+  .skeleton-grid {
+    gap: var(--space-3);
+  }
+}
+
+.cancel-confirm {
+  scroll-margin-bottom: var(--toast-offset);
+}
+
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):focus-visible {
+  outline: none;
+}
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):not(
+    [aria-invalid='true']
+  ):focus-visible {
+  border-color: var(--green);
+}
+.search-field:focus-within {
+  outline: 1px solid var(--green);
+  outline-offset: -1px;
 }
