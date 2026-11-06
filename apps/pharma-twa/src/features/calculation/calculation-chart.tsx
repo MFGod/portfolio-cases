@@ -29,6 +29,10 @@ export function CalculationChart({ result }: { result: CalculationResult }) {
         <text className="chart-label" x="24" y="154" textAnchor="end">
           0
         </text>
+        <polygon
+          className="chart-area"
+          points={`${first.x},${first.y} ${second.x},${second.y} ${second.x},150 ${first.x},150`}
+        />
         <line className="chart-line" x1={first.x} y1={first.y} x2={second.x} y2={second.y} />
         {[first, second].map((point, index) => (
           <g key={point.date}>

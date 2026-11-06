@@ -115,20 +115,23 @@ export function LibraryPage({
           </p>
           {filtered.length ? (
             <ul className="material-list">
-              {filtered.map((item) => (
-                <li key={item.id} className="material-item">
+              {filtered.map((item, index) => (
+                <li
+                  key={item.id}
+                  className={index === 0 ? 'material-item featured' : 'material-item'}
+                >
                   <div className="material-copy">
                     <h2>
                       <AppLink to={`/material/${item.id}?from=${from}`} onClick={onOpen}>
                         {item.title}
                       </AppLink>
                     </h2>
-                    <p className="material-meta">{item.category}</p>
+                    {index === 0 && <p className="material-summary">{item.summary}</p>}
+                    <p className="material-meta">
+                      {item.category}, {item.minutes} мин
+                    </p>
                   </div>
-                  <div className="material-margin">
-                    <span className="reading-time">{item.minutes} мин</span>
-                    <FavoriteButton item={item} library={library} />
-                  </div>
+                  <FavoriteButton item={item} library={library} />
                 </li>
               ))}
             </ul>

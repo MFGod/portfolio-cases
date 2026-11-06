@@ -107,16 +107,16 @@ export function CalculationPage() {
             )}
             <dl className="result-list">
               <div>
+                <dt>Изменение</dt>
+                <dd>{formatCalculationValue(result.percentageChange, true)} %</dd>
+              </div>
+              <div>
                 <dt>Интервал</dt>
                 <dd>{formatCalculationDays(result.intervalDays)}</dd>
               </div>
               <div>
                 <dt>Разница</dt>
                 <dd>{formatCalculationValue(result.absoluteChange, true)}</dd>
-              </div>
-              <div>
-                <dt>Изменение</dt>
-                <dd>{formatCalculationValue(result.percentageChange, true)} %</dd>
               </div>
             </dl>
             <CalculationChart result={result} />
