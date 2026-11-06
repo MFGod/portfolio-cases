@@ -331,7 +331,6 @@ export function App({ kit }: { kit: Kit }) {
                 </div>
               ))}
             </section>
-            <p className="age-note">18+</p>
           </>
         )}
         {view === 'game' && (
@@ -404,12 +403,15 @@ export function App({ kit }: { kit: Kit }) {
           <img className="brand-mark" src={logo} alt="" />
           мозаика<span className="brand-club">клуб</span>
         </a>
-        {account && view !== 'club' && (
-          <a className="balance" href="#/club" aria-label={`Баланс: ${account.balance} баллов`}>
-            {account.balance}
-            <small>баллов</small>
-          </a>
-        )}
+        <div className="brand-meta">
+          {account && view !== 'club' && (
+            <a className="balance" href="#/club" aria-label={`Баланс: ${account.balance} баллов`}>
+              {account.balance}
+              <small>баллов</small>
+            </a>
+          )}
+          <span className="age-note">18+</span>
+        </div>
       </div>
       <main id="main">{content}</main>
       <div className="feedback" aria-live="polite">
