@@ -69,11 +69,10 @@ export function CandidateRow({
             type="button"
             className="button secondary"
             disabled={!allowed(stage + 1)}
-            aria-label={`${candidate.name}: на этап «${nextStage}»`}
-            title={`На этап «${nextStage}»`}
+            aria-label={`Перевести на этап «${nextStage}»: ${candidate.name}`}
             onClick={() => onMove(stage + 1)}
           >
-            Дальше
+            {nextStage}
             <Icon name="arrow" size={16} />
           </button>
         ) : (

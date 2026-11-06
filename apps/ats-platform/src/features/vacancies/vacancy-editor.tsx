@@ -45,6 +45,12 @@ export function VacancyEditor({
   const [draft, setDraft] = useState<EditorDraft>(vacancy ?? blankDraft);
   const [errors, setErrors] = useState<FieldErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
+  const dirty = JSON.stringify(draft) !== JSON.stringify(vacancy ?? blankDraft);
+  const requestClose = () => {
+    if (pending) return;
+    if (dirty && !window.confirm('Закрыть без сохранения?')) return;
+    onClose();
+  };
   const change = <K extends keyof EditorDraft>(key: K, value: EditorDraft[K]) => {
     setDraft((previous) => ({ ...previous, [key]: value }));
     setErrors((previous) => ({ ...previous, [key]: undefined }));
@@ -79,7 +85,7 @@ export function VacancyEditor({
     'aria-describedby': errors[key] ? `error-${key}` : undefined,
   });
   return (
-    <Modal title={vacancy?.title ?? 'Новая вакансия'} onClose={onClose} wide>
+    <Modal title={vacancy?.title ?? 'Новая вакансия'} onClose={requestClose} wide>
       <form ref={formRef} noValidate onSubmit={submit} aria-busy={pending}>
         <div className="sheet-body">
           <fieldset className="form-grid" disabled={pending || readOnly}>
@@ -220,7 +226,12 @@ export function VacancyEditor({
           />
         </div>
         <footer className="sheet-foot">
-          <button className="button secondary" type="button" onClick={onClose} disabled={pending}>
+          <button
+            className="button secondary"
+            type="button"
+            onClick={requestClose}
+            disabled={pending}
+          >
             {readOnly ? 'Закрыть' : 'Отмена'}
           </button>
           {!readOnly && (

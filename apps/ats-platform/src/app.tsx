@@ -38,6 +38,16 @@ export function App() {
   const { view, change, role } = preferences;
   const state = useWorkspace();
   const { workspace, setWorkspace, pending, run, setActionError } = state;
+  const focusAfterMove = useRef<string | null>(null);
+  useEffect(() => {
+    if (pending || !focusAfterMove.current) return;
+    const target =
+      document
+        .getElementById(`candidate-${focusAfterMove.current}`)
+        ?.querySelector<HTMLElement>('button') ?? document.getElementById('main-content');
+    focusAfterMove.current = null;
+    target?.focus();
+  }, [pending]);
   const selected = workspace.vacancies.some((item) => item.id === view.selected)
     ? view.selected
     : (workspace.vacancies[0]?.id ?? '');
@@ -72,14 +82,8 @@ export function App() {
     const name = workspace.candidates.find((item) => item.id === id)?.name ?? 'Кандидат';
     void run(async () => {
       setWorkspace(await moveCandidate(workspace, id, stage));
-      if (!personId)
-        requestAnimationFrame(() => {
-          const target =
-            document.getElementById(`candidate-${id}`)?.querySelector<HTMLElement>('button') ??
-            document.getElementById('main-content');
-          target?.focus();
-        });
     }, `${name}: ${stages[stage]}`);
+    focusAfterMove.current = personId ? null : id;
   };
   const person = workspace.candidates.find((item) => item.id === personId);
   const managerNote =

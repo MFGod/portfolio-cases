@@ -121,6 +121,7 @@ h2,
 h3 {
   font-weight: var(--weight-strong);
   line-height: var(--leading-tight);
+  text-wrap: balance;
 }
 h1 {
   font-size: var(--text-2xl);
@@ -216,7 +217,6 @@ svg {
   width: var(--role-select);
   border-color: transparent;
   background-color: transparent;
-  font-size: var(--text-sm);
 }
 .app-body {
   min-height: calc(100dvh - var(--header-height));
@@ -233,6 +233,9 @@ main {
   align-content: start;
   min-width: 0;
   padding: var(--space-5) var(--gutter) var(--space-7);
+}
+body:has(.toast-visible) main {
+  padding-bottom: calc(var(--control) + var(--gutter) * 2 + var(--space-7));
 }
 main:focus {
   outline: none;
@@ -382,9 +385,6 @@ textarea[aria-invalid='true'] {
 .vacancy-select {
   grid-column: 1 / -1;
 }
-.stage-filter select {
-  font-size: var(--text-sm);
-}
 .toolbar {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -393,9 +393,6 @@ textarea[aria-invalid='true'] {
 .toolbar .search-field {
   grid-column: 1 / -1;
   grid-row: 1;
-}
-.status-filter select {
-  font-size: var(--text-sm);
 }
 .segmented {
   display: none;
@@ -728,6 +725,7 @@ form[aria-busy='true'] .form-grid {
 }
 .sheet label {
   display: grid;
+  align-content: start;
   gap: var(--space-1);
   color: var(--c-ink-soft);
   font-size: var(--text-sm);
@@ -1018,6 +1016,10 @@ form[aria-busy='true'] .form-grid {
   textarea {
     font-size: var(--text-md);
   }
+  .stage-filter select,
+  .status-filter select {
+    font-size: var(--text-sm);
+  }
   .toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -1077,6 +1079,9 @@ form[aria-busy='true'] .form-grid {
   .candidate-register th,
   .funnel-table th {
     text-align: left;
+  }
+  .candidate-register th.candidate-salary {
+    text-align: right;
   }
   .candidate-register thead th,
   .funnel-table thead th {
@@ -1190,4 +1195,22 @@ form[aria-busy='true'] .form-grid {
     animation-duration: var(--reduced) !important;
     transition-duration: var(--reduced) !important;
   }
+}
+
+.share-bar {
+  height: var(--space-3);
+  border-radius: var(--space-1);
+}
+
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):focus-visible {
+  outline: none;
+}
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):not(
+    [aria-invalid='true']
+  ):focus-visible {
+  border-color: var(--c-focus);
+}
+.search-field:focus-within {
+  outline: 1px solid var(--c-focus);
+  outline-offset: -1px;
 }
