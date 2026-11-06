@@ -5,9 +5,11 @@ import { Collection, type Section } from './sections';
 
 export type Missing = { section: Section; field: string; place: string; label: string };
 
-const blank = (value: string) => value.trim() === '';
-
-export const missingFields = (draft: Content): Missing[] => {
+export const missingFields = (
+  draft: Content,
+  placeholders: ReadonlySet<string> = new Set(),
+): Missing[] => {
+  const blank = (value: string) => value.trim() === '' || placeholders.has(value.trim());
   const missing: Missing[] = [];
   const check = (section: Section, place: string, fields: [string, string, string][]) => {
     for (const [field, label, value] of fields)
@@ -26,6 +28,11 @@ export const missingFields = (draft: Content): Missing[] => {
       [
         ['title', 'Название', item.text.title],
         ['summary', 'Кратко', item.text.summary],
+        ...item.text.steps.map((step, stepIndex): [string, string, string] => [
+          `steps.${stepIndex}.title`,
+          `Шаг ${stepIndex + 1}`,
+          step.title,
+        ]),
       ],
     ),
   );

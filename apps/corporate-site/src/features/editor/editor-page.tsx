@@ -41,6 +41,10 @@ const blankTitles = {
   en: { solutions: 'New service', cases: 'New project', team: 'New person' },
 } satisfies Record<Locale, Record<Collection, string>>;
 
+const placeholderTitles: ReadonlySet<string> = new Set(
+  Object.values(blankTitles).flatMap((titles) => Object.values(titles)),
+);
+
 const blankSolution = (draft: Content, title: string): Solution => {
   const text = (title: string) => ({
     title,
@@ -113,7 +117,10 @@ type MissingText = Missing & { locale: Locale };
 
 const missingTexts = (stored: LocalizedContent): MissingText[] =>
   locales.flatMap((locale) =>
-    missingFields(localize(stored, locale)).map((entry) => ({ ...entry, locale })),
+    missingFields(localize(stored, locale), placeholderTitles).map((entry) => ({
+      ...entry,
+      locale,
+    })),
   );
 
 const withoutEntry = (
@@ -210,6 +217,9 @@ export function EditorPage() {
           (entry) => entry.locale === locale && sameSection(entry.section, section),
         );
         if (!here) select(first.section, first.locale);
+        requestAnimationFrame(() =>
+          document.querySelector('.publish-blocked')?.scrollIntoView({ block: 'center' }),
+        );
         return;
       }
     }
@@ -231,17 +241,22 @@ export function EditorPage() {
     setNotice(null);
     setSection(next);
     setLocale(nextLocale);
+    requestAnimationFrame(() => window.scrollTo(0, 0));
   };
 
   const addItem = (collection: Collection) => {
     change(appended(draft, collection, locale));
     setSection({ kind: 'item', collection, index: draft[collection].length });
+    requestAnimationFrame(() => window.scrollTo(0, 0));
   };
 
   const removeItem = (collection: Collection, index: number) => {
     const result = removal(draft, collection, index);
     if ('blocked' in result) {
       setNotice(result.blocked);
+      requestAnimationFrame(() =>
+        document.querySelector('.remove-item + .form-error')?.scrollIntoView({ block: 'center' }),
+      );
       return;
     }
     if (!window.confirm(`Удалить «${result.title}»?`)) return;
@@ -397,7 +412,15 @@ export function EditorPage() {
         </div>
       )}
 
-      <div className={previewOpen ? 'editor-body is-previewing' : 'editor-body'}>
+      <div
+        className={[
+          'editor-body',
+          previewOpen && 'is-previewing',
+          section.kind === 'inquiries' && 'is-inquiries',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      >
         <EditorSidebar
           draft={draft}
           section={section}

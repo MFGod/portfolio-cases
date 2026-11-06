@@ -57,14 +57,14 @@ export function SeoFields({
     <fieldset className="field-group">
       <legend>SEO</legend>
       <TextField
-        label="Title"
+        label="Заголовок в поиске"
         value={value.title}
         hint={`${value.title.length} из ${TITLE_LIMIT} символов`}
         hintWarns={value.title.length > TITLE_LIMIT}
         onChange={(title) => onChange({ ...value, title })}
       />
       <TextField
-        label="Description"
+        label="Описание в поиске"
         rows={2}
         value={value.description}
         hint={`${value.description.length} из ${DESCRIPTION_LIMIT} символов`}
@@ -80,6 +80,12 @@ export function SeoFields({
   );
 }
 
+const parseList = (text: string) =>
+  text
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
 export function TagsField({
   label,
   value,
@@ -89,19 +95,18 @@ export function TagsField({
   value: string[];
   onChange: (value: string[]) => void;
 }) {
+  const [draft, setDraft] = useState('');
+  const joined = value.join(', ');
+  const shown = parseList(draft).join(', ') === joined ? draft : joined;
   return (
     <TextField
       label={label}
-      value={value.join(', ')}
+      value={shown}
       hint="Через запятую"
-      onChange={(text) =>
-        onChange(
-          text
-            .split(',')
-            .map((item) => item.trim())
-            .filter(Boolean),
-        )
-      }
+      onChange={(text) => {
+        setDraft(text);
+        onChange(parseList(text));
+      }}
     />
   );
 }
@@ -167,16 +172,19 @@ function CheckedField({
   hint,
   parse,
   onChange,
+  explain,
 }: {
   label: string;
   value: string;
   hint: string;
   parse: (text: string) => string | null;
   onChange: (value: string) => void;
+  explain?: (text: string) => string;
 }) {
   const [text, setText] = useState(value);
   useEffect(() => setText(value), [value]);
   const valid = parse(text) !== null;
+  const shownHint = valid || !explain ? hint : explain(text);
   return (
     <label className="field">
       <span>{label}</span>
@@ -188,9 +196,11 @@ function CheckedField({
           const next = parse(event.target.value);
           if (next !== null && next !== value) onChange(next);
         }}
-        onBlur={() => setText(value)}
+        onBlur={() => {
+          if (valid) setText(value);
+        }}
       />
-      <small className="field-hint">{hint}</small>
+      <small className={valid ? 'field-hint' : 'field-hint is-warning'}>{shownHint}</small>
     </label>
   );
 }
@@ -213,6 +223,11 @@ export function SlugField({
         const next = text.toLowerCase().trim();
         return SLUG.test(next) && (next === value || !taken(next)) ? next : null;
       }}
+      explain={(text) =>
+        SLUG.test(text.toLowerCase().trim())
+          ? 'Этот адрес уже занят'
+          : 'Только латиница, цифры и дефис'
+      }
       onChange={onChange}
     />
   );

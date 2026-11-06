@@ -1,10 +1,17 @@
 import type { Member } from '../content';
+import anna from '../../assets/team/anna.webp';
+import ilya from '../../assets/team/ilya.webp';
+import olga from '../../assets/team/olga.webp';
+import pavel from '../../assets/team/pavel.webp';
+import timur from '../../assets/team/timur.webp';
+import vera from '../../assets/team/vera.webp';
 
 export const team: Member[] = [
   {
     slug: 'anna-orlova',
     since: 2019,
     stack: ['TypeScript', 'PostgreSQL', 'Kubernetes'],
+    photo: anna,
     text: {
       name: 'Анна Орлова',
       role: 'Технический руководитель',
@@ -15,6 +22,7 @@ export const team: Member[] = [
     slug: 'ilya-shatrov',
     since: 2020,
     stack: ['TypeScript', 'Node.js', 'PostgreSQL'],
+    photo: ilya,
     text: {
       name: 'Илья Шатров',
       role: 'Разработчик веб-сервисов',
@@ -25,6 +33,7 @@ export const team: Member[] = [
     slug: 'vera-kim',
     since: 2021,
     stack: ['TypeScript', 'React', 'Playwright'],
+    photo: vera,
     text: {
       name: 'Вера Ким',
       role: 'Фронтенд-разработчик',
@@ -35,6 +44,7 @@ export const team: Member[] = [
     slug: 'timur-gaziev',
     since: 2020,
     stack: ['Go', 'Kafka', 'PostgreSQL'],
+    photo: timur,
     text: {
       name: 'Тимур Газиев',
       role: 'Инженер интеграций',
@@ -45,6 +55,7 @@ export const team: Member[] = [
     slug: 'olga-reshetova',
     since: 2022,
     stack: ['SQL', 'OpenAPI', 'BPMN'],
+    photo: olga,
     text: {
       name: 'Ольга Решетова',
       role: 'Системный аналитик',
@@ -55,6 +66,7 @@ export const team: Member[] = [
     slug: 'pavel-dronov',
     since: 2021,
     stack: ['TypeScript', 'React Native', 'API'],
+    photo: pavel,
     text: {
       name: 'Павел Дронов',
       role: 'Разработчик мобильных приложений',

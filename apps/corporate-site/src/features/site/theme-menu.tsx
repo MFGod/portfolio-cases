@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 
 import { t } from '../../domain/copy';
 import { themes, type Theme } from '../../domain/theme';
@@ -15,7 +15,8 @@ const icon = { system: 'system', light: 'sun', dark: 'moon' } as const satisfies
   IconName
 >;
 
-export function ThemeMenu({ theme }: { theme: ThemeChoice }) {
+export function ThemeMenu({ theme, className }: { theme: ThemeChoice; className?: string }) {
+  const listId = useId();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const button = useRef<HTMLButtonElement>(null);
@@ -23,7 +24,7 @@ export function ThemeMenu({ theme }: { theme: ThemeChoice }) {
 
   const close = (refocus: boolean) => {
     setOpen(false);
-    if (refocus) button.current?.focus();
+    if (refocus) requestAnimationFrame(() => button.current?.focus());
   };
 
   useEffect(() => {
@@ -43,7 +44,9 @@ export function ThemeMenu({ theme }: { theme: ThemeChoice }) {
       return;
     }
     if (event.key === 'Tab') {
-      setOpen(false);
+      event.preventDefault();
+      event.stopPropagation();
+      close(true);
       return;
     }
     const step = { ArrowDown: 1, ArrowUp: -1 }[event.key];
@@ -57,14 +60,14 @@ export function ThemeMenu({ theme }: { theme: ThemeChoice }) {
   };
 
   return (
-    <div className="theme-menu" ref={root}>
+    <div className={className ? `theme-menu ${className}` : 'theme-menu'} ref={root}>
       <button
         type="button"
         ref={button}
         className="theme-button"
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-controls="theme-list"
+        aria-controls={listId}
         aria-label={`${t('theme')}: ${t(label[theme.current])}`}
         onClick={() => setOpen(!open)}
       >
@@ -73,11 +76,11 @@ export function ThemeMenu({ theme }: { theme: ThemeChoice }) {
       {open && (
         <div
           className="theme-list"
-          id="theme-list"
+          id={listId}
           role="menu"
           aria-label={t('theme')}
           ref={list}
-          onKeyDown={navigate}
+          onKeyDownCapture={navigate}
         >
           {themes.map((key) => (
             <button

@@ -130,7 +130,7 @@ textarea {
   background: var(--selection);
 }
 .skip-link {
-  position: absolute;
+  position: fixed;
   display: inline-flex;
   align-items: center;
   min-height: var(--target);
@@ -354,7 +354,8 @@ select:not([multiple]):not([size]) {
   display: inline-flex;
   align-items: center;
   justify-self: start;
-  min-height: var(--target-compact);
+  min-width: var(--target);
+  min-height: var(--target);
   text-decoration: none;
 }
 .footer-reach {
@@ -372,6 +373,9 @@ select:not([multiple]):not([size]) {
   font-size: var(--text-xs);
 }
 .footer-editor {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
   text-decoration: none;
 }
 
@@ -623,6 +627,29 @@ select:not([multiple]):not([size]) {
 .person > span:last-child {
   display: grid;
   min-width: 0;
+}
+.person-portrait,
+.index-portrait {
+  flex: none;
+  width: calc(var(--space) * 5);
+  height: calc(var(--space) * 5);
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+}
+.index-title:has(.index-portrait) {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--space) * 1.5);
+}
+.index-name {
+  display: grid;
+  min-width: 0;
+}
+.member-portrait {
+  width: calc(var(--space) * 14);
+  height: calc(var(--space) * 14);
+  border-radius: var(--radius-card);
+  object-fit: cover;
 }
 .person-name {
   font-weight: var(--weight-medium);
@@ -945,6 +972,9 @@ select:not([multiple]):not([size]) {
   background: var(--page);
 }
 .editor-top {
+  position: sticky;
+  top: calc(var(--space) * -6.75);
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -953,6 +983,12 @@ select:not([multiple]):not([size]) {
   padding: calc(var(--space) * 2);
   border-bottom: 1px solid var(--line);
   background: var(--surface);
+}
+html:has(.editor-top) {
+  scroll-padding-top: calc(var(--space) * 16);
+}
+body:has(.editor-top) case-demo-bar {
+  position: relative;
 }
 .editor-top h1 {
   font-size: var(--text-lg);
@@ -1103,7 +1139,7 @@ select:not([multiple]):not([size]) {
   background: var(--surface);
 }
 .locale-switch button {
-  min-height: calc(var(--target) - var(--space));
+  min-height: var(--target);
   padding-inline: calc(var(--space) * 1.5);
   border: 0;
   border-radius: var(--radius-pill);
@@ -1196,6 +1232,9 @@ select:not([multiple]):not([size]) {
   border-color: var(--accent);
   outline: 1px solid var(--accent);
 }
+.table-scroll {
+  overflow-x: auto;
+}
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -1229,7 +1268,7 @@ select:not([multiple]):not([size]) {
 .is-previewing .preview-viewport {
   height: 70vh;
 }
-.preview-toggle {
+.button.preview-toggle {
   justify-self: start;
 }
 .preview-bar {
@@ -1239,6 +1278,10 @@ select:not([multiple]):not([size]) {
   padding: var(--space) calc(var(--space) * 2);
   color: var(--ink);
   font-size: var(--text-xs);
+}
+.preview-bar .mono {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .preview-viewport {
   position: relative;
@@ -1275,6 +1318,9 @@ select:not([multiple]):not([size]) {
 }
 
 @media (min-width: 760px) {
+  .editor-top {
+    top: 0;
+  }
   :root {
     --gutter: calc(var(--space) * 5);
     --section: calc(var(--space) * 10);
@@ -1445,6 +1491,9 @@ select:not([multiple]):not([size]) {
   .editor-body {
     grid-template-columns: calc(var(--space) * 26) minmax(0, 1fr) minmax(0, 1fr);
   }
+  .editor-body.is-inquiries {
+    grid-template-columns: calc(var(--space) * 26) minmax(0, 1fr);
+  }
   .editor-form {
     border-right: 1px solid var(--line);
   }
@@ -1502,6 +1551,9 @@ select:not([multiple]):not([size]) {
         1.1fr
       );
   }
+  .editor-body.is-inquiries {
+    grid-template-columns: calc(var(--space) * 30) minmax(0, 1fr);
+  }
   .editor-form {
     padding: calc(var(--space) * 3);
   }
@@ -1510,7 +1562,11 @@ select:not([multiple]):not([size]) {
 @media (hover: hover) and (pointer: fine) {
   .button.small,
   .filter-pills a,
-  .tags a {
+  .tags a,
+  .footer-contacts a,
+  .footer-nav a,
+  .footer-editor,
+  .locale-switch button {
     min-height: var(--target-compact);
   }
 }
@@ -1553,4 +1609,13 @@ select:not([multiple]):not([size]) {
   :root {
     --duration: 0ms;
   }
+}
+
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):focus-visible {
+  outline: none;
+}
+:is(input:not([type='checkbox'], [type='radio'], [type='file']), select, textarea):not(
+    [aria-invalid='true']
+  ):focus-visible {
+  border-color: var(--accent);
 }

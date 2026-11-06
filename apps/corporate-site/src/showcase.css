@@ -3,13 +3,12 @@
   --ink: #10172a;
   --ink-hover: #26304a;
   --muted: #5a6377;
-  --accent: #0068fc;
+  --accent: #0062ee;
   --accent-hover: #0058c9;
   --accent-soft: #e8f1ff;
   --selection: #cfe0ff;
   --on-accent: #ffffff;
   --glow-accent: rgb(0 104 252 / 0.2);
-  --glow-violet: rgb(139 92 246 / 0.16);
   --glow-warm: rgb(255 138 101 / 0.14);
   --dot-grid: #b9c3d6;
   --dot-accent: rgb(0 104 252 / 0.55);
@@ -73,7 +72,6 @@
   --card-shadow: rgb(0 0 0 / 0.55);
   --card-shadow-near: rgb(0 0 0 / 0.3);
   --glow-accent: rgb(61 139 255 / 0.3);
-  --glow-violet: rgb(139 92 246 / 0.24);
   --glow-warm: rgb(255 138 101 / 0.16);
   --dot-grid: #2b3650;
   --dot-accent: rgb(106 166 255 / 0.6);
@@ -233,6 +231,22 @@
 }
 .theme-list button > svg:first-child {
   color: var(--muted);
+}
+.site-header .header-language,
+.site-header .header-theme {
+  display: none;
+}
+.menu-settings {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  margin-top: var(--space);
+  padding-top: calc(var(--space) * 2);
+  border-top: 1px solid var(--line);
+}
+.menu-settings .theme-list {
+  right: auto;
+  left: 0;
 }
 
 .button {
@@ -476,7 +490,6 @@
   outline: none;
   border-color: var(--accent);
   background-color: var(--surface);
-  box-shadow: 0 0 0 calc(var(--space) / 2) var(--accent-soft);
   transition: none;
 }
 .site .contact .field :is(input, textarea)[aria-invalid='true'] {
@@ -615,6 +628,13 @@
   .site-menu {
     order: 1;
   }
+  .site-header .header-language,
+  .site-header .header-theme {
+    display: inline-flex;
+  }
+  .menu-settings {
+    display: none;
+  }
   .language-link {
     order: 2;
     min-height: var(--target-compact);
@@ -686,8 +706,6 @@
   background:
     radial-gradient(closest-side, var(--glow-accent), transparent) 50% 62% /
       min(100%, calc(var(--space) * 112.5)) calc(var(--space) * 52.5) no-repeat,
-    radial-gradient(closest-side, var(--glow-violet), transparent) 28% 70% /
-      min(70%, calc(var(--space) * 77.5)) calc(var(--space) * 45) no-repeat,
     radial-gradient(closest-side, var(--glow-warm), transparent) 74% 74% /
       min(70%, calc(var(--space) * 70)) calc(var(--space) * 40) no-repeat;
   filter: blur(var(--glow-blur));

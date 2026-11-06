@@ -100,6 +100,7 @@ export type Member = {
   slug: string;
   since: number;
   stack: string[];
+  photo?: string;
   text: MemberText;
 };
 

@@ -34,11 +34,18 @@ export function PreviewPane({
   useEffect(() => {
     const element = viewport.current;
     if (!element) return;
+    let frameId = 0;
     const observer = new ResizeObserver(([entry]) => {
-      if (entry) setScale(entry.contentRect.width / CANVAS_WIDTH);
+      if (!entry) return;
+      const width = entry.contentRect.width;
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(() => setScale(width / CANVAS_WIDTH));
     });
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      cancelAnimationFrame(frameId);
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -54,9 +61,14 @@ export function PreviewPane({
     doc.body.append(root);
     setMount(root);
 
-    const observer = new view.ResizeObserver(() => setHeight(root.offsetHeight));
+    let frameId = 0;
+    const observer = new view.ResizeObserver(() => {
+      view.cancelAnimationFrame(frameId);
+      frameId = view.requestAnimationFrame(() => setHeight(root.offsetHeight));
+    });
     observer.observe(root);
     return () => {
+      view.cancelAnimationFrame(frameId);
       observer.disconnect();
       root.remove();
     };

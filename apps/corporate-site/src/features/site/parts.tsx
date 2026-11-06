@@ -15,6 +15,7 @@ export type IndexEntry = {
   detail?: string;
   end?: string;
   cover?: MediaKey;
+  portrait?: string;
 };
 
 export function IndexList({ entries, label }: { entries: IndexEntry[]; label: string }) {
@@ -35,8 +36,21 @@ export function IndexList({ entries, label }: { entries: IndexEntry[]; label: st
             {entry.cover && <ProjectShot cover={entry.cover} />}
             {entry.kind && <span className="index-kind">{entry.kind}</span>}
             <span className="index-title">
-              {entry.title}
-              {entry.subtitle && <span className="index-subtitle">{entry.subtitle}</span>}
+              {entry.portrait && (
+                <img
+                  className="index-portrait"
+                  src={entry.portrait}
+                  alt=""
+                  width={320}
+                  height={320}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <span className="index-name">
+                {entry.title}
+                {entry.subtitle && <span className="index-subtitle">{entry.subtitle}</span>}
+              </span>
             </span>
             {(entry.meta || entry.detail) && (
               <span className="index-meta">
@@ -107,6 +121,17 @@ export function People({ members, label }: { members: Member[]; label: string })
       {members.map((member) => (
         <li key={member.slug}>
           <a className="person" href={href.member(member.slug)}>
+            {member.photo && (
+              <img
+                className="person-portrait"
+                src={member.photo}
+                alt=""
+                width={320}
+                height={320}
+                loading="lazy"
+                decoding="async"
+              />
+            )}
             <span>
               <span className="person-name">{member.text.name}</span>
               <span className="person-role">{member.text.role}</span>

@@ -38,6 +38,7 @@ export function TeamPage({ content, stack }: Props & { stack?: string }) {
           href: href.member(member.slug),
           kind: member.text.role,
           title: member.text.name,
+          portrait: member.photo,
           meta: member.stack.join(', '),
           end: String(casesOfMember(content, member.slug).length || ''),
         }))}
@@ -60,6 +61,16 @@ export function MemberPage({ content, slug }: Props & { slug: string }) {
         {t('allTeam')}
       </a>
       <header className="member-head">
+        {member.photo && (
+          <img
+            className="member-portrait"
+            src={member.photo}
+            alt=""
+            width={320}
+            height={320}
+            decoding="async"
+          />
+        )}
         <div>
           <h1>{text.name}</h1>
           <p className="muted">{text.role}</p>
