@@ -96,6 +96,7 @@ export function GiftForm({ initial, editing = false, disabled = false, onSave, o
     if (!title.trim()) {
       setError({ field: 'title', message: 'Напишите название желания.' });
       titleRef.current?.focus();
+      titleRef.current?.scrollIntoView({ block: 'center' });
       return;
     }
     const validPrice = /^\d+(?:[,.]\d{1,2})?$/.test(price.trim());
@@ -106,6 +107,7 @@ export function GiftForm({ initial, editing = false, disabled = false, onSave, o
         message: 'Укажите цену от 0 до 10 000 000 ₽, до двух знаков после запятой.',
       });
       priceRef.current?.focus();
+      priceRef.current?.scrollIntoView({ block: 'center' });
       return;
     }
     pending.current = 'save';
@@ -201,6 +203,11 @@ export function GiftForm({ initial, editing = false, disabled = false, onSave, o
             }}
           />
         </label>
+        {error?.field === 'title' && (
+          <p id={errorId} className="error-message" role="alert">
+            {error.message}
+          </p>
+        )}
         <div className="form-columns">
           <label>
             Цена, ₽
@@ -227,6 +234,11 @@ export function GiftForm({ initial, editing = false, disabled = false, onSave, o
             onChange={setCategory}
           />
         </div>
+        {error?.field === 'price' && (
+          <p id={errorId} className="error-message" role="alert">
+            {error.message}
+          </p>
+        )}
         <label>
           Пожелания к подарку <span className="optional">необязательно</span>
           <textarea
@@ -239,7 +251,7 @@ export function GiftForm({ initial, editing = false, disabled = false, onSave, o
       </fieldset>
       <div aria-live="polite">
         {reading && <p className="helper">Читаем фото…</p>}
-        {error && (
+        {error && error.field !== 'title' && error.field !== 'price' && (
           <p id={errorId} className="error-message" role="alert">
             {error.message}
           </p>

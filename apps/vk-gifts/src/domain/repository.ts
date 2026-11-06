@@ -168,7 +168,7 @@ export const createWishlistRepository = ({ store, href, withLock, id, now }: Rep
       addNotice(
         state,
         cancel
-          ? `Вы сняли бронь: «${present.title}» для ${recipient.name}.`
+          ? `Вы сняли бронь: «${present.title}». Получатель: ${recipient.name}.`
           : `Вы подарите «${present.title}». Получатель: ${recipient.name}.`,
         'booking',
       );
