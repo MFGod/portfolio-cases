@@ -59,7 +59,7 @@ export function createPdfDocument(
   append('\nendstream\nendobj\n');
   const content = `q\n${pageWidth} 0 0 ${pageHeight} 0 0 cm\n/Im0 Do\nQ\n`;
   object(5, `<< /Length ${encoder.encode(content).length} >>\nstream\n${content}endstream`);
-  object(6, `<< /Title <${pdfText('Практика. Динамика значений')}> /Creator (Praktika) >>`);
+  object(6, `<< /Title <${pdfText('Практика. Динамика гемоглобина')}> /Creator (Praktika) >>`);
   const crossReference = length;
   append('xref\n0 7\n0000000000 65535 f \n');
   for (let id = 1; id <= 6; id += 1) {

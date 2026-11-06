@@ -41,7 +41,7 @@ function drawReport(context: CanvasRenderingContext2D, result: CalculationResult
   context.fillStyle = palette.paper;
   context.fillRect(0, 0, 595.28, 841.89);
   text('Практика', 48, 58, 20, 600, palette.accent);
-  text('Динамика значений', 48, 112, 28, 600);
+  text('Динамика гемоглобина', 48, 112, 28, 600);
   text(
     `${formatCalculationDate(result.startDate)} - ${formatCalculationDate(result.endDate)}`,
     48,
@@ -53,9 +53,9 @@ function drawReport(context: CanvasRenderingContext2D, result: CalculationResult
   rule(164);
   const rows = [
     ['Начальная дата', formatCalculationDate(result.startDate)],
-    ['Начальное значение', formatCalculationValue(result.startValue)],
+    ['Начало, г/л', formatCalculationValue(result.startValue)],
     ['Конечная дата', formatCalculationDate(result.endDate)],
-    ['Конечное значение', formatCalculationValue(result.endValue)],
+    ['Конец, г/л', formatCalculationValue(result.endValue)],
   ];
   rows.forEach(([label, value], index) => {
     const y = 195 + index * 31;
@@ -74,7 +74,7 @@ function drawReport(context: CanvasRenderingContext2D, result: CalculationResult
     text(label!, 48, y, 12, 400, palette.muted);
     text(value!, 547, y, 15, 600, palette.ink, 'right');
   });
-  text('График значений', 48, 495, 18, 600);
+  text('График гемоглобина', 48, 495, 18, 600);
   const bounds = { left: 75, right: 520, top: 550, bottom: 697 };
   const [first, second] = calculationChartPoints(result, bounds);
   context.lineWidth = 1;

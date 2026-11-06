@@ -10,9 +10,9 @@ import { useCalculation } from './use-calculation';
 
 const fields: { key: CalculationField; label: string; date?: boolean }[] = [
   { key: 'startDate', label: 'Начальная дата', date: true },
-  { key: 'startValue', label: 'Начальное значение' },
+  { key: 'startValue', label: 'Начало, г/л' },
   { key: 'endDate', label: 'Конечная дата', date: true },
-  { key: 'endValue', label: 'Конечное значение' },
+  { key: 'endValue', label: 'Конец, г/л' },
 ];
 
 export function CalculationPage() {
@@ -21,7 +21,7 @@ export function CalculationPage() {
   return (
     <div className="calculation-page">
       <div className="page-heading">
-        <h1 id="calculation-title">Динамика значений</h1>
+        <h1 id="calculation-title">Динамика гемоглобина</h1>
       </div>
       {calculation.loadState === 'loading' && (
         <p className="sr-only" role="status">

@@ -18,7 +18,7 @@ export function CalculationChart({ result }: { result: CalculationResult }) {
   return (
     <figure className="calculation-chart">
       <svg viewBox="0 0 352 202" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
-        <title id={titleId}>Динамика значений</title>
+        <title id={titleId}>Динамика гемоглобина</title>
         <desc id={descriptionId}>
           {formatCalculationDate(first.date)}: {formatCalculationValue(first.value)}.{' '}
           {formatCalculationDate(second.date)}: {formatCalculationValue(second.value)}. Шкала
