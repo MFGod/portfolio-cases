@@ -170,6 +170,9 @@ function ExportDocument({
               onClick={() => download(job)}
             >
               <Icon name="download" />
+              <span className="download-label" aria-hidden="true">
+                Скачать
+              </span>
             </button>
             {!done && (
               <button

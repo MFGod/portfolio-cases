@@ -125,6 +125,9 @@ export function Review({
               onClick={() => download(job)}
             >
               <Icon name="download" />
+              <span className="download-label" aria-hidden="true">
+                Скачать
+              </span>
             </button>
             <a
               className={'button export-action ' + (editing ? 'secondary' : 'primary')}

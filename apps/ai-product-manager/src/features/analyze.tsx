@@ -113,7 +113,7 @@ export function Analyze({
           </a>
         </div>
       ) : (
-        <form className="document-form" onSubmit={(event) => void submit(event)}>
+        <form className="document-form" noValidate onSubmit={(event) => void submit(event)}>
           <label>
             Название документа
             <input
@@ -121,7 +121,6 @@ export function Analyze({
               maxLength={100}
               required
               disabled={!!busy}
-              placeholder="Бронирование рабочих мест"
               onChange={(event) => setDraft({ ...draft, title: event.target.value })}
             />
           </label>
@@ -145,9 +144,6 @@ export function Analyze({
             maxLength={maxChars}
             disabled={!!busy}
             aria-describedby="requirements-meta"
-            placeholder={
-              '## Бронирование\n- Показывать свободные места на выбранную дату.\n  Критерий: занятые места скрыты.'
-            }
             onChange={(event) =>
               setDraft({ ...draft, text: event.target.value, filename: 'Вставленный текст' })
             }

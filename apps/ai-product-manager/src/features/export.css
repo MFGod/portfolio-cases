@@ -191,13 +191,23 @@
     flex-direction: column;
     align-items: stretch;
   }
+  .export-footer {
+    position: static;
+  }
   .step-bar .actions {
-    flex-direction: column;
+    flex-direction: row;
     align-items: stretch;
   }
   .step-bar .button {
     width: 100%;
     min-width: 0;
     padding-inline: var(--space-2);
+  }
+  .step-bar .actions .button:not(.download-action) {
+    flex: 1;
+    width: auto;
+  }
+  .step-bar .actions .button.download-action {
+    flex: none;
   }
 }

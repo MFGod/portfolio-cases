@@ -14,7 +14,7 @@ textarea {
   border-radius: var(--radius-sm);
   background-color: var(--color-surface);
   color: var(--color-ink);
-  font-size: var(--text-body);
+  font-size: var(--text-lg);
   font-weight: var(--weight-regular);
   line-height: var(--leading-body);
 }
@@ -154,4 +154,12 @@ input[type='checkbox'] {
   .replacement-notice > span {
     width: 100%;
   }
+}
+.form-page {
+  margin-inline: auto;
+}
+.document-form {
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  background: var(--color-surface);
 }

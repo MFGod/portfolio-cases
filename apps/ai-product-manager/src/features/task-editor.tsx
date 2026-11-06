@@ -42,9 +42,11 @@ export function TaskEditor({
       const target = event.target;
       if (!(target instanceof Element) || !target.closest('a[href^="#/"]')) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+      if (window.confirm('Есть несохранённые правки. Уйти без сохранения?')) return;
       event.preventDefault();
       event.stopImmediatePropagation();
-      titleInput.current?.focus();
+      titleInput.current?.focus({ preventScroll: true });
+      titleInput.current?.scrollIntoView({ block: 'center' });
     };
     const beforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
@@ -103,10 +105,12 @@ export function TaskEditor({
   return (
     <form
       className="task-editor"
+      noValidate
       onSubmit={(event) => void submit(event)}
       onKeyDown={(event) => {
         if (event.key === 'Escape' && !busy) {
           event.preventDefault();
+          if (dirty && !window.confirm('Закрыть без сохранения?')) return;
           close();
         }
       }}
