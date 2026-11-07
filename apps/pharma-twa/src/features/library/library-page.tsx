@@ -37,9 +37,7 @@ export function LibraryPage({
 
   return (
     <div className="library-page">
-      <div className="page-heading">
-        <h1>Библиотека</h1>
-      </div>
+      <h1 className="sr-only">Библиотека</h1>
       <label className="search-field">
         <Icon name="search" />
         <span className="sr-only">Поиск по библиотеке</span>
@@ -126,9 +124,10 @@ export function LibraryPage({
                         {item.title}
                       </AppLink>
                     </h2>
-                    {index === 0 && <p className="material-summary">{item.summary}</p>}
+                    <p className="material-summary">{item.summary}</p>
                     <p className="material-meta">
-                      {item.category}, {item.minutes} мин
+                      <span className="material-topic">{item.category}</span>
+                      <span>{item.minutes} мин</span>
                     </p>
                   </div>
                   <FavoriteButton item={item} library={library} />

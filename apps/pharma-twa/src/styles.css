@@ -923,6 +923,30 @@ main > * {
 .material-item.featured .material-meta {
   margin-top: var(--space-3);
 }
+.material-item:not(.featured) .material-summary {
+  color: var(--c-ink-soft);
+  font-size: var(--text-md);
+  line-height: var(--leading-tight);
+}
+.material-item .material-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+.material-item:not(.featured) .material-topic {
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+  font-weight: var(--weight-medium);
+}
+.material-item.featured .material-topic::after {
+  content: ',';
+}
+.material-item.featured .material-meta {
+  gap: var(--space-1);
+}
 .exercise {
   padding: var(--space-4);
   border-block: 0;
