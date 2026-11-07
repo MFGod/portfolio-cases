@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { downloadReport, funnel, percent, type Workspace } from '../../domain/workspace';
+import { downloadReport, funnel, percent, stages, type Workspace } from '../../domain/workspace';
 import { ActionError, Empty } from '../../ui/feedback';
 import { Icon } from '../../ui/icons';
 
@@ -89,12 +89,12 @@ export function ReportPage({
                     <span className="report-cell-label" aria-hidden="true">
                       Доля от откликов
                     </span>
-                    <span className="report-cell-value">{percent(row.count, total)}%</span>
                     <span
                       className="share-bar"
                       aria-hidden="true"
                       style={{ '--share': `${percent(row.count, total)}%` } as CSSProperties}
                     />
+                    <span className="report-cell-value">{percent(row.count, total)}%</span>
                   </td>
                   <td className="numeric current-column">
                     <span className="report-cell-label" aria-hidden="true">
@@ -117,6 +117,40 @@ export function ReportPage({
         </table>
       ) : (
         <Empty title="По этой вакансии нет кандидатов" />
+      )}
+      {filter === 'all' && candidates.length > 0 && (
+        <section className="vacancy-reach" aria-labelledby="vacancy-reach-title">
+          <h2 id="vacancy-reach-title">По вакансиям</h2>
+          <table className="vacancy-reach-table">
+            <thead>
+              <tr>
+                <th scope="col">Вакансия</th>
+                {stages.map((label) => (
+                  <th key={label} scope="col" className="numeric">
+                    {label}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {workspace.vacancies.map((vacancy) => (
+                <tr key={vacancy.id}>
+                  <th scope="row">{vacancy.title}</th>
+                  {funnel(candidates.filter((person) => person.vacancyId === vacancy.id)).map(
+                    (row) => (
+                      <td key={row.label} className={row.count ? 'numeric' : 'numeric empty-count'}>
+                        <span className="report-cell-label" aria-hidden="true">
+                          {row.label}
+                        </span>
+                        <span className="report-cell-value">{row.count}</span>
+                      </td>
+                    ),
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
       )}
     </>
   );
