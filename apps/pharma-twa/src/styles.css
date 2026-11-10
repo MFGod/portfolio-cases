@@ -33,6 +33,7 @@
   --text-sm: 13px;
   --text-md: 15px;
   --text-field: 16px;
+  --text-reading: 16px;
   --text-lg: 17px;
   --text-xl: 22px;
   --text-2xl: 26px;
@@ -49,7 +50,7 @@
   --control: 44px;
   --content-max: 860px;
   --reading-max: 680px;
-  --prose-max: 70ch;
+  --prose-max: 65ch;
   --text-reading-heading: 20px;
   --avatar: 56px;
   --swatch: 28px;
@@ -419,6 +420,7 @@ input[aria-invalid='true'] {
   display: grid;
   gap: var(--space-4);
   max-width: min(var(--reading-max), var(--prose-max));
+  font-size: var(--text-reading);
   line-height: var(--leading-reading);
 }
 .reading .material-meta {
